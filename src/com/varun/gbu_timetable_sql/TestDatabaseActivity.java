@@ -1,4 +1,4 @@
-package com.varun.sqledition;
+package com.varun.gbu_timetable_sql;
 
 import java.util.List;
 import java.util.Random;
@@ -34,7 +34,8 @@ public class TestDatabaseActivity extends ListActivity {
     @SuppressWarnings("unchecked")
     ArrayAdapter<Comment> adapter = (ArrayAdapter<Comment>) getListAdapter();
     Comment comment = null;
-    switch (view.getId()) {
+  
+ /*  switch (view.getId()) {
     case R.id.add:
       String[] comments = new String[] { "Cool", "Very nice", "Hate it" };
       int nextInt = new Random().nextInt(3);
@@ -49,7 +50,7 @@ public class TestDatabaseActivity extends ListActivity {
         adapter.remove(comment);
       }
       break;
-    }
+    }*/
     adapter.notifyDataSetChanged();
   }
 

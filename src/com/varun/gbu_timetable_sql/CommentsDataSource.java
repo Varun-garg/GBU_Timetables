@@ -1,4 +1,4 @@
-package com.varun.sqledition;
+package com.varun.gbu_timetable_sql;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,8 +60,7 @@ public class CommentsDataSource {
   public List<Comment> getAllComments() {
     List<Comment> comments = new ArrayList<Comment>();
 
-    Cursor cursor = database.query(MySQLiteHelper.TABLE_section,
-        allColumns, null, null, null, null, null);
+    Cursor cursor = database.rawQuery("select * from "+ MySQLiteHelper.TABLE_section,null);
 
     cursor.moveToFirst();
     while (!cursor.isAfterLast()) {

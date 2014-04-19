@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package com.varun.sqledition;
+package com.varun.gbu_timetable_sql;
 
 public final class R {
     public static final class attr {

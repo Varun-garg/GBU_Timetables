@@ -1,4 +1,4 @@
-package com.varun.sqledition;
+package com.varun.gbu_timetable_sql;
 
 public class Comment {
 	  private long id;

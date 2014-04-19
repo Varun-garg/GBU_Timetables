@@ -1,4 +1,4 @@
-package com.varun.sqledition;
+package com.varun.gbu_timetable_sql;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -28,7 +28,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper
 	  public static String COLUMN_COMMENT = "Name";
 	  public static String TABLE_section = "Section";
 
-private String DB_PATH = "/data/data/com.varun.sqledition/databases/";
+private String DB_PATH = "/data/data/com.varun.gbu_timetable_sql/databases/";
 //private String DB_PATH = mycontext.getApplicationContext().getPackageName()+"/databases/";
 private static String DB_NAME = "timetable.db";//the extension may be .sqlite or .db
 public SQLiteDatabase myDataBase;
@@ -93,7 +93,7 @@ private void copydatabase() throws IOException {
     String outfilename = DB_PATH + DB_NAME;
 
     //Open the empty db as the output stream
-    OutputStream myoutput = new FileOutputStream("/data/data/com.varun.sqledition/databases/timetable.db");
+    OutputStream myoutput = new FileOutputStream("/data/data/com.varun.gbu_timetable_sql/databases/timetable.db");
 
     // transfer byte to inputfile to outputfile
     byte[] buffer = new byte[1024];
