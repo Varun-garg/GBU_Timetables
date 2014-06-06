@@ -1,28 +1,28 @@
 package com.varun.gbu_timetable_sql;
 
 public class Comment {
-	  private long id;
-	  private String comment;
+	private long id;
+	private String comment;
 
-	  public long getId() {
-	    return id;
-	  }
+	public long getId() {
+		return id;
+	}
 
-	  public void setId(long id) {
-	    this.id = id;
-	  }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-	  public String getComment() {
-	    return comment;
-	  }
+	public String getComment() {
+		return comment;
+	}
 
-	  public void setComment(String comment) {
-	    this.comment = comment;
-	  }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-	  // Will be used by the ArrayAdapter in the ListView
-	  @Override
-	  public String toString() {
-	    return comment;
-	  }
-	} 
+	// Will be used by the ArrayAdapter in the ListView
+	@Override
+	public String toString() {
+		return comment;
+	}
+}

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/com/varun/sqledition/MySQLiteHelper.java" line="24" />
+    <bookmark url="file://$PROJECT_DIR$/src/com/varun/gbu_timetable_sql/MySQLiteHelper.java" line="24" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="01feae22-3e0e-4e6d-85aa-0a8f6a90d926" name="Default" comment="" />
-    <ignored path="sqlEdition.iws" />
+    <ignored path="gbu_timetable_sql.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -62,12 +62,12 @@
   </component>
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FavoritesManager">
-    <favorites_list name="sqlEdition" />
+    <favorites_list name="gbu_timetable_sql" />
   </component>
   <component name="FileEditorManager">
     <leaf>
       <file leaf-file-name="MySQLiteHelper.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/varun/sqledition/MySQLiteHelper.java">
+        <entry file="file://$PROJECT_DIR$/src/com/varun/gbu_timetable_sql/MySQLiteHelper.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.17028381" vertical-offset="0" max-vertical-offset="782">
               <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
@@ -120,27 +120,27 @@
         <subPane>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqlEdition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqlEdition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqlEdition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqlEdition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqlEdition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -156,7 +156,7 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sqledition" />
+              <option name="myItemId" value="gbu_timetable_sql" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -373,7 +373,7 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/varun/sqledition/MySQLiteHelper.java">
+    <entry file="file://$PROJECT_DIR$/src/com/varun/gbu_timetable_sql/MySQLiteHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17028381" vertical-offset="0" max-vertical-offset="782">
           <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
