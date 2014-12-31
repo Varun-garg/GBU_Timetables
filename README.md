@@ -1,5 +1,4 @@
-sTimetable
-============
+Time 2015
+=========
 
-
-This is an android front application for GBU-timetable. This version supports offline sqlite database.
+From here we are changing the cascading style. Now we are using embeded css.
