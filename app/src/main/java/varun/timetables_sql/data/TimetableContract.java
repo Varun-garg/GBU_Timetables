@@ -1,5 +1,7 @@
 package varun.timetables_sql.data;
 
+import android.content.ContentResolver;
+
 import varun.timetables_sql.MainActivity;
 
 /**
@@ -11,5 +13,7 @@ public class TimetableContract {
     public static String PATH_TIMETABLE = "tt";
     public static String PATH_SECTION = "section";
     public static String PATH_FACULTY = "faculty";
+
+    public static String TT_CELL_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_TIMETABLE;
 
 }

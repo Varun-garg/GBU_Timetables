@@ -27,6 +27,7 @@ public class TimetableProvider extends ContentProvider
         final String authority = TimetableContract.CONTENT_AUTHORITY;
         matcher.addURI(authority,TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_SECTION,CELL_BY_SECTION_DAY_SLOT);
         matcher.addURI(authority,TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_FACULTY,CELL_BY_FACULTY_DAY_SLOT);
+        return matcher;
     }
 
     public boolean onCreate()
@@ -34,4 +35,32 @@ public class TimetableProvider extends ContentProvider
         mOpenHeler = new TimetableDbHelper(getContext());
         return true;
     }
+
+    @Override
+    public String getType(Uri uri)
+    {
+        final int match = sUriMatcher.match(uri);
+
+        switch (match)
+        {
+            case CELL_BY_SECTION_DAY_SLOT:
+                return TimetableContract.TT_CELL_TYPE;
+            case CELL_BY_FACULTY_DAY_SLOT:
+                return TimetableContract.TT_CELL_TYPE;
+            default:
+                throw new UnsupportedOperationException("Unknown uri: " + uri);
+        }
+    }
+
+    private cursor getTTCellBySection_id
+
+
+    @Override
+    public Cursor query(Uri uri, String[] projection,String selection,String[] SelectionArgs,String sortOrder)
+    {
+        Cursor retCursor;
+
+        return retCursor;
+    }
+
 }
