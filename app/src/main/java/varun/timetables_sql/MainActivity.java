@@ -64,7 +64,12 @@ public class MainActivity extends AppCompatActivity {
                     Cursor room_cursor = getContentResolver().query(room_uri, null, null, null, null);
                     Log.d("room_cursor ", DatabaseUtils.dumpCursorToString(room_cursor));
 
+                    fac_cursor.close();
+                    sec_cursor.close();
+                    room_cursor.close();
+
                 }
+                cursor.close();
 
             }
         }

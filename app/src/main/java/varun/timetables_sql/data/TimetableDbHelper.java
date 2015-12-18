@@ -27,8 +27,8 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
 
     public TimetableDbHelper(Context context) {
-        super(context, DATABASE_NAME, null, 2);
-
+        super(context, DATABASE_NAME, null, 1);
+       // super.;
 
         /* Code for listing files in assets folder, varun.db should be present here
         String files[] = context.getAssets().list("");
@@ -50,6 +50,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         if (list.size() <= 1) // only sql_master or empty db
         {
             copy_db(context);
+
         }
     }
 
@@ -59,6 +60,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
         Log.d(LOG_TAG, "output file location " + dest_db);
 
+        this.close();
         context.deleteDatabase(DATABASE_NAME); //Delete existing db
         try {
             File f = new File(dest_db);
@@ -76,7 +78,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
                 dest_db_stream.write(buffer, 0, length);
             }
 
-
+            dest_db_stream.flush();
             db_stream.close();
             dest_db_stream.close();
 
@@ -104,11 +106,14 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        Log.d(LOG_TAG,"Calling onCreate");
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        Log.d(LOG_TAG,"Calling onUpgrade");
     }
+
 
 }
