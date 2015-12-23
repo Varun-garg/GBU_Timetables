@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.IntegerRes;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,8 @@ public class DayAdapter extends ArrayAdapter<Integer> {
         super(context, 0, Days);
         this.Section = Section;
         this.context = context;
+        Log.d("days ",Days.toString());
+
     }
 
     @Override
@@ -39,14 +43,19 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.timetable_row, parent, false);
             }
-            ArrayList<Integer> al = new ArrayList<>();
+            ArrayList<Integer> periods = new ArrayList<>();
             for (int i = 1; i <= 9; i++) {
-                al.add(i);
+                periods.add(i);
             }
 
-            ListView lv = (ListView) convertView.findViewById(R.id.timetable_row_listview);
-            TimetableAdapter timetableAdapter = new TimetableAdapter(context,al,Section,day_no);
-            lv.setAdapter(timetableAdapter);
-            return convertView;
+        //    ListView lv = (ListView) convertView.findViewById(R.id.timetable_row_listview);
+        //    TimetableAdapter timetableAdapter = new TimetableAdapter(context,periods,Section,day_no);
+        //    lv.setAdapter(timetableAdapter);
+
+            RecyclerView mRecyclerView = (RecyclerView) convertView.findViewById(R.id.timetable_row_recycler);
+            TimetableAdapter timetableAdapter = new TimetableAdapter(context,periods,Section,day_no);
+            mRecyclerView.setAdapter(timetableAdapter);
+
+        return convertView;
      }
 }

@@ -28,6 +28,7 @@ public class TimetableAdapter extends ArrayAdapter<Integer> {
         this.Day_no = Day_no;
         this.Section = Section;
         this.context = context;
+        Log.d("periods ",Periods.toString());
     }
 
     @Override
@@ -38,7 +39,7 @@ public class TimetableAdapter extends ArrayAdapter<Integer> {
 
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.timetable_item_single, parent, false);
         }
-
+        Log.d("section day period",Integer.toString(Section) +" "+ Integer.toString(Day_no) +" " + Integer.toString(Period_no) +" ");
         Uri uri = TimetableContract.BuildTTCellWithSectionDaySlot(Section, Day_no, Period_no);
         Log.d("uri ",uri.toString());
 
@@ -76,7 +77,8 @@ public class TimetableAdapter extends ArrayAdapter<Integer> {
             room_cursor.close();
 
         }
-        textView.setText(time_string);
+ //       textView.setText(time_string);
+        textView.setText(Integer.toString(Section) +" "+ Integer.toString(Day_no) +" " + Integer.toString(Period_no) +" ");
         return convertView;
     }
 }
