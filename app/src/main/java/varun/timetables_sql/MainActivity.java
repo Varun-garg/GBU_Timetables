@@ -1,5 +1,6 @@
 package varun.timetables_sql;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
@@ -13,10 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.IOException;
-
 import varun.timetables_sql.data.TimetableContract;
-import varun.timetables_sql.data.TimetableDbHelper;
 
 public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        int section = 19;
+/*        int section = 19;
         for(int day = 0; day<7;day++)
         {
             for(int slot = 0;slot<9;slot++)
@@ -73,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
             }
         }
+        */
+        Intent intent = new Intent(getApplicationContext(),TimetableActivity.class);
+        startActivity(intent);
     }
 
     @Override

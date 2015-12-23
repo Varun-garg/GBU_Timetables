@@ -14,15 +14,25 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <provider
-            android:authorities="varun.timetables_sql"
             android:name=".data.TimetableProvider"
+            android:authorities="varun.timetables_sql"
             android:enabled="true"
-            android:exported="true" >
-        </provider>
+            android:exported="true" />
+
+        <activity
+            android:name=".TimetableActivity"
+            android:label="@string/title_activity_timetable"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TimetableActivity"
+            android:label="@string/title_activity_timetable"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
