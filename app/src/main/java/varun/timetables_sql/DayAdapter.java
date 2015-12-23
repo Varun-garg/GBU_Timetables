@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.IntegerRes;
 import android.support.v4.widget.CursorAdapter;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -48,11 +49,13 @@ public class DayAdapter extends ArrayAdapter<Integer> {
                 periods.add(i);
             }
 
-        //    ListView lv = (ListView) convertView.findViewById(R.id.timetable_row_listview);
-        //    TimetableAdapter timetableAdapter = new TimetableAdapter(context,periods,Section,day_no);
-        //    lv.setAdapter(timetableAdapter);
-
             RecyclerView mRecyclerView = (RecyclerView) convertView.findViewById(R.id.timetable_row_recycler);
+
+        //    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView.LayoutManager layoutManager = new CustomLinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false);
+
+            mRecyclerView.setLayoutManager(layoutManager);
+
             TimetableAdapter timetableAdapter = new TimetableAdapter(context,periods,Section,day_no);
             mRecyclerView.setAdapter(timetableAdapter);
 

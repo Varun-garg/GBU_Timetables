@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.net.Uri;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,34 +19,54 @@ import varun.timetables_sql.data.TimetableContract;
 /**
  * Created by varun on 12/23/15.
  */
-public class TimetableAdapter extends ArrayAdapter<Integer> {
+public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.ViewHolder> {
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        //each data item is just a string in this case
+        public TextView mTextView;
+        public ViewHolder(TextView v) {
+            super(v);
+            mTextView = v;
+        }
+    }
 
     int Day_no;
     int Section;
     Context context;
+    ArrayList<Integer> Periods;
     public TimetableAdapter(Context context, ArrayList<Integer> Periods,int Section,int Day_no) {
-        super(context, 0, Periods);
+      //  super(context, 0, Periods);
         this.Day_no = Day_no;
         this.Section = Section;
         this.context = context;
         Log.d("periods ",Periods.toString());
+        this.Periods = Periods;
     }
 
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
-        int Period_no = getItem(position);
-        if (convertView == null) {
 
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.timetable_item_single, parent, false);
-        }
+    // Create new views (invoked by the layout manager)
+    @Override
+    public TimetableAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                   int viewType) {
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.timetable_item_single, parent, false);
+        TextView tx = (TextView) v.findViewById(R.id.timetable_item_text);
+
+        ViewHolder vh = new ViewHolder(tx);
+        return vh;
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int Position)
+    {
+        int Period_no = Periods.get(Position);
+
         Log.d("section day period",Integer.toString(Section) +" "+ Integer.toString(Day_no) +" " + Integer.toString(Period_no) +" ");
         Uri uri = TimetableContract.BuildTTCellWithSectionDaySlot(Section, Day_no, Period_no);
         Log.d("uri ",uri.toString());
 
         Cursor cursor = context.getContentResolver().query(uri,null,null,null,null);
-
-        TextView textView = (TextView) convertView.findViewById(R.id.timetable_item_text);
 
         String time_string = "";
         while ( cursor.moveToNext())
@@ -78,7 +99,13 @@ public class TimetableAdapter extends ArrayAdapter<Integer> {
 
         }
  //       textView.setText(time_string);
-        textView.setText(Integer.toString(Section) +" "+ Integer.toString(Day_no) +" " + Integer.toString(Period_no) +" ");
-        return convertView;
+        holder.mTextView.setText(time_string);
+     //   return convertView;
     }
+
+    @Override
+    public int getItemCount() {
+        return Periods.size();
+    }
+
 }
