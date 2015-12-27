@@ -30,33 +30,31 @@ public class TimetableContract {
 
     public static String TT_CELL_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_TIMETABLE;
 
-    public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day,long slot)
-    {
+    public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day, long slot) {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).appendPath(Long.toString(fac_id))
                 .appendQueryParameter(PARAM_DAY, Long.toString(day))
                 .appendQueryParameter(PARAM_SLOT, Long.toString(slot)).build();
     }
-    public static Uri BuildTTCellWithSectionDaySlot(long section_id, long day,long slot)
-    {
+
+    public static Uri BuildTTCellWithSectionDaySlot(long section_id, long day, long slot) {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).appendPath(Long.toString(section_id))
                 .appendQueryParameter(PARAM_DAY, Long.toString(day))
                 .appendQueryParameter(PARAM_SLOT, Long.toString(slot)).build();
     }
-    public static long getFacultyFromUri(Uri uri)
-    {
+
+    public static long getFacultyFromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(2));
     }
-    public static long getSectionFromUri(Uri uri)
-    {
+
+    public static long getSectionFromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(2));
     }
-    public static long getSlotFromUri(Uri uri)
-    {
+
+    public static long getSlotFromUri(Uri uri) {
         return Long.parseLong(uri.getQueryParameter(PARAM_SLOT));
     }
 
-    public static long getDayFromUri(Uri uri)
-    {
+    public static long getDayFromUri(Uri uri) {
         return Long.parseLong(uri.getQueryParameter(PARAM_DAY));
     }
 
@@ -69,26 +67,23 @@ public class TimetableContract {
     public static final Uri ROOM_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_ROOM).build();
 
-    public static Uri BuildFacultyWithCSFid(long csf_id)
-    {
+    public static Uri BuildFacultyWithCSFid(long csf_id) {
         return FACULTY_CONTENT_URI.buildUpon().appendPath(PATH_CSF).appendPath(Long.toString(csf_id)).build();
     }
-    public static Uri BuildSectionWithCSFid(long csf_id)
-    {
+
+    public static Uri BuildSectionWithCSFid(long csf_id) {
         return SECTION_CONTENT_URI.buildUpon().appendPath(PATH_CSF).appendPath(Long.toString(csf_id)).build();
     }
-    public static Uri BuildRoomWithId(long room_id)
-    {
+
+    public static Uri BuildRoomWithId(long room_id) {
         return ROOM_CONTENT_URI.buildUpon().appendPath(Long.toString(room_id)).build();
     }
 
-    public static Long getCSFfromUri(Uri uri)
-    {
+    public static Long getCSFfromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(2));
     }
 
-    public static Long getRoomFromUri(Uri uri)
-    {
+    public static Long getRoomFromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(1));
     }
 }

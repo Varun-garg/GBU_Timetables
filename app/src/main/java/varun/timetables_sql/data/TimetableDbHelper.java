@@ -28,7 +28,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
     public TimetableDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-       // super.;
+        // super.;
 
         /* Code for listing files in assets folder, varun.db should be present here
         String files[] = context.getAssets().list("");
@@ -54,7 +54,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void copy_db(Context context){
+    private void copy_db(Context context) {
 
         Log.d(LOG_TAG, "Ok, we are gonna copy some data");
         String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
@@ -106,13 +106,13 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        Log.d(LOG_TAG,"Calling onCreate");
+        Log.d(LOG_TAG, "Calling onCreate");
     }
 
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        Log.d(LOG_TAG,"Calling onUpgrade");
+        Log.d(LOG_TAG, "Calling onUpgrade");
     }
 
 

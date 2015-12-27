@@ -10,6 +10,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/timetable_item_text"
         android:lines="2"
-        android:background="@drawable/back"/>
+        android:background="@drawable/back" />
 
 </LinearLayout>

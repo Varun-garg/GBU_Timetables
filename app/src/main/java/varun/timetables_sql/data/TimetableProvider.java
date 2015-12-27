@@ -55,7 +55,7 @@ public class TimetableProvider extends ContentProvider {
             case FACULTY_BY_CSF:
                 return TimetableContract.TT_CELL_TYPE;
             case ROOM_BY_ID:
-                return  TimetableContract.TT_CELL_TYPE;
+                return TimetableContract.TT_CELL_TYPE;
             case SUBJECT_BY_CSF:
                 return TimetableContract.TT_CELL_TYPE;
             default:
@@ -84,27 +84,24 @@ public class TimetableProvider extends ContentProvider {
         return mOpenHeler.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getFacultyByCSF(Uri uri)
-    {
+    private Cursor getFacultyByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
 
         String query = "SELECT * FROM Teacher Join CSF_Faculty on faculty_id=id where csf_id=" + CSF;
-        return mOpenHeler.getReadableDatabase().rawQuery(query,null);
+        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getSubjectByCSF(Uri uri)
-    {
+    private Cursor getSubjectByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
 
         String query = "SELECT Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
-        return mOpenHeler.getReadableDatabase().rawQuery(query,null);
+        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getRommById(Uri uri)
-    {
+    private Cursor getRommById(Uri uri) {
         Long room_id = TimetableContract.getRoomFromUri(uri);
         String query = "SELECT name FROM M_Room where room_id=" + room_id;
-        return mOpenHeler.getReadableDatabase().rawQuery(query,null);
+        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
     }
 
     @Override

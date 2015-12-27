@@ -8,7 +8,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".TimetableActivityFragment"
     tools:showIn="@layout/activity_timetable"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:layout_width="match_parent"

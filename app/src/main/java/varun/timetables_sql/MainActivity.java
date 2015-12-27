@@ -18,6 +18,7 @@ import varun.timetables_sql.data.TimetableContract;
 
 public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         */
-        Intent intent = new Intent(getApplicationContext(),TimetableActivity.class);
+        Intent intent = new Intent(getApplicationContext(), TimetableActivity.class);
         startActivity(intent);
     }
 
