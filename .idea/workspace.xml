@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7866def0-0957-424c-bfae-bf191eb728fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" />
     </list>
@@ -44,10 +43,12 @@
       <file leaf-file-name="TimetableAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41958043">
-              <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.6118881">
+              <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3919#3920#0" expanded="true" />
+                <element signature="e#3956#3957#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -69,13 +70,9 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="66" column="106" selection-start-line="66" selection-start-column="106" selection-end-line="66" selection-end-column="106" />
+              <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1720#2438#0" expanded="true" />
-                <element signature="e#2437#2438#0" expanded="true" />
-                <element signature="e#2471#2785#0" expanded="true" />
-                <element signature="e#2784#2785#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1619,8 +1616,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
       <pane id="Scope" />
       <pane id="Scratches" />
       <pane id="AndroidView">
@@ -1640,9 +1635,47 @@
               <option name="myItemId" value="Timetables_sql" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Timetables_sql" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Timetables_sql" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="timetables_sql" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="ProjectPane" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1953,7 +1986,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47048903" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.47048903" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32715008" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32546374" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32546374" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -2018,10 +2051,6 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1720#2438#0" expanded="true" />
-            <element signature="e#2437#2438#0" expanded="true" />
-            <element signature="e#2471#2785#0" expanded="true" />
-            <element signature="e#2784#2785#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2053,10 +2082,6 @@
           <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1720#2438#0" expanded="true" />
-            <element signature="e#2437#2438#0" expanded="true" />
-            <element signature="e#2471#2785#0" expanded="true" />
-            <element signature="e#2784#2785#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2406,7 +2431,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.8951049">
           <caret line="33" column="22" selection-start-line="33" selection-start-column="19" selection-end-line="33" selection-end-column="22" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="72" column="11" selection-start-line="72" selection-start-column="11" selection-end-line="72" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2420,26 +2454,14 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="66" column="106" selection-start-line="66" selection-start-column="106" selection-end-line="66" selection-end-column="106" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1720#2438#0" expanded="true" />
-            <element signature="e#2437#2438#0" expanded="true" />
-            <element signature="e#2471#2785#0" expanded="true" />
-            <element signature="e#2784#2785#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41958043">
-          <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.6118881">
+          <caret line="97" column="40" selection-start-line="97" selection-start-column="40" selection-end-line="97" selection-end-column="40" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3919#3920#0" expanded="true" />
+            <element signature="e#3956#3957#0" expanded="true" />
           </folding>
         </state>
       </provider>

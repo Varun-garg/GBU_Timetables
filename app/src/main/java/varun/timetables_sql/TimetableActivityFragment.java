@@ -71,16 +71,6 @@ public class TimetableActivityFragment extends Fragment {
 
             }
         });
-        lv.setOnTouchListener(new ListView.OnTouchListener()
-        {
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if(event.getAction() == MotionEvent.ACTION_MOVE){
-                    Log.d("anyway","on touch listner is working fine");
-                }
-                return true;
-            }
-        });
         return rootView;
     }
 
