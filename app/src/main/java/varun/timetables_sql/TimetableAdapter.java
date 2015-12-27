@@ -28,7 +28,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
     int Section;
     Context context;
     ArrayList<Integer> Periods;
-
+    Hash
     public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_no) {
         //  super(context, 0, Periods);
         this.Day_no = Day_no;
@@ -40,7 +40,6 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        //each data item is just a string in this case
         public LinearLayout linearLayout;
 
         public ViewHolder(LinearLayout v) {

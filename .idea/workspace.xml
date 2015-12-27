@@ -12,17 +12,8 @@
     <list default="true" id="7866def0-0957-424c-bfae-bf191eb728fe" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableContract.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableContract.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableDbHelper.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableDbHelper.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableProvider.java" afterPath="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/data/TimetableProvider.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/drawable/back.xml" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/back.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_timetable.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_timetable.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/timetable_grid.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/timetable_grid.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/timetable_item_single.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/timetable_item_single.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/timetable_row.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/timetable_row.xml" />
     </list>
     <ignored path="Timetables_sql.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -50,11 +41,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="TimetableAdapter.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="TimetableAdapter.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.41958043">
+              <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -62,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DayAdapter.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DayAdapter.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.83916086">
-              <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -78,11 +69,13 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+              <caret line="66" column="106" selection-start-line="66" selection-start-column="106" selection-end-line="66" selection-end-column="106" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#3186#3500#0" expanded="true" />
-                <element signature="e#3499#3500#0" expanded="true" />
+                <element signature="e#1720#2438#0" expanded="true" />
+                <element signature="e#2437#2438#0" expanded="true" />
+                <element signature="e#2471#2785#0" expanded="true" />
+                <element signature="e#2784#2785#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1583,9 +1576,9 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_timetable.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/timetable_row.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/timetable_item_single.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java" />
       </list>
     </option>
   </component>
@@ -2025,8 +2018,10 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3186#3500#0" expanded="true" />
-            <element signature="e#3499#3500#0" expanded="true" />
+            <element signature="e#1720#2438#0" expanded="true" />
+            <element signature="e#2437#2438#0" expanded="true" />
+            <element signature="e#2471#2785#0" expanded="true" />
+            <element signature="e#2784#2785#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2058,8 +2053,10 @@
           <caret line="33" column="29" selection-start-line="33" selection-start-column="29" selection-end-line="33" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3186#3500#0" expanded="true" />
-            <element signature="e#3499#3500#0" expanded="true" />
+            <element signature="e#1720#2438#0" expanded="true" />
+            <element signature="e#2437#2438#0" expanded="true" />
+            <element signature="e#2471#2785#0" expanded="true" />
+            <element signature="e#2784#2785#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2413,10 +2410,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -2426,19 +2423,21 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableActivityFragment.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+          <caret line="66" column="106" selection-start-line="66" selection-start-column="106" selection-end-line="66" selection-end-column="106" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#3186#3500#0" expanded="true" />
-            <element signature="e#3499#3500#0" expanded="true" />
+            <element signature="e#1720#2438#0" expanded="true" />
+            <element signature="e#2437#2438#0" expanded="true" />
+            <element signature="e#2471#2785#0" expanded="true" />
+            <element signature="e#2784#2785#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/DayAdapter.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/varun/timetables_sql/TimetableAdapter.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83916086">
-          <caret line="87" column="0" selection-start-line="87" selection-start-column="0" selection-end-line="87" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.41958043">
+          <caret line="30" column="8" selection-start-line="30" selection-start-column="8" selection-end-line="30" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

@@ -29,9 +29,6 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
     int Section;
     Context context;
-    public int scroll_position = 0;
-    public int scroll_override = 0;
-    public int ignore_position = -1;
 
     public interface RecycleListener {
 
@@ -67,13 +64,10 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
         final RecyclerView mRecyclerView = (RecyclerView) convertView.findViewById(R.id.timetable_row_recycler);
 
-        //    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL, false);
         final RecyclerView.LayoutManager layoutManager = new CustomLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        Log.d("scroll","Scrolling "  + Integer.toString(position) + " to " + Integer.toString(scroll_position));
-        ( (LinearLayoutManager) layoutManager).scrollToPositionWithOffset(0,- scroll_position);
         TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, Section, day_no);
         mRecyclerView.setAdapter(timetableAdapter);
 
@@ -84,31 +78,10 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
 
                 super.onScrolled(recyclerView, dx, dy);
-                int findFirstVisibleItemPosition = ( (LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
+                listener.onScroll(recyclerView.computeHorizontalScrollOffset(),position);
 
-                Log.d("found position ",Integer.toString(findFirstVisibleItemPosition) + " " + Integer.toString(position) );
-                Log.d("found offest ",Integer.toString(recyclerView.computeHorizontalScrollOffset()) + " " + Integer.toString(position) );
-                Log.d("found extent ",Integer.toString(recyclerView.computeHorizontalScrollExtent()) + " " + Integer.toString(position) );
-                Log.d("found range ",Integer.toString(recyclerView.computeHorizontalScrollRange()) + " " + Integer.toString(position) );
-
-                overallXScroll = overallXScroll + dx;
-
-                if(scroll_override == 0 && position!= ignore_position)
-                {
-                    Log.d("found position ","Scrolling");
-                    listener.onScroll(recyclerView.computeHorizontalScrollOffset(),position);
-                }
-
-            }
-
-            @Override
-            public void onScrollStateChanged (RecyclerView recyclerView, int newState)
-            {
-                super.onScrollStateChanged(recyclerView,newState);
-               // listener.onScroll(layoutManager.computeHorizontalScrollExtent(null),position);
             }
         });
-        convertView.setTag(mRecyclerView);
         return convertView;
     }
 }
