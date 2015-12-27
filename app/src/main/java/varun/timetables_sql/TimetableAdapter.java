@@ -31,6 +31,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
     Context context;
     ArrayList<Integer> Periods;
     HashMap cache = new HashMap();
+    int max_lines = 2;
     public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_no) {
         this.Day_no = Day_no;
         this.Section = Section;
@@ -72,6 +73,7 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 
         String time_string = "";
+        int lines = 0;
         while (cursor.moveToNext()) {
 
             Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(cursor.getLong(cursor.getColumnIndex("CSF_Id")));
@@ -86,28 +88,26 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
             sec_cursor.moveToNext();
             room_cursor.moveToNext();
             fac_cursor.moveToNext();
-            time_string += sec_cursor.getString(sec_cursor.getColumnIndex("Subject_Code")) + " \n";
-            time_string += "(" + fac_cursor.getString(fac_cursor.getColumnIndex("abbr")) + ") ";
-            time_string += room_cursor.getString(room_cursor.getColumnIndex("Name")) + " \n";
+            time_string += sec_cursor.getString(sec_cursor.getColumnIndex("Subject_Code")).trim() + "\n";
+            time_string += "(" + fac_cursor.getString(fac_cursor.getColumnIndex("abbr")).trim() + ") ";
+            time_string += room_cursor.getString(room_cursor.getColumnIndex("Name")).trim() + "\n";
 
             fac_cursor.close();
             sec_cursor.close();
             room_cursor.close();
-
+            lines +=2;
         }
         cache.put(Position,time_string);
+        if(lines>max_lines) max_lines = lines;
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int Position) {
-        int Period_no = Periods.get(Position);
         String time_string = (String) cache.get(Position);
-
-        Log.d("time_string", time_string);
-
         TextView textView = (TextView) holder.linearLayout.findViewById(R.id.timetable_item_text);
+        textView.setLines(max_lines);
         textView.setText(time_string.trim());
-        }
+    }
 
     @Override
     public int getItemCount() {

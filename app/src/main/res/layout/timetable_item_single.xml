@@ -7,9 +7,10 @@
 
     <TextView
         android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="5dp"
         android:id="@+id/timetable_item_text"
-        android:lines="2"
+        android:gravity="center"
         android:background="@drawable/back" />
 
 </LinearLayout>
