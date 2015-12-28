@@ -14,4 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="238dp"
         android:id="@+id/timetable_row_item" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/timetable_faculty_data" />
 </LinearLayout>

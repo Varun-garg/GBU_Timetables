@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
+import varun.timetables_sql.data.CSF;
+import varun.timetables_sql.data.Key;
 import varun.timetables_sql.data.TimetableContract;
 
 /**
@@ -26,23 +28,22 @@ import varun.timetables_sql.data.TimetableContract;
 public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.ViewHolder> {
 
 
-    int Day_no;
+    int Day_pos;
     int Section;
     Context context;
     ArrayList<Integer> Periods;
-    HashMap cache = new HashMap();
+    HashMap<Key,String> cache;
+
     int max_lines = 2;
-    public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_no) {
-        this.Day_no = Day_no;
+
+    public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_pos,HashMap<Key,String> cache,int max_lines) {
+        this.Day_pos = Day_pos;
         this.Section = Section;
         this.context = context;
         this.Periods = Periods;
-
-        for(int i = 0;i<this.Periods.size();i++)
-            this.BuildTimeString(i);
-
+        this.cache = cache;
+        this.max_lines = max_lines;
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout linearLayout;
@@ -65,45 +66,12 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
         return vh;
     }
 
-    public void BuildTimeString(int Position)
-    {
-        int Period_no = Periods.get(Position);
-        Uri uri = TimetableContract.BuildTTCellWithSectionDaySlot(Section, Day_no, Period_no);
 
-        Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
-
-        String time_string = "";
-        int lines = 0;
-        while (cursor.moveToNext()) {
-
-            Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(cursor.getLong(cursor.getColumnIndex("CSF_Id")));
-            Cursor fac_cursor = context.getContentResolver().query(fac_uri, null, null, null, null);
-
-            Uri sec_uri = TimetableContract.BuildSectionWithCSFid(cursor.getLong(cursor.getColumnIndex("CSF_Id")));
-            Cursor sec_cursor = context.getContentResolver().query(sec_uri, null, null, null, null);
-
-            Uri room_uri = TimetableContract.BuildRoomWithId(cursor.getLong(cursor.getColumnIndex("Room_Id")));
-            Cursor room_cursor = context.getContentResolver().query(room_uri, null, null, null, null);
-
-            sec_cursor.moveToNext();
-            room_cursor.moveToNext();
-            fac_cursor.moveToNext();
-            time_string += sec_cursor.getString(sec_cursor.getColumnIndex("Subject_Code")).trim() + "\n";
-            time_string += "(" + fac_cursor.getString(fac_cursor.getColumnIndex("abbr")).trim() + ") ";
-            time_string += room_cursor.getString(room_cursor.getColumnIndex("Name")).trim() + "\n";
-
-            fac_cursor.close();
-            sec_cursor.close();
-            room_cursor.close();
-            lines +=2;
-        }
-        cache.put(Position,time_string);
-        if(lines>max_lines) max_lines = lines;
-    }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int Position) {
-        String time_string = (String) cache.get(Position);
+        Key key = new Key(Day_pos,Position);
+        String time_string = (String) cache.get(key);
         TextView textView = (TextView) holder.linearLayout.findViewById(R.id.timetable_item_text);
         textView.setLines(max_lines);
         textView.setText(time_string.trim());

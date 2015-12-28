@@ -16,7 +16,7 @@ import android.util.Log;
  */
 public class TimetableProvider extends ContentProvider {
     private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private TimetableDbHelper mOpenHeler;
+    private TimetableDbHelper mOpenHelper;
 
     static final int CELL_BY_SECTION_DAY_SLOT = 100;
     static final int CELL_BY_FACULTY_DAY_SLOT = 101;
@@ -39,7 +39,7 @@ public class TimetableProvider extends ContentProvider {
     }
 
     public boolean onCreate() {
-        mOpenHeler = new TimetableDbHelper(getContext());
+        mOpenHelper = new TimetableDbHelper(getContext());
         return true;
     }
 
@@ -70,7 +70,7 @@ public class TimetableProvider extends ContentProvider {
 
         String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table Where Section_Id=" + section_id.toString() + " AND  TT_Day=" + day.toString() + " AND TT_Period=" + slot.toString();
 
-        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getTTCellByFacultyDaySlot(Uri uri) {
@@ -81,27 +81,31 @@ public class TimetableProvider extends ContentProvider {
         String query = "SELECT _ROWID_ as _id, ContGroupCode, M_Time_Table.CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table " +
                 " JOIN CSF_Faculty on M_Time_Table.CSF_Id=CSF_Faculty.csf_id Where faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot;
 
-        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getFacultyByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
 
-        String query = "SELECT * FROM Teacher Join CSF_Faculty on faculty_id=id where csf_id=" + CSF;
-        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
+        String query = "SELECT Teacher._ROWID_ as _id,* FROM Teacher,CSF_Faculty where faculty_id=Teacher.id and csf_id=" + CSF;
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getSubjectByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
+        String query = "SELECT _ROWID_ as _id,Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
+        Cursor cursor =  mOpenHelper.getReadableDatabase().rawQuery(query, null);
+        cursor.moveToNext();
+        String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
+        String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code= '" + code + "'";
+        return  mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
 
-        String query = "SELECT Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
-        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getRommById(Uri uri) {
+    private Cursor getRoomById(Uri uri) {
         Long room_id = TimetableContract.getRoomFromUri(uri);
-        String query = "SELECT name FROM M_Room where room_id=" + room_id;
-        return mOpenHeler.getReadableDatabase().rawQuery(query, null);
+        String query = "SELECT _ROWID_ as _id, name FROM M_Room where room_id=" + room_id;
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     @Override
@@ -121,7 +125,7 @@ public class TimetableProvider extends ContentProvider {
                 retCursor = getSubjectByCSF(uri);
                 break;
             case ROOM_BY_ID:
-                retCursor = getRommById(uri);
+                retCursor = getRoomById(uri);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
@@ -144,5 +148,12 @@ public class TimetableProvider extends ContentProvider {
     @Override
     public int delete(Uri uri, String selection, String[] selectionArgs) { //TODO
         return 1;
+    }
+
+    @Override
+    @TargetApi(11)
+    public void shutdown() {
+        mOpenHelper.close();
+        super.shutdown();
     }
 }

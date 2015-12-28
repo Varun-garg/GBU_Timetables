@@ -21,8 +21,10 @@ import android.widget.TextView;
 import android.support.v7.widget.GridLayout.LayoutParams;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import varun.timetables_sql.R;
+import varun.timetables_sql.data.CSF;
 import varun.timetables_sql.data.TimetableContract;
 
 /**
@@ -42,6 +44,7 @@ public class TimetableActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
+        HashMap<Long,CSF> CSF_Details = new HashMap();
 
         final ArrayList<Integer> days = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
@@ -52,6 +55,15 @@ public class TimetableActivityFragment extends Fragment {
         final DayAdapter dayAdapter = new DayAdapter(getContext(), days, 19);
         lv.setAdapter(dayAdapter);
 
+        CSF_Details = dayAdapter.getCSFDetails();
+
+        ArrayList<CSF> CSF_Array = new ArrayList<CSF>(CSF_Details.values());
+        final ListView lv2 = (ListView) rootView.findViewById(R.id.timetable_faculty_data);
+        final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array);
+        lv2.setAdapter(detailsAdapter);
+
+
+
         dayAdapter.setRecycleListener(new DayAdapter.RecycleListener() {
             int busy = 0;
             @Override
@@ -61,13 +73,11 @@ public class TimetableActivityFragment extends Fragment {
                 busy = 1;
                  for(int i = 0;i<days.size();i++)
                 {
-                    if( adapter_position != i) {
                         View view = lv.getChildAt(i);
                         if(view == null) continue;
                         RecyclerView r = (RecyclerView) view.findViewById(R.id.timetable_row_recycler);
                         LinearLayoutManager  layoutManager =  ( LinearLayoutManager) r.getLayoutManager();
                         layoutManager.scrollToPositionWithOffset(0,0-scroll_x);
-                    }
                 }
                 busy = 0;
             }
