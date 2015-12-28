@@ -5,25 +5,20 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
-import android.util.Log;
 
 /**
  * varun.timetables_sql.data (Timetables_sql)
  * Created by Varun garg <varun.10@live.com> on 12/14/2015 7:44 PM.
  */
 public class TimetableProvider extends ContentProvider {
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
-    private TimetableDbHelper mOpenHelper;
-
     static final int CELL_BY_SECTION_DAY_SLOT = 100;
     static final int CELL_BY_FACULTY_DAY_SLOT = 101;
     static final int SUBJECT_BY_CSF = 102;
     static final int FACULTY_BY_CSF = 103;
     static final int ROOM_BY_ID = 104;
-
+    private static final UriMatcher sUriMatcher = buildUriMatcher();
+    private TimetableDbHelper mOpenHelper;
 
     static UriMatcher buildUriMatcher() {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -94,11 +89,11 @@ public class TimetableProvider extends ContentProvider {
     private Cursor getSubjectByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
         String query = "SELECT _ROWID_ as _id,Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
-        Cursor cursor =  mOpenHelper.getReadableDatabase().rawQuery(query, null);
+        Cursor cursor = mOpenHelper.getReadableDatabase().rawQuery(query, null);
         cursor.moveToNext();
         String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
         String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code= '" + code + "'";
-        return  mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
+        return mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
 
     }
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 public class CustomLinearLayoutManager extends LinearLayoutManager {
 
     private static final String TAG = CustomLinearLayoutManager.class.getSimpleName();
+    private int[] mMeasuredDimension = new int[2];
 
     public CustomLinearLayoutManager(Context context) {
         super(context);
@@ -17,8 +18,6 @@ public class CustomLinearLayoutManager extends LinearLayoutManager {
     public CustomLinearLayoutManager(Context context, int orientation, boolean reverseLayout) {
         super(context, orientation, reverseLayout);
     }
-
-    private int[] mMeasuredDimension = new int[2];
 
     @Override
     public void onMeasure(RecyclerView.Recycler recycler, RecyclerView.State state, int widthSpec, int heightSpec) {

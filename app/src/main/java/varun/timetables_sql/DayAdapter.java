@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -25,29 +26,18 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
     Context context;
     int Section;
-    String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+    String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     int current_scroll_pos = 0;
 
-    HashMap<Long,CSF> CSF_Details = new HashMap();
+    HashMap<Long, CSF> CSF_Details = new HashMap();
 
     ArrayList<Integer> periods = new ArrayList<>();
     int max_lines[];
 
-    HashMap<Key,String> cache = new HashMap();
-
-    public HashMap<Long,CSF> getCSFDetails()
-    {
-        return CSF_Details;
-    }
-
-
-    public interface RecycleListener {
-
-        public void onScroll(int scroll_x,int adapter_position);
-    }
-
+    HashMap<Key, String> cache = new HashMap();
     private RecycleListener listener;
+
 
     public DayAdapter(Context context, ArrayList<Integer> Days, int Section) {
         super(context, 0, Days);
@@ -59,15 +49,18 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             periods.add(i);
         }
         max_lines = new int[Days.size()];
-        Arrays.fill(max_lines,2);
+        Arrays.fill(max_lines, 2);
 
-        for(int i = 0;i<Days.size();i++)
-            for(int j = 0;j<periods.size();j++)
-                BuildTimeString(i,j);
+        for (int i = 0; i < Days.size(); i++)
+            for (int j = 0; j < periods.size(); j++)
+                BuildTimeString(i, j);
     }
 
-    public void setRecycleListener(RecycleListener listener)
-    {
+    public HashMap<Long, CSF> getCSFDetails() {
+        return CSF_Details;
+    }
+
+    public void setRecycleListener(RecycleListener listener) {
         this.listener = listener;
     }
 
@@ -90,16 +83,16 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
         mRecyclerView.setLayoutManager(layoutManager);
 
-        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(0,0-current_scroll_pos);
+        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(0, 0 - current_scroll_pos);
 
-        TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, Section, position,cache,max_lines[position]);
+        TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, Section, position, cache, max_lines[position]);
         mRecyclerView.setAdapter(timetableAdapter);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 current_scroll_pos = recyclerView.computeHorizontalScrollOffset();
-                listener.onScroll(recyclerView.computeHorizontalScrollOffset(),position);
+                listener.onScroll(recyclerView.computeHorizontalScrollOffset(), position);
 
             }
         });
@@ -112,8 +105,7 @@ public class DayAdapter extends ArrayAdapter<Integer> {
         return getCount();
     }
 
-    public void BuildTimeString(int Day_Pos,int Period_Pos)
-    {
+    public void BuildTimeString(int Day_Pos, int Period_Pos) {
 
         int Period_no = periods.get(Period_Pos);
         int Day_no = getItem(Day_Pos);
@@ -129,26 +121,31 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
 
             CSF mCSF = CSF_Details.get(CSF_Id);
-            if(mCSF == null) {
+            if (mCSF == null) {
                 mCSF = new CSF(CSF_Id, Room_Id, context);
                 mCSF.CSF_Id = CSF_Id;
                 CSF_Details.put(mCSF.CSF_Id, mCSF);
             }
 
-            time_string +=  mCSF.Sub_Code + "\n";
+            time_string += mCSF.Sub_Code + "\n";
             time_string += "(" + mCSF.Fac_name + ") ";
             time_string += mCSF.Room_no + "\n";
 
-            lines +=2;
+            lines += 2;
         }
         cursor.close();
-        cache.put(new Key(Day_Pos,Period_Pos),time_string);
-        if(lines>max_lines[Day_Pos]) max_lines[Day_Pos] = lines;
+        cache.put(new Key(Day_Pos, Period_Pos), time_string);
+        if (lines > max_lines[Day_Pos]) max_lines[Day_Pos] = lines;
     }
 
     @Override
     public int getItemViewType(int position) {
 
         return position;
+    }
+
+    public interface RecycleListener {
+
+        public void onScroll(int scroll_x, int adapter_position);
     }
 }

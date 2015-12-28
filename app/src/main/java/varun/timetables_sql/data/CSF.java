@@ -15,13 +15,11 @@ public class CSF {
     public String Sub_Code, Sub_name;
     public String Room_no;
 
-    public CSF()
-    {
+    public CSF() {
 
     }
 
-    public CSF(Long CSF_Id,Long Room_id, Context context)
-    {
+    public CSF(Long CSF_Id, Long Room_id, Context context) {
         this.CSF_Id = CSF_Id;
         Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(CSF_Id);
         Cursor fac_cursor = context.getContentResolver().query(fac_uri, null, null, null, null);
@@ -39,8 +37,8 @@ public class CSF {
         Fac_abbr = fac_cursor.getString(fac_cursor.getColumnIndex("abbr")).trim();
         Fac_id = fac_cursor.getInt(fac_cursor.getColumnIndex("_id"));
         Fac_name = fac_cursor.getString(fac_cursor.getColumnIndex("abbr")).trim();
-        Sub_Code= sec_cursor.getString(sec_cursor.getColumnIndex("code")).trim();
-        Sub_name= sec_cursor.getString(sec_cursor.getColumnIndex("name")).trim();
+        Sub_Code = sec_cursor.getString(sec_cursor.getColumnIndex("code")).trim();
+        Sub_name = sec_cursor.getString(sec_cursor.getColumnIndex("name")).trim();
         Room_no = room_cursor.getString(room_cursor.getColumnIndex("Name")).trim();
 
         fac_cursor.close();

@@ -1,26 +1,17 @@
 package varun.timetables_sql;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
 
-import varun.timetables_sql.data.CSF;
 import varun.timetables_sql.data.Key;
-import varun.timetables_sql.data.TimetableContract;
 
 /**
  * Created by varun on 12/23/15.
@@ -32,26 +23,17 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
     int Section;
     Context context;
     ArrayList<Integer> Periods;
-    HashMap<Key,String> cache;
+    HashMap<Key, String> cache;
 
     int max_lines = 2;
 
-    public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_pos,HashMap<Key,String> cache,int max_lines) {
+    public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_pos, HashMap<Key, String> cache, int max_lines) {
         this.Day_pos = Day_pos;
         this.Section = Section;
         this.context = context;
         this.Periods = Periods;
         this.cache = cache;
         this.max_lines = max_lines;
-    }
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout linearLayout;
-
-        public ViewHolder(LinearLayout v) {
-            super(v);
-            linearLayout = v;
-        }
     }
 
     // Create new views (invoked by the layout manager)
@@ -66,11 +48,9 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
         return vh;
     }
 
-
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int Position) {
-        Key key = new Key(Day_pos,Position);
+        Key key = new Key(Day_pos, Position);
         String time_string = (String) cache.get(key);
         TextView textView = (TextView) holder.linearLayout.findViewById(R.id.timetable_item_text);
         textView.setLines(max_lines);
@@ -80,6 +60,15 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
     @Override
     public int getItemCount() {
         return Periods.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public LinearLayout linearLayout;
+
+        public ViewHolder(LinearLayout v) {
+            super(v);
+            linearLayout = v;
+        }
     }
 
 }

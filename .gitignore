@@ -7,6 +7,8 @@
 /build
 /captures
 
+.idea/workspace.xml
+
 # Built application files
 *.apk
 *.ap_

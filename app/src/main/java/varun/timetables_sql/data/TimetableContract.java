@@ -2,9 +2,6 @@ package varun.timetables_sql.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-import android.util.Log;
-
-import varun.timetables_sql.MainActivity;
 
 /**
  * varun.timetables_sql.data (Timetables_sql)
@@ -12,22 +9,22 @@ import varun.timetables_sql.MainActivity;
  */
 public class TimetableContract {
     public static String CONTENT_AUTHORITY = "varun.timetables_sql";
-
-    public static String PATH_TIMETABLE = "tt";
-    public static String PATH_SECTION = "section";
-    public static String PATH_FACULTY = "faculty";
-    public static String PATH_CSF = "CSF";
-    public static String PATH_ROOM = "room";
-
-    public static String PARAM_SLOT = "slot";
-    public static String PARAM_DAY = "day";
-
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
-
-
+    public static String PATH_TIMETABLE = "tt";
     public static final Uri TT_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_TIMETABLE).build();
-
+    public static String PATH_SECTION = "section";
+    public static final Uri SECTION_CONTENT_URI =
+            BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
+    public static String PATH_FACULTY = "faculty";
+    public static final Uri FACULTY_CONTENT_URI =
+            BASE_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).build();
+    public static String PATH_CSF = "CSF";
+    public static String PATH_ROOM = "room";
+    public static final Uri ROOM_CONTENT_URI =
+            BASE_CONTENT_URI.buildUpon().appendPath(PATH_ROOM).build();
+    public static String PARAM_SLOT = "slot";
+    public static String PARAM_DAY = "day";
     public static String TT_CELL_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_TIMETABLE;
 
     public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day, long slot) {
@@ -57,15 +54,6 @@ public class TimetableContract {
     public static long getDayFromUri(Uri uri) {
         return Long.parseLong(uri.getQueryParameter(PARAM_DAY));
     }
-
-    public static final Uri FACULTY_CONTENT_URI =
-            BASE_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).build();
-
-    public static final Uri SECTION_CONTENT_URI =
-            BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
-
-    public static final Uri ROOM_CONTENT_URI =
-            BASE_CONTENT_URI.buildUpon().appendPath(PATH_ROOM).build();
 
     public static Uri BuildFacultyWithCSFid(long csf_id) {
         return FACULTY_CONTENT_URI.buildUpon().appendPath(PATH_CSF).appendPath(Long.toString(csf_id)).build();
