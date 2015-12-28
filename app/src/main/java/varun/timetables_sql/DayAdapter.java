@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +30,9 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
     int Section;
     Context context;
+    int current_scroll_pos = 0;
 
+    String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     public interface RecycleListener {
 
         public void onScroll(int scroll_x,int adapter_position);
@@ -62,22 +65,25 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             periods.add(i);
         }
 
+        TextView header_tv = (TextView) convertView.findViewById(R.id.timetable_row_header);
+        header_tv.setText(days[position]);
+
         final RecyclerView mRecyclerView = (RecyclerView) convertView.findViewById(R.id.timetable_row_recycler);
 
         final RecyclerView.LayoutManager layoutManager = new CustomLinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
 
+        ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(0,0-current_scroll_pos);
+
         TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, Section, day_no);
         mRecyclerView.setAdapter(timetableAdapter);
 
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            int overallXScroll = 0;
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-
-                super.onScrolled(recyclerView, dx, dy);
+                current_scroll_pos = recyclerView.computeHorizontalScrollOffset();
                 listener.onScroll(recyclerView.computeHorizontalScrollOffset(),position);
 
             }

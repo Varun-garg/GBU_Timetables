@@ -53,13 +53,14 @@ public class TimetableActivityFragment extends Fragment {
         lv.setAdapter(dayAdapter);
 
         dayAdapter.setRecycleListener(new DayAdapter.RecycleListener() {
+            int busy = 0;
             @Override
             public void onScroll(int scroll_x,int adapter_position)
             {
-
+                if(busy == 1) return;
+                busy = 1;
                  for(int i = 0;i<days.size();i++)
                 {
-
                     if( adapter_position != i) {
                         View view = lv.getChildAt(i);
                         if(view == null) continue;
@@ -68,8 +69,9 @@ public class TimetableActivityFragment extends Fragment {
                         layoutManager.scrollToPositionWithOffset(0,0-scroll_x);
                     }
                 }
-
+                busy = 0;
             }
+
         });
         return rootView;
     }

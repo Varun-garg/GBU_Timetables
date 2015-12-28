@@ -4,6 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:layout_width="90dp"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:id="@+id/timetable_row_header"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@android:color/holo_green_light"/>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/timetable_row_recycler"
         android:scrollbars="vertical"

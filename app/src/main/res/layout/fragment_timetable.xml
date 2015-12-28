@@ -12,6 +12,6 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="238dp"
         android:id="@+id/timetable_row_item" />
 </LinearLayout>
