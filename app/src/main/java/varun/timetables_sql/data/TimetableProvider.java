@@ -17,7 +17,9 @@ public class TimetableProvider extends ContentProvider {
     static final int SUBJECT_BY_CSF = 102;
     static final int FACULTY_BY_CSF = 103;
     static final int ROOM_BY_ID = 104;
-    private static final UriMatcher sUriMatcher = buildUriMatcher();
+    static final int SCHOOLS = 105;
+    static final int SECTIONS = 106;
+    static final UriMatcher sUriMatcher = buildUriMatcher();
     private TimetableDbHelper mOpenHelper;
 
     static UriMatcher buildUriMatcher() {
@@ -27,8 +29,10 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_SECTION + "/*", CELL_BY_SECTION_DAY_SLOT);
         matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_FACULTY + "/*", CELL_BY_FACULTY_DAY_SLOT);
         matcher.addURI(authority, TimetableContract.PATH_FACULTY + "/" + TimetableContract.PATH_CSF + "/*", FACULTY_BY_CSF);
-        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_CSF + "/*", SUBJECT_BY_CSF);
+        matcher.addURI(authority, TimetableContract.PATH_SUBJECT + "/" + TimetableContract.PATH_CSF + "/*", SUBJECT_BY_CSF);
         matcher.addURI(authority, TimetableContract.PATH_ROOM + "/*", ROOM_BY_ID);
+        matcher.addURI(authority, TimetableContract.PATH_SCHOOL,SCHOOLS);
+        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*",SUBJECT_BY_CSF);
 
         return matcher;
     }
@@ -53,6 +57,10 @@ public class TimetableProvider extends ContentProvider {
                 return TimetableContract.TT_CELL_TYPE;
             case SUBJECT_BY_CSF:
                 return TimetableContract.TT_CELL_TYPE;
+            case SCHOOLS:
+                return TimetableContract.TT_CELL_TYPE;
+            case SECTIONS:
+                return TimetableContract.TT_CELL_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -64,6 +72,14 @@ public class TimetableProvider extends ContentProvider {
         Long slot = TimetableContract.getSlotFromUri(uri);
 
         String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table Where Section_Id=" + section_id.toString() + " AND  TT_Day=" + day.toString() + " AND TT_Period=" + slot.toString();
+
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
+    }
+
+
+    private Cursor getSchools(Uri uri) {
+
+        String query = "SELECT _ROWID_ as _id,id as course_id,school from Program";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }

@@ -8,15 +8,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/sub_code"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="left"
             android:id="@+id/sub_name"/>
     </LinearLayout>
 
@@ -25,15 +22,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:id="@+id/fac_code"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="left"
             android:id="@+id/fac_name"/>
     </LinearLayout>
 </LinearLayout>

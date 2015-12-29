@@ -128,7 +128,7 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             }
 
             time_string += mCSF.Sub_Code + "\n";
-            time_string += "(" + mCSF.Fac_name + ") ";
+            time_string += "(" + mCSF.Fac_abbr + ") ";
             time_string += mCSF.Room_no + "\n";
 
             lines += 2;
