@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -120,17 +121,31 @@ public class DayAdapter extends ArrayAdapter<Integer> {
             Long CSF_Id = cursor.getLong(cursor.getColumnIndex("CSF_Id"));
             Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
 
-            CSF mCSF = CSF_Details.get(CSF_Id);
-            if (mCSF == null) {
-                mCSF = new CSF(CSF_Id, Room_Id, context);
-                mCSF.CSF_Id = CSF_Id;
-                CSF_Details.put(mCSF.CSF_Id, mCSF);
+            try {
+                CSF mCSF = CSF_Details.get(CSF_Id);
+                if (mCSF == null) {
+                    mCSF = new CSF(CSF_Id, context);
+                    mCSF.CSF_Id = CSF_Id;
+                    CSF_Details.put(mCSF.CSF_Id, mCSF);
+                }
+
+                Uri room_uri = TimetableContract.BuildRoomWithId(Room_Id);
+                Cursor room_cursor = context.getContentResolver().query(room_uri, null, null, null, null);
+                room_cursor.moveToNext();
+                String Room_no = room_cursor.getString(room_cursor.getColumnIndex("Name")).trim();
+                room_cursor.close();
+
+
+                time_string += mCSF.Sub_Code + "\n";
+                time_string += "(" + mCSF.Fac_abbr + ") ";
+                time_string += Room_no + "\n";
+
             }
-
-            time_string += mCSF.Sub_Code + "\n";
-            time_string += "(" + mCSF.Fac_abbr + ") ";
-            time_string += mCSF.Room_no + "\n";
-
+            catch (Exception e)
+            {
+                Log.d("DayAdapter",e.toString());
+                time_string += "An Error Occurred \n";
+            }
             lines += 2;
         }
         cursor.close();
