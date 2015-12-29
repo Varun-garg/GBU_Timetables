@@ -32,7 +32,7 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_SUBJECT + "/" + TimetableContract.PATH_CSF + "/*", SUBJECT_BY_CSF);
         matcher.addURI(authority, TimetableContract.PATH_ROOM + "/*", ROOM_BY_ID);
         matcher.addURI(authority, TimetableContract.PATH_SCHOOL,SCHOOLS);
-        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*",SUBJECT_BY_CSF);
+        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*",SECTIONS);
 
         return matcher;
     }
@@ -79,9 +79,17 @@ public class TimetableProvider extends ContentProvider {
 
     private Cursor getSchools(Uri uri) {
 
-        String query = "SELECT _ROWID_ as _id,id as course_id,school from Program";
+        String query = "SELECT _ROWID_ as _id,id as program_id, school from Program";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
+    }
+
+    private Cursor getSections(Uri uri)
+    {
+        Long program_id = TimetableContract.getProgramFromUri(uri);
+        String query = "SELECT _ROWID_ as _id,id as section_id,Name from Section where ShowTimetable = 1 and  program = " + program_id;
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
+
     }
 
     private Cursor getTTCellByFacultyDaySlot(Uri uri) {
@@ -137,6 +145,12 @@ public class TimetableProvider extends ContentProvider {
                 break;
             case ROOM_BY_ID:
                 retCursor = getRoomById(uri);
+                break;
+            case SCHOOLS:
+                retCursor = getSchools(uri);
+                break;
+            case SECTIONS:
+                retCursor = getSections(uri);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

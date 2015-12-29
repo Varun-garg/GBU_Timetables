@@ -25,7 +25,7 @@ import varun.timetables_sql.data.TimetableContract;
 public class DayAdapter extends ArrayAdapter<Integer> {
 
     Context context;
-    int Section;
+    Long Section;
     String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     int current_scroll_pos = 0;
@@ -39,7 +39,7 @@ public class DayAdapter extends ArrayAdapter<Integer> {
     private RecycleListener listener;
 
 
-    public DayAdapter(Context context, ArrayList<Integer> Days, int Section) {
+    public DayAdapter(Context context, ArrayList<Integer> Days, Long Section) {
         super(context, 0, Days);
         this.listener = null;
 

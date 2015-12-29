@@ -29,46 +29,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
-/*        int section = 19;
-        for(int day = 0; day<7;day++)
-        {
-            for(int slot = 0;slot<9;slot++)
-            {
-                Uri uri = TimetableContract.BuildTTCellWithSectionDaySlot(section, day, slot);
-                Log.d("uri ",uri.toString());
-
-                Cursor cursor = getContentResolver().query(uri,null,null,null,null);
-                while ( cursor.moveToNext())
-                {
-                    Log.d("varun.timetables_sql",cursor.getString(cursor.getColumnIndex("CSF_Id")));
-
-                    Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(cursor.getLong(cursor.getColumnIndex("CSF_Id")));
-                    Cursor fac_cursor = getContentResolver().query(fac_uri, null, null, null, null);
-                    Log.d("fac_cursor ", DatabaseUtils.dumpCursorToString(fac_cursor));
-
-                    Uri sec_uri = TimetableContract.BuildSectionWithCSFid(cursor.getLong(cursor.getColumnIndex("CSF_Id")));
-                    Cursor sec_cursor = getContentResolver().query(sec_uri, null, null, null, null);
-                    Log.d("sec_cursor ", DatabaseUtils.dumpCursorToString(sec_cursor));
-
-                    Log.d("varun.timetables_sql",cursor.getString(cursor.getColumnIndex("Room_Id")));
-
-                    Uri room_uri = TimetableContract.BuildRoomWithId(cursor.getLong(cursor.getColumnIndex("Room_Id")));
-                    Cursor room_cursor = getContentResolver().query(room_uri, null, null, null, null);
-                    Log.d("room_cursor ", DatabaseUtils.dumpCursorToString(room_cursor));
-
-                    fac_cursor.close();
-                    sec_cursor.close();
-                    room_cursor.close();
-
-                }
-                cursor.close();
-
-            }
-        }
-        */
-        Intent intent = new Intent(getApplicationContext(), TimetableActivity.class);
-        startActivity(intent);
     }
 
     @Override

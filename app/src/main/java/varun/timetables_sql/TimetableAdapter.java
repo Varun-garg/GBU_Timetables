@@ -20,14 +20,14 @@ public class TimetableAdapter extends RecyclerView.Adapter<TimetableAdapter.View
 
 
     int Day_pos;
-    int Section;
+    Long Section;
     Context context;
     ArrayList<Integer> Periods;
     HashMap<Key, String> cache;
 
     int max_lines = 2;
 
-    public TimetableAdapter(Context context, ArrayList<Integer> Periods, int Section, int Day_pos, HashMap<Key, String> cache, int max_lines) {
+    public TimetableAdapter(Context context, ArrayList<Integer> Periods, Long Section, int Day_pos, HashMap<Key, String> cache, int max_lines) {
         this.Day_pos = Day_pos;
         this.Section = Section;
         this.context = context;
