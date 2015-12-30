@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Timetables_sql</string>
+    <string name="app_name">GBU Timetables</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_timetable">TimetableActivity</string>
+    <string name="title_activity_timetable">GBU Timetables</string>
 </resources>

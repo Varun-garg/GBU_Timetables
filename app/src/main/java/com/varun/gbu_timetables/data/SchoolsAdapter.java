@@ -1,7 +1,6 @@
-package varun.timetables_sql.data;
+package com.varun.gbu_timetables.data;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +8,12 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
+import com.varun.gbu_timetables.MainActivityFragment;
+
 import java.util.HashMap;
 import java.util.List;
 
-import varun.timetables_sql.MainActivityFragment;
-import varun.timetables_sql.R;
+import com.varun.gbu_timetables.R;
 
 /*
 Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/

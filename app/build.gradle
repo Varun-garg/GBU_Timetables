@@ -5,11 +5,11 @@ android {
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        applicationId "varun.timetables_sql"
+        applicationId "com.varun.gbu_timetables"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        versionCode 42
+        versionName "8.3"
     }
     buildTypes {
         release {

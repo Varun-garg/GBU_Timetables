@@ -1,4 +1,4 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.varun.gbu_timetables.data.CSF;
+
 import java.util.ArrayList;
 
-import varun.timetables_sql.data.CSF;
+import com.varun.gbu_timetables.R;
 
 /**
  * Created by varun on 12/28/15.

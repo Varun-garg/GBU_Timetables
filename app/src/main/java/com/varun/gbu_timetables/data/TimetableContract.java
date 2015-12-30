@@ -1,4 +1,4 @@
-package varun.timetables_sql.data;
+package com.varun.gbu_timetables.data;
 
 import android.content.ContentResolver;
 import android.net.Uri;
@@ -8,7 +8,7 @@ import android.net.Uri;
  * Created by Varun garg <varun.10@live.com> on 12/14/2015 7:55 PM.
  */
 public class TimetableContract {
-    public static String CONTENT_AUTHORITY = "varun.timetables_sql";
+    public static String CONTENT_AUTHORITY = "com.varun.gbu_timetables";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
     public static String PATH_TIMETABLE = "tt";
     public static final Uri TT_CONTENT_URI =

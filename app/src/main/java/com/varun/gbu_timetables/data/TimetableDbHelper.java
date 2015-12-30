@@ -1,4 +1,4 @@
-package varun.timetables_sql.data;
+package com.varun.gbu_timetables.data;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -110,6 +110,4 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
         Log.d(LOG_TAG, "Calling onUpgrade");
     }
-
-
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="varun.timetables_sql">
+    package="com.varun.gbu_timetables">
 
     <application
         android:allowBackup="true"
@@ -14,14 +14,13 @@
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <provider
             android:name=".data.TimetableProvider"
-            android:authorities="varun.timetables_sql"
+            android:authorities="com.varun.gbu_timetables"
             android:enabled="true"
             android:exported="true" />
 
@@ -29,10 +28,7 @@
             android:name=".TimetableActivity"
             android:label="@string/title_activity_timetable"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".TimetableActivity"
-            android:label="@string/title_activity_timetable"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
+

@@ -1,4 +1,4 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +8,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.varun.gbu_timetables.data.Key;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import varun.timetables_sql.data.Key;
+import com.varun.gbu_timetables.R;
 
 /**
  * Created by varun on 12/23/15.

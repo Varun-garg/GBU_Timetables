@@ -1,19 +1,22 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 
+import com.varun.gbu_timetables.data.CSF;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import varun.timetables_sql.data.CSF;
+import com.varun.gbu_timetables.R;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -32,6 +35,7 @@ public class TimetableActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         Long Section_id = getActivity().getIntent().getExtras().getLong("Section_id");
+        getActivity().setTitle(getActivity().getIntent().getExtras().getString("Section_Name"));
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
         HashMap<Long, CSF> CSF_Details = new HashMap();

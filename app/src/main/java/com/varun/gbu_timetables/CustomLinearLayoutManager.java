@@ -1,4 +1,4 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;

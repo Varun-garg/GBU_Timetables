@@ -1,4 +1,4 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -16,9 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import varun.timetables_sql.data.CSF;
-import varun.timetables_sql.data.Key;
-import varun.timetables_sql.data.TimetableContract;
+import com.varun.gbu_timetables.R;
+
+import com.varun.gbu_timetables.data.CSF;
+import com.varun.gbu_timetables.data.Key;
+import com.varun.gbu_timetables.data.TimetableContract;
 
 /**
  * Created by varun on 12/23/15.

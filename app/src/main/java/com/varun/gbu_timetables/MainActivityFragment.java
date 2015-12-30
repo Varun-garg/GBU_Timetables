@@ -1,9 +1,7 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
-import android.content.ContentResolver;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,18 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.Toast;
+
+import com.varun.gbu_timetables.data.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import varun.timetables_sql.data.SchoolsAdapter;
-import varun.timetables_sql.data.TimetableContract;
+import com.varun.gbu_timetables.R;
+
+import com.varun.gbu_timetables.data.SchoolsAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -90,6 +88,7 @@ public class MainActivityFragment extends Fragment {
                 Section s = Children_data.get(program).get(childPosition);
                 Intent intent = new Intent(getActivity(),TimetableActivity.class);
                 intent.putExtra("Section_id",s.id);
+                intent.putExtra("Section_Name",s.Name);
                 startActivity(intent);
                 return false;
             }

@@ -1,4 +1,4 @@
-package varun.timetables_sql;
+package com.varun.gbu_timetables;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;
