@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.MainActivityFragment;
+import com.varun.gbu_timetables.SectionsFragment;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,17 +23,17 @@ public class SchoolsAdapter extends BaseExpandableListAdapter {
 
     private Context _context;
     private List<String> _listDataHeader;
-    private HashMap<String, List<MainActivityFragment.Section>> _listDataChild;
+    private HashMap<String, List<SectionsFragment.Section>> _listDataChild;
 
     public SchoolsAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<MainActivityFragment.Section>> listChildData) {
+                                 HashMap<String, List<SectionsFragment.Section>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
 
     @Override
-    public MainActivityFragment.Section getChild(int groupPosition, int childPosititon) {
+    public SectionsFragment.Section getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
@@ -47,7 +47,7 @@ public class SchoolsAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final MainActivityFragment.Section childSection = getChild(groupPosition, childPosition);
+        final SectionsFragment.Section childSection = getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context

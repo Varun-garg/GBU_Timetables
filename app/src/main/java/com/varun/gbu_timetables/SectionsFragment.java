@@ -26,12 +26,12 @@ import com.varun.gbu_timetables.data.SchoolsAdapter;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainActivityFragment extends Fragment {
+public class SectionsFragment extends Fragment {
 
     List<String> Header_data;
     HashMap<String,List<Section>> Children_data;
 
-    public MainActivityFragment() {
+    public SectionsFragment() {
         Header_data = new ArrayList<String>();
         Children_data = new HashMap<String,List<Section>>();
 
@@ -48,6 +48,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+
 
         ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
         Uri Schools_uri = TimetableContract.BuildSchool();
