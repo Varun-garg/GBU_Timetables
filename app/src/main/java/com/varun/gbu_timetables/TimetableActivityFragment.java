@@ -34,8 +34,7 @@ public class TimetableActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Long Section_id = getActivity().getIntent().getExtras().getLong("Section_id");
-        getActivity().setTitle(getActivity().getIntent().getExtras().getString("Section_Name"));
+        getActivity().setTitle(getActivity().getIntent().getExtras().getString("Timetable_title"));
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
         HashMap<Long, CSF> CSF_Details = new HashMap();
@@ -46,7 +45,19 @@ public class TimetableActivityFragment extends Fragment {
         }
 
         final ListView lv = (ListView) rootView.findViewById(R.id.timetable_row_item);
-        final DayAdapter dayAdapter = new DayAdapter(getContext(), days, Section_id);
+
+        String timetable_type = getActivity().getIntent().getExtras().getString("Type");
+        Long id = null;
+        if(timetable_type.equals("Section"))
+        {
+            id = getActivity().getIntent().getExtras().getLong("Section_id");
+        }
+        else if (timetable_type.equals("Faculty"))
+        {
+            id = getActivity().getIntent().getExtras().getLong("Faculty_id");
+        }
+
+        final DayAdapter dayAdapter = new DayAdapter(getContext(), days, id,timetable_type);
         lv.setAdapter(dayAdapter);
 
         CSF_Details = dayAdapter.getCSFDetails();

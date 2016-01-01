@@ -19,6 +19,8 @@ public class TimetableProvider extends ContentProvider {
     static final int ROOM_BY_ID = 104;
     static final int SCHOOLS = 105;
     static final int SECTIONS = 106;
+    static final int FACULTY = 107;
+
     static final UriMatcher sUriMatcher = buildUriMatcher();
     private TimetableDbHelper mOpenHelper;
 
@@ -33,7 +35,7 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_ROOM + "/*", ROOM_BY_ID);
         matcher.addURI(authority, TimetableContract.PATH_SCHOOL,SCHOOLS);
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*",SECTIONS);
-
+        matcher.addURI(authority, TimetableContract.PATH_FACULTY,FACULTY);
         return matcher;
     }
 
@@ -61,6 +63,8 @@ public class TimetableProvider extends ContentProvider {
                 return TimetableContract.TT_CELL_TYPE;
             case SECTIONS:
                 return TimetableContract.TT_CELL_TYPE;
+            case FACULTY:
+                return TimetableContract.TT_CELL_TYPE;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);
         }
@@ -77,9 +81,17 @@ public class TimetableProvider extends ContentProvider {
     }
 
 
-    private Cursor getSchools(Uri uri) {
+    private Cursor getSchools() {
 
         String query = "SELECT _ROWID_ as _id,id as program_id, school from Program";
+
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
+    }
+
+
+    private Cursor getFaculty() {
+
+        String query = "SELECT _ROWID_ as _id,id as faculty_id, name,school from Teacher";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -97,8 +109,8 @@ public class TimetableProvider extends ContentProvider {
         Long day = TimetableContract.getDayFromUri(uri);
         Long slot = TimetableContract.getSlotFromUri(uri);
 
-        String query = "SELECT _ROWID_ as _id, ContGroupCode, M_Time_Table.CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table " +
-                " JOIN CSF_Faculty on M_Time_Table.CSF_Id=CSF_Faculty.csf_id Where faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot;
+        String query = "SELECT M_Time_Table._ROWID_ as _id, ContGroupCode, M_Time_Table.CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table,CSF_Faculty " +
+                " where M_Time_Table.CSF_Id=CSF_Faculty.csf_id and faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot;
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -147,10 +159,13 @@ public class TimetableProvider extends ContentProvider {
                 retCursor = getRoomById(uri);
                 break;
             case SCHOOLS:
-                retCursor = getSchools(uri);
+                retCursor = getSchools();
                 break;
             case SECTIONS:
                 retCursor = getSections(uri);
+                break;
+            case FACULTY:
+                retCursor = getFaculty();
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

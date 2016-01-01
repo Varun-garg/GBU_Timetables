@@ -28,7 +28,8 @@ import com.varun.gbu_timetables.data.TimetableContract;
 public class DayAdapter extends ArrayAdapter<Integer> {
 
     Context context;
-    Long Section;
+    String timetable_type;
+    Long timetable_id;
     String[] days = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     int current_scroll_pos = 0;
@@ -42,11 +43,11 @@ public class DayAdapter extends ArrayAdapter<Integer> {
     private RecycleListener listener;
 
 
-    public DayAdapter(Context context, ArrayList<Integer> Days, Long Section) {
+    public DayAdapter(Context context, ArrayList<Integer> Days, Long timetable_id, String timetable_type) {
         super(context, 0, Days);
         this.listener = null;
-
-        this.Section = Section;
+        this.timetable_type = timetable_type;
+        this.timetable_id = timetable_id;
         this.context = context;
         for (int i = 1; i <= 9; i++) {
             periods.add(i);
@@ -88,7 +89,7 @@ public class DayAdapter extends ArrayAdapter<Integer> {
 
         ((LinearLayoutManager) layoutManager).scrollToPositionWithOffset(0, 0 - current_scroll_pos);
 
-        TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, Section, position, cache, max_lines[position]);
+        TimetableAdapter timetableAdapter = new TimetableAdapter(context, periods, timetable_id, position, cache, max_lines[position]);
         mRecyclerView.setAdapter(timetableAdapter);
 
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -113,7 +114,11 @@ public class DayAdapter extends ArrayAdapter<Integer> {
         int Period_no = periods.get(Period_Pos);
         int Day_no = getItem(Day_Pos);
 
-        Uri uri = TimetableContract.BuildTTCellWithSectionDaySlot(Section, Day_no, Period_no);
+        Uri uri = null;
+        if(timetable_type.equals("Section"))
+            uri = TimetableContract.BuildTTCellWithSectionDaySlot(timetable_id, Day_no, Period_no);
+        else if (timetable_type.equals("Faculty"))
+            uri = TimetableContract.BuildTTCellWithFacultyDaySlot(timetable_id,Day_no,Period_no);
 
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 

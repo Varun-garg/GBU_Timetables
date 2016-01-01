@@ -50,6 +50,11 @@ public class TimetableContract {
         return SCHOOL_CONTENT_URI;
     }
 
+    public static Uri BuildFaculty()
+    {
+        return FACULTY_CONTENT_URI;
+    }
+
     public static long getFacultyFromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(2));
     }

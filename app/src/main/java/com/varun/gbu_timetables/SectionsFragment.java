@@ -5,12 +5,12 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.varun.gbu_timetables.data.SchoolsFacultyAdapter;
 import com.varun.gbu_timetables.data.TimetableContract;
 
 import java.util.ArrayList;
@@ -19,9 +19,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.varun.gbu_timetables.R;
-
-import com.varun.gbu_timetables.data.SchoolsAdapter;
+import com.varun.gbu_timetables.data.SchoolsFacultyAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -29,25 +27,19 @@ import com.varun.gbu_timetables.data.SchoolsAdapter;
 public class SectionsFragment extends Fragment {
 
     List<String> Header_data;
-    HashMap<String,List<Section>> Children_data;
+    HashMap<String,List<SchoolsFacultyAdapter.Common_type>> Children_data;
 
     public SectionsFragment() {
         Header_data = new ArrayList<String>();
-        Children_data = new HashMap<String,List<Section>>();
+        Children_data = new HashMap<String,List<SchoolsFacultyAdapter.Common_type>>();
 
-    }
-
-    public class Section
-    {
-        public Long id;
-        public String Name;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
 
 
         ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
@@ -61,11 +53,11 @@ public class SectionsFragment extends Fragment {
             Long Program_id = schools_c.getLong(schools_c.getColumnIndex("program_id"));
             Uri Program_uri = TimetableContract.BuildSectionWithProgramId(Program_id);
             Cursor program_cursor = getContext().getContentResolver().query(Program_uri,null,null,null,null);
-            List<Section> Sections = Children_data.get(school);
-            if(Sections == null) Sections = new ArrayList<Section>();
+            List<SchoolsFacultyAdapter.Common_type> Sections = Children_data.get(school);
+            if(Sections == null) Sections = new ArrayList<>();
             while (program_cursor.moveToNext())
             {
-                Section s = new Section();
+                SchoolsFacultyAdapter.Common_type s = new SchoolsFacultyAdapter.Common_type();
                 s.id = program_cursor.getLong(program_cursor.getColumnIndex("section_id"));
                 s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
                 Sections.add(s);
@@ -77,7 +69,7 @@ public class SectionsFragment extends Fragment {
         Header_data.clear();
         Header_data.addAll(hs);
 
-        SchoolsAdapter schoolsAdapter = new SchoolsAdapter(getContext(),Header_data,Children_data);
+        SchoolsFacultyAdapter schoolsAdapter = new SchoolsFacultyAdapter(getContext(),Header_data,Children_data);
         schools_lv.setAdapter(schoolsAdapter);
 
         schools_lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -86,10 +78,11 @@ public class SectionsFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 String program = Header_data.get(groupPosition);
-                Section s = Children_data.get(program).get(childPosition);
+                SchoolsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
                 Intent intent = new Intent(getActivity(),TimetableActivity.class);
+                intent.putExtra("Type","Section");
                 intent.putExtra("Section_id",s.id);
-                intent.putExtra("Section_Name",s.Name);
+                intent.putExtra("Timetable_title",s.Name);
                 startActivity(intent);
                 return false;
             }

@@ -19,21 +19,27 @@ import com.varun.gbu_timetables.R;
 Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
 */
 
-public class SchoolsAdapter extends BaseExpandableListAdapter {
+public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
+
+    public static class Common_type
+    {
+        public Long id;
+        public String Name;
+    }
 
     private Context _context;
     private List<String> _listDataHeader;
-    private HashMap<String, List<SectionsFragment.Section>> _listDataChild;
+    private HashMap<String, List<Common_type>> _listDataChild;
 
-    public SchoolsAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<SectionsFragment.Section>> listChildData) {
+    public SchoolsFacultyAdapter(Context context, List<String> listDataHeader,
+                                 HashMap<String, List<Common_type>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
 
     @Override
-    public SectionsFragment.Section getChild(int groupPosition, int childPosititon) {
+    public Common_type getChild(int groupPosition, int childPosititon) {
         return this._listDataChild.get(this._listDataHeader.get(groupPosition))
                 .get(childPosititon);
     }
@@ -47,7 +53,7 @@ public class SchoolsAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, final int childPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final SectionsFragment.Section childSection = getChild(groupPosition, childPosition);
+        final Common_type childSection = getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
