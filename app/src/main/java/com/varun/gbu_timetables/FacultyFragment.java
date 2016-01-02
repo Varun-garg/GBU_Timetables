@@ -79,7 +79,7 @@ public class FacultyFragment extends Fragment {
                 Intent intent = new Intent(getActivity(),TimetableActivity.class);
                 intent.putExtra("Type","Faculty");
                 intent.putExtra("Faculty_id",s.id);
-                intent.putExtra("timetable_title",s.Name);
+                intent.putExtra("Timetable_title",s.Name);
                 startActivity(intent);
                 return false;
             }

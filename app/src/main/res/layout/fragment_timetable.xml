@@ -10,10 +10,28 @@
     tools:showIn="@layout/activity_timetable"
     android:orientation="vertical">
 
-    <ListView
+
+    <ScrollView
+        android:layout_height="256dp"
+        android:scrollbars="horizontal|vertical"
         android:layout_width="match_parent"
-        android:layout_height="238dp"
-        android:id="@+id/timetable_row_item" />
+        android:layout_marginTop="5dip"
+        android:scrollbarStyle="outsideInset"
+        android:fillViewport="true">
+        <HorizontalScrollView
+            android:id="@+id/horizontalView"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal|vertical"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="5dip">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/timetable_table">
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
 
     <ListView
         android:layout_width="match_parent"
