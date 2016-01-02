@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.data.CSF;
@@ -18,12 +19,10 @@ import com.varun.gbu_timetables.R;
  */
 public class DetailsAdapter extends ArrayAdapter<CSF> {
 
-    public DetailsAdapter(Context context, int textViewResourceId) {
-        super(context, textViewResourceId);
-    }
-
-    public DetailsAdapter(Context context, ArrayList<CSF> values) {
+    String type;
+    public DetailsAdapter(Context context, ArrayList<CSF> values, String type) {
         super(context, 0, values);
+        this.type = type;
     }
 
     @Override
@@ -47,6 +46,12 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
         TextView fac_name = (TextView) convertView.findViewById(R.id.fac_name);
         fac_name.setText(mCSF.Fac_name);
 
+        if(type.equals("Faculty"))
+        {
+            fac_code.setText("Section");
+            fac_name.setText(mCSF.Section_name);
+        }
+        convertView.setTag(mCSF);
         return convertView;
     }
 

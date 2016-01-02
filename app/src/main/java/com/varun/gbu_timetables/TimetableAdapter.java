@@ -2,6 +2,7 @@ package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
 import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -35,15 +37,15 @@ public class TimetableAdapter {
     String timetable_type;
     Long timetable_id;
     ArrayList<Integer> day_nos;
-    int current_scroll_pos = 0;
-
+    String title;
     HashMap<Long, CSF> CSF_Details = new HashMap();
 
     ArrayList<Integer> periods;
 
     HashMap<Key, String> cache = new HashMap();
 
-    public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, ArrayList<Integer> periods) {
+    public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, ArrayList<Integer> periods,String title) {
+        this.title = title;
         this.day_nos = day_nos;
         this.timetable_type = timetable_type;
         this.timetable_id = timetable_id;
@@ -106,8 +108,8 @@ public class TimetableAdapter {
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 
         String time_string = "";
-        int lines = 0;
         while (cursor.moveToNext()) {
+            time_string = time_string.trim();
             if(!time_string.equals("")) time_string += "\n";
             Long CSF_Id = cursor.getLong(cursor.getColumnIndex("CSF_Id"));
             Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
@@ -117,6 +119,21 @@ public class TimetableAdapter {
                 if (mCSF == null) {
                     mCSF = new CSF(CSF_Id, context);
                     mCSF.CSF_Id = CSF_Id;
+
+                    if(timetable_type.equals("Section"))
+                    {
+                        mCSF.Section_id = timetable_id;
+                        mCSF.Section_name = title;
+                    }
+                    else if (timetable_type.equals("Faculty"))
+                    {
+                        mCSF.Section_id = cursor.getLong(cursor.getColumnIndex("Section_Id"));
+                        Uri section_uri = TimetableContract.BuildSectionWithId(mCSF.Section_id);
+                        Cursor section_cursor = context.getContentResolver().query(section_uri,null,null,null,null);
+                        section_cursor.moveToNext();
+                        mCSF.Section_name = section_cursor.getString(section_cursor.getColumnIndex("Name")).trim();
+                    }
+
                     CSF_Details.put(mCSF.CSF_Id, mCSF);
                 }
 
@@ -128,9 +145,14 @@ public class TimetableAdapter {
 
 
                 time_string += mCSF.Sub_Code + " ";
-                time_string += "(" + mCSF.Fac_abbr + ") ";
+
+                if(timetable_type.equals("Section"))
+                    time_string += "(" + mCSF.Fac_abbr + ") ";
+
+                if(timetable_type.equals("Faculty"))
+                    time_string += "(" + mCSF.Section_name + ") ";
+
                 time_string += Room_no;
-                lines += 2;
             }
             catch (Exception e)
             {
@@ -139,7 +161,7 @@ public class TimetableAdapter {
             }
         }
         cursor.close();
-        cache.put(new Key(Day_Pos, Period_Pos), time_string);
+        cache.put(new Key(Day_Pos, Period_Pos), time_string.trim());
     }
 
 }

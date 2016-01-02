@@ -1,5 +1,7 @@
 package com.varun.gbu_timetables;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -22,13 +25,14 @@ import java.util.HashMap;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class TimetableActivityFragment extends Fragment {
+public class TimetableFragment extends Fragment {
 
     static String LOG_TAG = "TimeTableActivityFragment";
     HorizontalScrollView horizontalScrollView;
     String[] day_names = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
-
-    public TimetableActivityFragment() {
+    String title;
+    String type;
+    public TimetableFragment() {
 
     }
 
@@ -36,7 +40,8 @@ public class TimetableActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        getActivity().setTitle(getActivity().getIntent().getExtras().getString("Timetable_title"));
+        title = getActivity().getIntent().getExtras().getString("Timetable_title");
+        getActivity().setTitle(title);
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
         HashMap<Long, CSF> CSF_Details = new HashMap();
@@ -54,13 +59,13 @@ public class TimetableActivityFragment extends Fragment {
         final TableLayout tableLayout = (TableLayout) rootView.findViewById(R.id.timetable_table);
 
 
-        String timetable_type = getActivity().getIntent().getExtras().getString("Type");
+        type = getActivity().getIntent().getExtras().getString("Type");
         Long id = null;
-        if(timetable_type.equals("Section"))
+        if(type.equals("Section"))
         {
             id = getActivity().getIntent().getExtras().getLong("Section_id");
         }
-        else if (timetable_type.equals("Faculty"))
+        else if (type.equals("Faculty"))
         {
             id = getActivity().getIntent().getExtras().getLong("Faculty_id");
         }
@@ -93,7 +98,7 @@ public class TimetableActivityFragment extends Fragment {
         }
         tableLayout.addView(header);
 
-        final TimetableAdapter timetableAdapter = new TimetableAdapter(getContext(), days, id,timetable_type,periods);
+        final TimetableAdapter timetableAdapter = new TimetableAdapter(getContext(), days, id,type,periods,title);
         for(int i = 0;i<days.size();i++)
         { //we are only interested in position not what is inside days
 
@@ -138,10 +143,34 @@ public class TimetableActivityFragment extends Fragment {
 
         ArrayList<CSF> CSF_Array = new ArrayList<CSF>(CSF_Details.values());
         final ListView lv2 = (ListView) rootView.findViewById(R.id.timetable_faculty_data);
-        final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array);
+        final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array,type);
         lv2.setAdapter(detailsAdapter);
 
+        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView adapterView, View view, int position, long l) {
+                CSF csf = (CSF) view.getTag();
+
+                Intent intent = new Intent(getActivity(),TimetableActivity.class);
+
+                if(type.equals("Faculty"))
+                {
+                    intent.putExtra("Section_id",csf.Section_id);
+                    intent.putExtra("Timetable_title",csf.Section_name);
+                    intent.putExtra("Type","Section");
+                }
+                else  if(type.equals("Section"))
+                {
+                    intent.putExtra("Faculty_id",csf.Fac_id);
+                    intent.putExtra("Timetable_title",csf.Fac_name);
+                    intent.putExtra("Type","Faculty");
+                }
+
+                startActivity(intent);
+
+            }
+        });
 
         return rootView;
     }
