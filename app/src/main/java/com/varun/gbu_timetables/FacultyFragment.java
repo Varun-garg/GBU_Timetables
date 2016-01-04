@@ -61,6 +61,7 @@ public class FacultyFragment extends Fragment {
             facultyList.add(ct);
             Children_data.put(school,facultyList);
         }
+        faculty_cursor.close();
 
         Set<String> hs = new LinkedHashSet<>(Header_data); // now we remove duplicates
         Header_data.clear();

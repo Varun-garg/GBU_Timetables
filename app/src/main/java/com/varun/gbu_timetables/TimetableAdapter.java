@@ -5,8 +5,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;

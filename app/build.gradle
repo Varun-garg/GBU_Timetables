@@ -8,8 +8,8 @@ android {
         applicationId "com.varun.gbu_timetables"
         minSdkVersion 9
         targetSdkVersion 23
-        versionCode 45
-        versionName "8.5"
+        versionCode 46
+        versionName "8.6"
     }
     buildTypes {
         release {

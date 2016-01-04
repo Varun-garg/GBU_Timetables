@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:orientation="horizontal"
+android:padding="8dp"
+android:background="#FFFFFF">
+
+<ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:src="@drawable/ic_school_black_24dp"/>
+
+
+<TextView
+    android:id="@+id/list_group_tv"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp"
-    android:background="#FFFFFF">
-
-
-    <TextView
-        android:id="@+id/list_group_tv"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
-        android:textSize="17dp" />
+    android:paddingLeft="6dp"
+    android:textSize="17dp" />
 
 </LinearLayout>

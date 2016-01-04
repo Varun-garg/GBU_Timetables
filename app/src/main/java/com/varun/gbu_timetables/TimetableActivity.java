@@ -66,8 +66,8 @@ public class TimetableActivity extends AppCompatActivity {
         editor = prefs.edit();
         TimeTableBasic info = getCurrentBasic();
         reload();
-        final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_black_24dp);
-        final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_border_black_24dp);
+        final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_white_24dp);
+        final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_border_white_24dp);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

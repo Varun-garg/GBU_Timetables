@@ -62,8 +62,10 @@ public class SectionsFragment extends Fragment {
                 s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
                 Sections.add(s);
             }
+            program_cursor.close();
             Children_data.put(school,Sections);
         }
+        schools_c.close();
 
         Set<String> hs = new LinkedHashSet<>(Header_data); // now we remove duplicates
         Header_data.clear();
