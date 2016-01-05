@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.varun.gbu_timetables.MD5;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -21,22 +23,23 @@ import java.util.ArrayList;
  * Created by Varun garg <varun.10@live.com> on 12/12/2015 10:11 PM.
  */
 public class TimetableDbHelper extends SQLiteOpenHelper {
+
+    public static String DB_VERSION_PATH = "App_db_version";
+    public static String DB_MD5_PATH = "App_db_md5";
+
     static final String DATABASE_NAME = "varun.db";
     static final String LOG_TAG = "TimetableDbHelper";
     Context context;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
     public TimetableDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
+        prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        editor = prefs.edit();
         this.context = context;
-        // super.;
 
-        /* Code for listing files in assets folder, varun.db should be present here
-        String files[] = context.getAssets().list("");
-        for(int i = 0; i<files.length;i++)
-            Log.d(LOG_TAG," File found " + files[i]);
-        */
-
-        //list tables in our db
         Cursor c = this.getWritableDatabase().rawQuery("SELECT name from sqlite_master where type = 'table'", null);
         ArrayList<String> list = new ArrayList<String>();
         if (c.moveToFirst()) {
@@ -49,19 +52,20 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
         if (list.size() <= 1) // only sql_master or empty db
         {
-            copy_db(context);
+            copy_db(context,0,null);
         }
 
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         PackageInfo info;
         try {
             info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            int saved_db_version = prefs.getInt("App_db_version",0);
+            int saved_db_version = prefs.getInt(DB_VERSION_PATH,0);
             int current_db_version = info.versionCode;
             if(current_db_version != saved_db_version) {
-                copy_db(context);
-                prefs.edit().putInt("App_db_version",current_db_version);
-                prefs.edit().commit();
+                copy_db(context,0,null);
+                editor.putInt(DB_VERSION_PATH, current_db_version);
+                editor.commit();
+                Log.d("updating", "due to version mismatch");
+                Log.d("Difference","new version = " + Integer.toString(current_db_version) + ", old db version = " + Integer.toString(saved_db_version));
             }
         }
         catch (Exception e) {
@@ -69,7 +73,13 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    private void copy_db(Context context) {
+    public static File get_dest_db(Context context)
+    {
+        String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
+        return new File(dest_db);
+    }
+
+    public void copy_db(Context context,int mode,String location) {
 
         Log.d(LOG_TAG, "Ok, we are gonna copy some data");
         String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
@@ -79,11 +89,14 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         context.deleteDatabase(DATABASE_NAME); //Delete existing db
         try {
             File f = new File(dest_db);
-            if (!f.exists()) {
-                Log.d(LOG_TAG, "File Not Created");
+            InputStream db_stream;
+            if(mode == 0)
+                 db_stream = context.getAssets().open("varun.db");
+            else
+            {
+                Log.d("using",location);
+                db_stream = context.openFileInput(location);
             }
-
-            InputStream db_stream = context.getAssets().open("varun.db");
             OutputStream dest_db_stream = new FileOutputStream(dest_db);
 
             byte buffer[] = new byte[1024];
@@ -97,26 +110,12 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             db_stream.close();
             dest_db_stream.close();
 
-            /* Read new file for debugging only
-            Log.d(LOG_TAG,"Now We we read new file");
-            InputStream db_stream_2 = new FileInputStream(dest_db);
-
-            InputStreamReader is = new InputStreamReader(db_stream_2);
-            StringBuilder sb = new StringBuilder();
-            BufferedReader br = new BufferedReader(is);
-            String read = br.readLine();
-            while (read!=null)
-            {
-                sb.append(read);
-                read = br.readLine();
-            }
-
-            Log.d(LOG_TAG,"New Database = "+ sb.toString());
-            db_stream_2.close();
-            */
         } catch (IOException e) {
             Log.d(LOG_TAG, "Caught IO Exception " + e);
         }
+        String new_MD5 = MD5.calculateMD5(this.get_dest_db(context));
+        editor.putString(DB_MD5_PATH,new_MD5);
+        editor.commit();
     }
 
     @Override

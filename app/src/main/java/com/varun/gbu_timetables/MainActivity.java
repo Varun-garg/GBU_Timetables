@@ -1,6 +1,7 @@
 package com.varun.gbu_timetables;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,12 +17,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.data.FetchDbTask;
 
 public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
-
+    FetchDbTask fetchDbTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
                 MainActivity.this));
         viewPager.setCurrentItem(2);
         tabLayout.setupWithViewPager(viewPager);
+
+        fetchDbTask = new FetchDbTask(getApplicationContext());
+        fetchDbTask.execute();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
- //       getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -57,7 +63,22 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_refresh) {
+            if (fetchDbTask.getStatus() == AsyncTask.Status.RUNNING)
+            {
+                Toast toast = Toast.makeText(getApplicationContext(),"Refresh is already going on",Toast.LENGTH_LONG);
+                toast.show();
+            }
+            else if (fetchDbTask.getStatus() == AsyncTask.Status.FINISHED)
+            {
+                fetchDbTask = new FetchDbTask(getApplicationContext());
+                fetchDbTask.execute();
+            }
+            else
+            {
+                fetchDbTask.execute();
+                fetchDbTask = null;
+            }
             return true;
         }
 
