@@ -1,9 +1,12 @@
 package com.varun.gbu_timetables.data;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
 import java.io.File;
@@ -20,10 +23,11 @@ import java.util.ArrayList;
 public class TimetableDbHelper extends SQLiteOpenHelper {
     static final String DATABASE_NAME = "varun.db";
     static final String LOG_TAG = "TimetableDbHelper";
-
+    Context context;
 
     public TimetableDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
+        this.context = context;
         // super.;
 
         /* Code for listing files in assets folder, varun.db should be present here
@@ -46,7 +50,22 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         if (list.size() <= 1) // only sql_master or empty db
         {
             copy_db(context);
+        }
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+        PackageInfo info;
+        try {
+            info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            int saved_db_version = prefs.getInt("App_db_version",0);
+            int current_db_version = info.versionCode;
+            if(current_db_version != saved_db_version) {
+                copy_db(context);
+                prefs.edit().putInt("App_db_version",current_db_version);
+                prefs.edit().commit();
+            }
+        }
+        catch (Exception e) {
+            Log.d("error", e.toString());
         }
     }
 
@@ -108,6 +127,5 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        Log.d(LOG_TAG, "Calling onUpgrade");
     }
 }

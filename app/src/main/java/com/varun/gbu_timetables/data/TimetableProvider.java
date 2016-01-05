@@ -48,7 +48,7 @@ public class TimetableProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) { //TODO Improve return type
-        final int match = sUriMatcher.match(uri);
+           final int match = sUriMatcher.match(uri);
 
         switch (match) {
             case CELL_BY_SECTION_DAY_SLOT:
