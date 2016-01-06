@@ -10,6 +10,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -66,7 +68,7 @@ public class TimetableActivity extends AppCompatActivity {
         editor = prefs.edit();
         TimeTableBasic info = getCurrentBasic();
         reload();
-        final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_white_24dp);
+        final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_white_24dp);
         final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_border_white_24dp);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -105,4 +107,6 @@ public class TimetableActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

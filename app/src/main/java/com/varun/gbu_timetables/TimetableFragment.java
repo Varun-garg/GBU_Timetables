@@ -1,12 +1,22 @@
 package com.varun.gbu_timetables;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -16,9 +26,14 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.CSF;
+import com.varun.gbu_timetables.data.FetchDbTask;
+import com.varun.gbu_timetables.data.TimetableDbHelper;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,6 +47,7 @@ public class TimetableFragment extends Fragment {
     String[] day_names = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
     String title;
     String type;
+    TableLayout tableLayout;
     public TimetableFragment() {
 
     }
@@ -39,7 +55,7 @@ public class TimetableFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        setHasOptionsMenu(true);
         title = getActivity().getIntent().getExtras().getString("Timetable_title");
         getActivity().setTitle(title);
 
@@ -56,7 +72,7 @@ public class TimetableFragment extends Fragment {
         }
 
 
-        final TableLayout tableLayout = (TableLayout) rootView.findViewById(R.id.timetable_table);
+        tableLayout = (TableLayout) rootView.findViewById(R.id.timetable_table);
 
 
         type = getActivity().getIntent().getExtras().getString("Type");
@@ -83,6 +99,11 @@ public class TimetableFragment extends Fragment {
         blank.setLayoutParams(halfparams);
         blank.setBackgroundResource(R.drawable.back);
         header.addView(blank);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String db_md5 = sharedPreferences.getString(TimetableDbHelper.DB_MD5_PATH,"");
+        db_md5 = db_md5.substring(0,10);
+        blank.setText(db_md5);
         for(int i = 0; i <periods.size();i++)
         {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
@@ -173,6 +194,52 @@ public class TimetableFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+  //      inflater.inflate(R.menu.menu_timetable, menu);
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if(id == R.id.action_export)
+        {
+//            tableLayout.setDrawingCacheEnabled(true);
+            Bitmap b = tableLayout.getDrawingCache();
+
+            try {
+                File dir =new File(android.os.Environment.getExternalStorageDirectory(),"Timetables");
+
+                if (!dir.exists()) {
+                    dir.mkdir();
+                }
+
+                File file = new File(dir, getActivity().getIntent().getExtras().getString("Timetable_title") + ".jpg");
+                if(!file.exists())
+                {
+                    file.createNewFile();
+                }
+                FileOutputStream fos = new FileOutputStream(file);
+                b.compress(Bitmap.CompressFormat.PNG, 10,fos);
+                fos.flush();
+                fos.close();
+            }
+            catch (Exception e)
+            {
+                Log.d("error",e.toString());
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

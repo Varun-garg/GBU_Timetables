@@ -12,11 +12,11 @@
 
 
     <ScrollView
-        android:layout_height="256dp"
         android:scrollbars="horizontal|vertical"
         android:layout_width="match_parent"
         android:layout_marginTop="5dip"
         android:scrollbarStyle="outsideInset"
+        android:layout_height="256dp"
         android:fillViewport="true">
         <HorizontalScrollView
             android:id="@+id/horizontalView"

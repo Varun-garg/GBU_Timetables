@@ -95,7 +95,8 @@ public class TimetableProvider extends ContentProvider {
 
     private Cursor getFaculty() {
 
-        String query = "SELECT Teacher._ROWID_ as _id,Teacher.id as faculty_id, Teacher.name,Teacher.school from Teacher,School where Teacher.school = School.name";
+        String query = "SELECT distinct Teacher._ROWID_ as _id,Teacher.id as faculty_id, Teacher.name,Teacher.school from Teacher,School,M_Time_Table,CSF_Faculty where Teacher.school = School.name " +
+                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
