@@ -111,7 +111,7 @@ public class TimetableAdapter {
             if(!time_string.equals("")) time_string += "\n";
             Long CSF_Id = cursor.getLong(cursor.getColumnIndex("CSF_Id"));
             Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
-
+            Long Batch_id = cursor.getLong(cursor.getColumnIndex("Batch_Id"));
             try {
                 CSF mCSF = CSF_Details.get(CSF_Id);
                 if (mCSF == null) {
@@ -152,6 +152,8 @@ public class TimetableAdapter {
                     time_string += "(" + mCSF.Section_name + ") ";
 
                 time_string += Room_no;
+                if(Batch_id != 0)
+                    time_string += " G" + Batch_id.toString();
             }
             catch (Exception e)
             {
