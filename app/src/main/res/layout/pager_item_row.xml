@@ -4,7 +4,8 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:layout_width="80dp"
+        android:layout_width="100dp"
         android:layout_height="match_parent"
-        android:id = "@+id/pager_item_row"/>
+        android:id = "@+id/pager_item_row"
+        android:gravity="left|center"/>
 </LinearLayout>

@@ -140,13 +140,9 @@ public class TimetableFragmentPager extends Fragment {
             {
                 LinearLayout item_view = (LinearLayout) mLayoutInflater.inflate(R.layout.pager_item_row, container, false);
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position,j);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                item_view.addView(item,layoutParams);
-                layoutParams.setMargins(10, 10, 5, 5);
-                GradientDrawable shape =  new GradientDrawable();
-                shape.setCornerRadius(20);
-                item_view.setBackground(shape);
-
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+                item_view.addView(item, layoutParams);
+              
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
                 textView.setText(Integer.toString(beg_hr)+":"+ Integer.toString(beg_min) + " - ");
                 beg_hr++;
@@ -154,9 +150,10 @@ public class TimetableFragmentPager extends Fragment {
                 textView.append(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min));
                 textView.setBackgroundResource(R.drawable.back);
                 textView.setTypeface(null, Typeface.BOLD);
-                textView.setPadding(5, 5, 0, 0);
+                textView.setPadding(10,0,0,0);
 
-
+                layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(20,20,20,0);
                 linearLayout.addView(item_view,layoutParams);
 
 
