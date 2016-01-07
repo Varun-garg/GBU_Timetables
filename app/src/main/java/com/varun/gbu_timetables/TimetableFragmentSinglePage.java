@@ -138,19 +138,19 @@ public class TimetableFragmentSinglePage extends Fragment {
             for(int j = 0;j<periods.size();j++)
             {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(i,j);
-                String this_time_string = (String) item.getTag();
+      //          String this_time_string = (String) item.getTag();
 
-                if(prev_time_string.equals(this_time_string) && prev_time_string.length() > 0 && prev_item!=null)
-                {
-                    TableRow.LayoutParams old_params = (TableRow.LayoutParams) prev_item.getLayoutParams();
-                    duplicates++;
-                    old_params.span = duplicates;
-                    prev_item.setLayoutParams(old_params);
-                    continue;
-                }
+//                if(prev_time_string.equals(this_time_string) && prev_time_string.length() > 0 && prev_item!=null)
+  //              {
+    //                TableRow.LayoutParams old_params = (TableRow.LayoutParams) prev_item.getLayoutParams();
+      //              duplicates++;
+        //            old_params.span = duplicates;
+          //          prev_item.setLayoutParams(old_params);
+            //        continue;
+              //  }
                 duplicates = 1;
                 tableRow.addView(item);
-                prev_time_string = this_time_string;
+        //        prev_time_string = this_time_string;
                 prev_item = item;
             }
 
@@ -158,12 +158,12 @@ public class TimetableFragmentSinglePage extends Fragment {
         }
 
 
-        CSF_Details = timetableAdapter.getCSFDetails();
+//        CSF_Details = timetableAdapter.getCSFDetails();
 
-        ArrayList<CSF> CSF_Array = new ArrayList<CSF>(CSF_Details.values());
+  //      ArrayList<CSF> CSF_Array = new ArrayList<CSF>(CSF_Details.values());
         final ListView lv2 = (ListView) rootView.findViewById(R.id.timetable_faculty_data);
-        final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array,type);
-        lv2.setAdapter(detailsAdapter);
+    //    final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array,type);
+      //  lv2.setAdapter(detailsAdapter);
 
         lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

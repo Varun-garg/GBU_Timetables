@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -7,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +16,7 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -35,12 +38,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.CSF;
+import com.varun.gbu_timetables.data.CSF_FAC_KEY;
 import com.varun.gbu_timetables.data.FetchDbTask;
 import com.varun.gbu_timetables.data.TimetableDbHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 /**
@@ -49,10 +54,10 @@ import java.util.HashMap;
 public class TimetableFragmentPager extends Fragment {
 
     static String LOG_TAG = "TimeTableActivityFragmentPager";
-    String[] day_names = {"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"};
+    String[] day_names = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     String title;
     String type;
-    TableLayout tableLayout;
+    HashMap<CSF_FAC_KEY,CSF> CSF_Details;
     public TimetableFragmentPager() {
 
     }
@@ -64,7 +69,6 @@ public class TimetableFragmentPager extends Fragment {
         getActivity().setTitle(title);
 
         View rootView = inflater.inflate(R.layout.fragment_timetable_pager, container, false);
-        HashMap<Long, CSF> CSF_Details = new HashMap();
 
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.timetable_pager);
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(getContext());
@@ -78,11 +82,16 @@ public class TimetableFragmentPager extends Fragment {
         else
             Log.d("adapter", timetablePagerAdapter.toString());
 
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK);
+        if(day  == 1) day = 6; //bring sunday to last
+        else day -= 2;
 
         viewPager.setAdapter(timetablePagerAdapter);
         TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setCurrentItem(day);
 
         return rootView;
     }
@@ -121,7 +130,7 @@ public class TimetableFragmentPager extends Fragment {
                 id = getActivity().getIntent().getExtras().getLong("Faculty_id");
             }
             timetableAdapter = new TimetableAdapter(getContext(), days, id,type,periods,title);
-
+            CSF_Details = timetableAdapter.getCSFDetails();
         }
 
         public int getCount()
@@ -130,33 +139,118 @@ public class TimetableFragmentPager extends Fragment {
         }
 
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
+        public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
-            LinearLayout linearLayout = (LinearLayout)parent_view.findViewById(R.id.linear_layout);
+            final LinearLayout linearLayout = (LinearLayout)parent_view.findViewById(R.id.linear_layout);
             int beg_hr = 8;
             int beg_min = 30;
-
-            for(int j = 0; j<periods.size();j++)
-            {
-                LinearLayout item_view = (LinearLayout) mLayoutInflater.inflate(R.layout.pager_item_row, container, false);
-                LinearLayout item = (LinearLayout) timetableAdapter.getView(position,j);
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.MATCH_PARENT);
+            final ArrayList<LinearLayout> items_list = new ArrayList<>();
+            String prev_time_string = "";
+            int item_pos = -1;
+            int repeat = 1;
+            int repeat_hr = 0;
+            if (beg_hr == 13) beg_hr = 1;
+            for(int j = 0; j<periods.size();j++) {
+                LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
+                ArrayList<CSF_FAC_KEY> keys = (ArrayList) item.getTag(R.string.current_csf_fac_key_list);
+                String time_string = (String) item.getTag(R.string.time_string);
+                if(time_string.length() >0 && time_string.equals(prev_time_string))
+                {
+                    repeat++;
+                    LinearLayout cur_item = items_list.get(item_pos);
+                    TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
+                    if (repeat_hr == 13) repeat_hr = 1;
+                    textView.setText(Integer.toString(repeat_hr) + ":" + Integer.toString(beg_min) + " - ");
+                    if (repeat_hr == 13) repeat_hr = 1;
+                    int end = repeat_hr + repeat;
+                    if(end == 13) end =1;
+                    textView.append(Integer.toString(end) + ":" + Integer.toString(beg_min));
+                    textView.setBackgroundResource(R.drawable.back);
+                    textView.setTypeface(null, Typeface.BOLD);
+                    textView.setPadding(10, 0, 0, 0);
+                    beg_hr++;
+                    continue;
+                }
+                repeat = 1;
+                repeat_hr = beg_hr;
+                prev_time_string = time_string;
+                item_pos++;
+                final int final_item_pos = item_pos;
+                final LinearLayout item_view = (LinearLayout) mLayoutInflater.inflate(R.layout.pager_item_row, container, false);
+                items_list.add(item_view);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 item_view.addView(item, layoutParams);
-              
+
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
-                textView.setText(Integer.toString(beg_hr)+":"+ Integer.toString(beg_min) + " - ");
+                if (beg_hr == 13) beg_hr = 1;
+                textView.setText(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min) + " - ");
+                if (beg_hr == 13) beg_hr = 1;
+                textView.append(Integer.toString(beg_hr+1) + ":" + Integer.toString(beg_min));
                 beg_hr++;
-                if(beg_hr == 13) beg_hr = 1;
-                textView.append(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min));
                 textView.setBackgroundResource(R.drawable.back);
                 textView.setTypeface(null, Typeface.BOLD);
-                textView.setPadding(10,0,0,0);
+                textView.setPadding(10, 0, 0, 0);
 
-                layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(20,20,20,0);
-                linearLayout.addView(item_view,layoutParams);
+                layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(20, 20, 20, 0);
+                linearLayout.addView(item_view, layoutParams);
 
+                final ArrayList<CSF> current_csf_list = new ArrayList<>();
+                if(keys!=null)
+                    for (int i = 0; i < keys.size(); i++)
+                    {
+                        current_csf_list.add(CSF_Details.get(keys.get(i)));
+                    }
 
+                final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(),current_csf_list,type);
+                final LinearLayout footer = (LinearLayout) parent_view.findViewById(R.id.footer_ll);
+                item_view.setOnClickListener(new View.OnClickListener() {
+                    LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    @Override
+                    public void onClick(View v) {
+                        footer.removeAllViews();
+                        for(int i=0;i<current_csf_list.size();i++)
+                        {
+                            final View detail_item = detailsAdapter.getView(i, null, null);
+                            detail_item.setPadding(20, 0, 20, 0);
+                            detail_item.setOnClickListener(new View.OnClickListener()
+                           {
+                               @Override
+                               public void onClick(View v) {
+                                   CSF csf = (CSF) detail_item.getTag();
+                                   Intent intent = new Intent(getActivity(),TimetableActivity.class);
+
+                                   if(type.equals("Faculty"))
+                                   {
+                                       intent.putExtra("Section_id",csf.Section_id);
+                                       intent.putExtra("Timetable_title",csf.Section_name);
+                                       intent.putExtra("Type","Section");
+                                   }
+                                   else  if(type.equals("Section"))
+                                   {
+                                       intent.putExtra("Faculty_id",csf.Fac_id);
+                                       intent.putExtra("Timetable_title",csf.Fac_name);
+                                       intent.putExtra("Type","Faculty");
+                                   }
+                                   startActivity(intent);
+                               }
+                           });
+
+                            footer.addView(detail_item, item_layoutParams);
+                            detail_item.setBackgroundResource(R.drawable.back);
+                        }
+                        item_view.setBackgroundResource(R.drawable.blue_margin);
+                        item_view.setPadding(6, 6, 6, 6);
+
+                        for(int i = 0;i<items_list.size();i++) //remove border from other rows
+                        {
+                            if(i == final_item_pos) continue;
+                            LinearLayout cur_item = items_list.get(i);
+                            cur_item.setBackgroundResource(0);
+                            cur_item.setPadding(0, 0, 0, 0);
+                        }
+                    }
+                });
             }
             container.addView(parent_view);
             return parent_view;
