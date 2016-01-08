@@ -29,13 +29,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.CSF;
+import com.varun.gbu_timetables.data.CSF_FAC_KEY;
 import com.varun.gbu_timetables.data.FetchDbTask;
 import com.varun.gbu_timetables.data.TimetableDbHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.security.Key;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -59,7 +63,7 @@ public class TimetableFragmentSinglePage extends Fragment {
         getActivity().setTitle(title);
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
-        HashMap<Long, CSF> CSF_Details = new HashMap();
+        HashMap<CSF_FAC_KEY, CSF> CSF_Details = new HashMap();
 
         final ArrayList<Integer> days = new ArrayList<>();
         ArrayList<Integer> periods = new ArrayList<>();
@@ -138,19 +142,19 @@ public class TimetableFragmentSinglePage extends Fragment {
             for(int j = 0;j<periods.size();j++)
             {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(i,j);
-      //          String this_time_string = (String) item.getTag();
+               String this_time_string = (String) item.getTag(R.string.time_string);
 
-//                if(prev_time_string.equals(this_time_string) && prev_time_string.length() > 0 && prev_item!=null)
-  //              {
-    //                TableRow.LayoutParams old_params = (TableRow.LayoutParams) prev_item.getLayoutParams();
-      //              duplicates++;
-        //            old_params.span = duplicates;
-          //          prev_item.setLayoutParams(old_params);
-            //        continue;
-              //  }
+                if(prev_time_string.equals(this_time_string) && prev_time_string.length() > 0 && prev_item!=null)
+                {
+                    TableRow.LayoutParams old_params = (TableRow.LayoutParams) prev_item.getLayoutParams();
+                    duplicates++;
+                    old_params.span = duplicates;
+                    prev_item.setLayoutParams(old_params);
+                    continue;
+                }
                 duplicates = 1;
                 tableRow.addView(item);
-        //        prev_time_string = this_time_string;
+                prev_time_string = this_time_string;
                 prev_item = item;
             }
 
@@ -158,12 +162,13 @@ public class TimetableFragmentSinglePage extends Fragment {
         }
 
 
-//        CSF_Details = timetableAdapter.getCSFDetails();
+        CSF_Details = timetableAdapter.getCSFDetails();
+        Set<CSF> csf_tems = new HashSet<>(CSF_Details.values());
 
-  //      ArrayList<CSF> CSF_Array = new ArrayList<CSF>(CSF_Details.values());
+        ArrayList<CSF> CSF_Array = new ArrayList<>(csf_tems);
         final ListView lv2 = (ListView) rootView.findViewById(R.id.timetable_faculty_data);
-    //    final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array,type);
-      //  lv2.setAdapter(detailsAdapter);
+        final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array,type);
+        lv2.setAdapter(detailsAdapter);
 
         lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -196,8 +201,6 @@ public class TimetableFragmentSinglePage extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu,MenuInflater inflater) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-  //      inflater.inflate(R.menu.menu_timetable, menu);
     }
 
 

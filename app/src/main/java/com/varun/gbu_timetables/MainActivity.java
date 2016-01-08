@@ -1,6 +1,7 @@
 package com.varun.gbu_timetables;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -16,10 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
-import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.data.FetchDbTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -81,7 +80,10 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(),SettingsActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
 

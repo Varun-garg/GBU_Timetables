@@ -7,6 +7,11 @@
     android:fitsSystemWindows="true"
     tools:context="com.varun.gbu_timetables.TimetableActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,8 +26,14 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_timetable" />
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/container" />
+
+    </LinearLayout>
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

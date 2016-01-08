@@ -1,5 +1,7 @@
 package com.varun.gbu_timetables;
 
+import android.app.Fragment;
+import android.app.FragmentContainer;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -63,13 +65,29 @@ public class TimetableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timetable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         prefs =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = prefs.edit();
+
+        String stored_mode = prefs.getString(getString(R.string.pref_tt_display_type_key),"0");
+        Fragment fragment;
+
+        if (savedInstanceState == null) {
+
+            if(stored_mode.equals("0"))
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new TimetableFragmentPager())
+                        .commit();
+            else //1
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new TimetableFragmentSinglePage())
+                        .commit();
+        }
+
+
         TimeTableBasic info = getCurrentBasic();
         reload();
         final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_white_24dp);
-        final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(),R.drawable.ic_favorite_border_white_24dp);
+        final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_border_white_24dp);
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

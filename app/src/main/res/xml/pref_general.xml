@@ -1,0 +1,9 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ListPreference
+        android:title="@string/pref_tt_display_type_label"
+        android:defaultValue="0"
+        android:entryValues="@array/pref_tt_display_type_values"
+        android:entries="@array/pref_tt_display_type_options"
+        android:key="@string/pref_tt_display_type_key" />
+</PreferenceScreen>
