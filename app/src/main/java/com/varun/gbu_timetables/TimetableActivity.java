@@ -58,12 +58,10 @@ public class TimetableActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         int saved_theme = Utility.getThemeId(getApplicationContext());
-        int set_theme = R.style.AppTheme;
-        if (set_theme != saved_theme)
-            setTheme(saved_theme);
+        setTheme(saved_theme);
+
+        super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_timetable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -121,6 +119,7 @@ public class TimetableActivity extends AppCompatActivity {
                     message = "Added to Favourites";
                     fab.setImageDrawable(fav_yes);
                 }
+
                 json = gson.toJson(existing_data);
 
                 editor.putString(existing_TAG, json);

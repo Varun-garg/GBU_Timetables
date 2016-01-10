@@ -3,6 +3,7 @@ package com.varun.gbu_timetables;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -34,6 +35,7 @@ public class TimetableFragmentSinglePage extends Fragment {
     String type;
     TableLayout tableLayout;
     ProgressDialog dialog;
+    int back_id;
 
     public TimetableFragmentSinglePage() {
 
@@ -45,6 +47,7 @@ public class TimetableFragmentSinglePage extends Fragment {
         setHasOptionsMenu(true);
         title = getActivity().getIntent().getExtras().getString("Timetable_title");
         getActivity().setTitle(title);
+        back_id = Utility.getBackDrawable(getContext());
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
         HashMap<CSF_FAC_KEY, CSF> CSF_Details;
@@ -85,7 +88,7 @@ public class TimetableFragmentSinglePage extends Fragment {
 
         TextView blank = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
         blank.setLayoutParams(halfparams);
-        blank.setBackgroundResource(R.drawable.back);
+        blank.setBackgroundResource(back_id);
         header.addView(blank);
 
         //  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -99,7 +102,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             beg_hr++;
             if (beg_hr == 13) beg_hr = 1;
             textView.append(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min));
-            textView.setBackgroundResource(R.drawable.back);
+            textView.setBackgroundResource(back_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
             header.addView(textView);
@@ -114,7 +117,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(halfparams);
             textView.setText(day_names[i]);
-            textView.setBackgroundResource(R.drawable.back);
+            textView.setBackgroundResource(back_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
 

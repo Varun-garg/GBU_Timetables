@@ -17,10 +17,12 @@ import java.util.ArrayList;
 public class DetailsAdapter extends ArrayAdapter<CSF> {
 
     String type;
+  //  int back_id;
 
     public DetailsAdapter(Context context, ArrayList<CSF> values, String type) {
         super(context, 0, values);
         this.type = type;
+//        back_id = Utility.getBackDrawable(context);
     }
 
     @Override

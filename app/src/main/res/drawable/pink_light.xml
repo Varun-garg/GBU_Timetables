@@ -1,6 +1,7 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
+    <solid android:color="@color/theme_pink" />
     <stroke
-        android:width="6dip"
-        android:color="#37474f" />
+        android:width="0.3dip"
+        android:color="#424242" />
 </shape>

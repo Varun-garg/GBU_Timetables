@@ -2,7 +2,11 @@ package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -18,6 +22,8 @@ import com.varun.gbu_timetables.data.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by varun on 12/23/15.
@@ -34,7 +40,11 @@ public class TimetableAdapter {
     ArrayList<Integer> periods;
 
     HashMap<Key, String> cache = new HashMap();
-    HashMap<Key, ArrayList> keymap = new HashMap<>();
+    HashMap<Key, HashSet> keymap = new HashMap<>();
+
+    int back;
+    int pink;
+    int green;
 
     public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, ArrayList<Integer> periods, String title) {
         this.title = title;
@@ -43,6 +53,10 @@ public class TimetableAdapter {
         this.timetable_id = timetable_id;
         this.context = context;
         this.periods = periods;
+
+        back = Utility.getBackDrawable(context);
+        pink = Utility.getPinkDrawable(context);
+        green = Utility.getGreenDrawable(context);
 
         for (int i = 0; i < day_nos.size(); i++)
             for (int j = 0; j < periods.size(); j++)
@@ -65,7 +79,7 @@ public class TimetableAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         Key key = new Key(row_no, column_no);
-        ArrayList<CSF_FAC_KEY> current_csf_fac_key_list = keymap.get(key);
+        Set<CSF_FAC_KEY> current_csf_fac_key_list = keymap.get(key);
         String day_str = cache.get(key);
         if (day_str == null) day_str = "";
         String lines[] = day_str.split("\\r?\\n");
@@ -78,11 +92,12 @@ public class TimetableAdapter {
 
             if (lines.length >= 2) {
                 if (i % 2 == 0)
-                    textView.setBackgroundResource(R.drawable.pink);
+                    textView.setBackgroundResource(pink);
                 else
-                    textView.setBackgroundResource(R.drawable.green);
-            } else
-                textView.setBackgroundResource(R.drawable.back);
+                    textView.setBackgroundResource(green);
+            }
+            else
+                textView.setBackgroundResource(back);
         }
         linearLayout.setTag(R.string.current_csf_fac_key_list, current_csf_fac_key_list);
         linearLayout.setTag(R.string.time_string, day_str);
@@ -96,9 +111,9 @@ public class TimetableAdapter {
         int Day_no = day_nos.get(Day_Pos);
         final Key key = new Key(Day_Pos, Period_Pos);
 
-        ArrayList<CSF_FAC_KEY> current_key_list = keymap.get(key);
+        HashSet<CSF_FAC_KEY> current_key_list = keymap.get(key);
         if (current_key_list == null) {
-            current_key_list = new ArrayList<>();
+            current_key_list = new HashSet<>();
             keymap.put(key, current_key_list);
         }
 
@@ -111,7 +126,6 @@ public class TimetableAdapter {
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 
         String time_string = "";
-
 
         while (cursor.moveToNext()) {
             time_string = time_string.trim();
@@ -168,8 +182,8 @@ public class TimetableAdapter {
                         }
 
                         CSF_Details.put(csf_fac_key, mCSF);
-                        myArr.add(mCSF);
                     }
+                    myArr.add(mCSF);
                     current_key_list.add(csf_fac_key);
                 }
                 fac_cursor.close();
@@ -200,6 +214,8 @@ public class TimetableAdapter {
                     time_string += " LAB";
 
             } catch (Exception e) {
+                Log.d("day_no",Integer.toString(Day_no));
+                Log.d("period_no",Integer.toString(Period_no));
                 Log.d("TimetableAdapter", "caught error in CSF_id" + CSF_Id.toString());
                 Log.d("TimetableAdapter", e.toString());
             }

@@ -4,9 +4,11 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)
@@ -50,14 +52,44 @@ public class Utility {
             return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
     }
 
-    public static int getBgColor(int ThemeId, Context context) {
-        TypedArray a;
-        if (ThemeId == R.style.LightTheme)
-            a = context.getTheme().obtainStyledAttributes(R.style.LightTheme, new int[]{R.attr.app_bg});
+    public static int getBackDrawable(Context context)
+    {
+        int theme_id = getThemeId(context);
+        if(theme_id == R.style.LightTheme)
+            return R.drawable.back_light;
         else
-            a = context.getTheme().obtainStyledAttributes(R.style.LightTheme, new int[]{R.attr.app_bg});
+            return R.drawable.back_dark;
+    }
 
-        return a.getResourceId(0, 0);
+    public static int getPinkDrawable(Context context)
+    {
+
+        int theme_id = getThemeId(context);
+        if(theme_id == R.style.LightTheme)
+            return R.drawable.pink_light;
+        else
+            return R.drawable.pink_dark;
+    }
+
+
+    public static int getGreenDrawable(Context context)
+    {
+
+        int theme_id = getThemeId(context);
+        if(theme_id == R.style.LightTheme)
+            return R.drawable.green_light;
+        else
+            return R.drawable.green_dark;
+    }
+
+    public static int getMarginDrawable(Context context)
+    {
+
+        int theme_id = getThemeId(context);
+        if(theme_id == R.style.LightTheme)
+            return R.drawable.margin_light;
+        else
+            return R.drawable.margin_dark;
     }
 
     public static int getDialogThemeId(Context context) {

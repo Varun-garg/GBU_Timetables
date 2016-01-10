@@ -4,7 +4,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
@@ -21,6 +23,7 @@ import com.varun.gbu_timetables.data.CSF_FAC_KEY;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -49,6 +52,7 @@ public class TimetableFragmentPager extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_timetable_pager, container, false);
 
+        AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appbar_layout);
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.timetable_pager);
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(getContext());
 
@@ -58,10 +62,14 @@ public class TimetableFragmentPager extends Fragment {
         else day -= 2;
 
         viewPager.setAdapter(timetablePagerAdapter);
-        TabLayout tabLayout = (TabLayout) rootView.findViewById(R.id.tab_layout);
+
+        TabLayout tabLayout = (TabLayout) inflater.inflate(R.layout.tab_layout,null);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(day);
+
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        appBarLayout.addView(tabLayout,layoutParams);
 
         return rootView;
     }
@@ -80,12 +88,16 @@ public class TimetableFragmentPager extends Fragment {
         ArrayList<Integer> periods;
         Long id;
         TimetableAdapter timetableAdapter;
+        int back_id;
+        int margin_id;
 
         public TimetablePagerAdapter(Context context) {
             mContext = context;
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             days = new ArrayList<>();
             periods = new ArrayList<>();
+            back_id = Utility.getBackDrawable(context);
+            margin_id = Utility.getMarginDrawable(context);
             for (int i = 1; i <= 7; i++) {
                 days.add(i);
             }
@@ -121,7 +133,8 @@ public class TimetableFragmentPager extends Fragment {
             int repeat_hr = 0;
             for (int j = 0; j < periods.size(); j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
-                ArrayList<CSF_FAC_KEY> keys = (ArrayList) item.getTag(R.string.current_csf_fac_key_list);
+                HashSet<CSF_FAC_KEY> key_hashmap = (HashSet)item.getTag(R.string.current_csf_fac_key_list);
+                ArrayList<CSF_FAC_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
                 if (time_string.length() > 0 && time_string.equals(prev_time_string)) {
                     repeat++;
@@ -132,7 +145,7 @@ public class TimetableFragmentPager extends Fragment {
                     int end = repeat_hr + repeat;
                     if (end == 13) end = 1;
                     textView.append(Integer.toString(end) + ":" + Integer.toString(beg_min));
-                    textView.setBackgroundResource(R.drawable.back);
+                    textView.setBackgroundResource(back_id);
                     textView.setTypeface(null, Typeface.BOLD);
                     textView.setPadding(10, 0, 0, 0);
                     beg_hr++;
@@ -153,7 +166,7 @@ public class TimetableFragmentPager extends Fragment {
                 textView.setText(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min) + " - ");
                 textView.append(Integer.toString(beg_hr + 1) + ":" + Integer.toString(beg_min));
                 beg_hr++;
-                textView.setBackgroundResource(R.drawable.back);
+                textView.setBackgroundResource(back_id);
                 textView.setTypeface(null, Typeface.BOLD);
                 textView.setPadding(10, 0, 0, 0);
 
@@ -178,6 +191,7 @@ public class TimetableFragmentPager extends Fragment {
                         for (int i = 0; i < current_csf_list.size(); i++) {
                             final View detail_item = detailsAdapter.getView(i, null, null);
                             detail_item.setPadding(20, 0, 20, 0);
+                            detail_item.setBackgroundResource(back_id);
                             detail_item.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -199,11 +213,9 @@ public class TimetableFragmentPager extends Fragment {
                                     startActivity(intent);
                                 }
                             });
-
                             footer.addView(detail_item, item_layoutParams);
-                            detail_item.setBackgroundResource(R.drawable.back);
                         }
-                        item_view.setBackgroundResource(R.drawable.blue_margin);
+                        item_view.setBackgroundResource(margin_id);
                         item_view.setPadding(6, 6, 6, 6);
 
                         for (int i = 0; i < items_list.size(); i++) //remove border from other rows
