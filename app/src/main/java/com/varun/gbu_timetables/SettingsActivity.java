@@ -3,18 +3,25 @@ package com.varun.gbu_timetables;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
-import android.util.Log;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 
-public class  SettingsActivity extends AppCompatPreferenceActivity
-    implements Preference.OnPreferenceChangeListener {
+public class SettingsActivity extends AppCompatPreferenceActivity
+        implements Preference.OnPreferenceChangeListener {
+
     @Override
     public void onCreate(Bundle savedInstance) {
+
         super.onCreate(savedInstance);
         addPreferencesFromResource(R.xml.pref_general);
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_tt_display_type_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_theme_key)));
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void bindPreferenceSummaryToValue(Preference preference) {
@@ -47,5 +54,17 @@ public class  SettingsActivity extends AppCompatPreferenceActivity
         }
         return true;
 
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

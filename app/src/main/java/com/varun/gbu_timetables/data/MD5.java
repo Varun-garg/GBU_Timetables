@@ -7,7 +7,7 @@
  * or at https://www.gnu.org/licenses/gpl-2.0.txt
  */
 
-package com.varun.gbu_timetables;
+package com.varun.gbu_timetables.data;
 
 import android.text.TextUtils;
 import android.util.Log;

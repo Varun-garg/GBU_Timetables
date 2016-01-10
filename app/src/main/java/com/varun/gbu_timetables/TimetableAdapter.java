@@ -34,7 +34,7 @@ public class TimetableAdapter {
     ArrayList<Integer> periods;
 
     HashMap<Key, String> cache = new HashMap();
-    HashMap<Key,ArrayList> keymap = new HashMap<Key, ArrayList>();;
+    HashMap<Key, ArrayList> keymap = new HashMap<>();
 
     public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, ArrayList<Integer> periods, String title) {
         this.title = title;
@@ -65,9 +65,9 @@ public class TimetableAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         Key key = new Key(row_no, column_no);
-        ArrayList<CSF_FAC_KEY> current_csf_fac_key_list= keymap.get(key);
+        ArrayList<CSF_FAC_KEY> current_csf_fac_key_list = keymap.get(key);
         String day_str = cache.get(key);
-        if(day_str == null) day_str = "";
+        if (day_str == null) day_str = "";
         String lines[] = day_str.split("\\r?\\n");
 
         for (int i = 0; i < lines.length; i++) {
@@ -84,8 +84,8 @@ public class TimetableAdapter {
             } else
                 textView.setBackgroundResource(R.drawable.back);
         }
-        linearLayout.setTag(R.string.current_csf_fac_key_list,current_csf_fac_key_list);
-        linearLayout.setTag(R.string.time_string,day_str);
+        linearLayout.setTag(R.string.current_csf_fac_key_list, current_csf_fac_key_list);
+        linearLayout.setTag(R.string.time_string, day_str);
 
         return linearLayout;
     }
@@ -94,13 +94,12 @@ public class TimetableAdapter {
 
         int Period_no = periods.get(Period_Pos);
         int Day_no = day_nos.get(Day_Pos);
-        final Key key = new Key(Day_Pos,Period_Pos);
+        final Key key = new Key(Day_Pos, Period_Pos);
 
         ArrayList<CSF_FAC_KEY> current_key_list = keymap.get(key);
-        if(current_key_list == null)
-        {
+        if (current_key_list == null) {
             current_key_list = new ArrayList<>();
-            keymap.put(key,current_key_list);
+            keymap.put(key, current_key_list);
         }
 
         Uri uri = null;
@@ -120,6 +119,7 @@ public class TimetableAdapter {
             Long CSF_Id = cursor.getLong(cursor.getColumnIndex("CSF_Id"));
             Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
             Long Batch_id = cursor.getLong(cursor.getColumnIndex("Batch_Id"));
+            String ActivityTag = cursor.getString(cursor.getColumnIndex("ActivityTag"));
             Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(CSF_Id);
             Cursor fac_cursor = context.getContentResolver().query(fac_uri, null, null, null, null);
             try {
@@ -181,7 +181,7 @@ public class TimetableAdapter {
                     time_string += " (";
                     for (int i = 0; i < myArr.size(); i++) {
                         CSF csf = myArr.get(i);
-                        if(i!=0)
+                        if (i != 0)
                             time_string += ", ";
                         time_string += csf.Fac_abbr;
                     }
@@ -195,6 +195,10 @@ public class TimetableAdapter {
 
                 if (Batch_id != 0)
                     time_string += " G" + Batch_id.toString();
+
+                if (ActivityTag.equalsIgnoreCase("lab"))
+                    time_string += " LAB";
+
             } catch (Exception e) {
                 Log.d("TimetableAdapter", "caught error in CSF_id" + CSF_Id.toString());
                 Log.d("TimetableAdapter", e.toString());

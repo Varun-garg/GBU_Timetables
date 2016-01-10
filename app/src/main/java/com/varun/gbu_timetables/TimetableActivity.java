@@ -1,19 +1,16 @@
 package com.varun.gbu_timetables;
 
-import android.app.Fragment;
-import android.app.FragmentContainer;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.gson.Gson;
@@ -62,18 +59,28 @@ public class TimetableActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int set_theme = R.style.AppTheme;
+        if (set_theme != saved_theme)
+            setTheme(saved_theme);
+
         setContentView(R.layout.activity_timetable);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        prefs =  PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = prefs.edit();
 
-        String stored_mode = prefs.getString(getString(R.string.pref_tt_display_type_key),"0");
-        Fragment fragment;
+        String stored_mode = prefs.getString(getString(R.string.pref_tt_display_type_key), "0");
 
         if (savedInstanceState == null) {
 
-            if(stored_mode.equals("0"))
+            if (stored_mode.equals("0"))
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.container, new TimetableFragmentPager())
                         .commit();
@@ -86,17 +93,15 @@ public class TimetableActivity extends AppCompatActivity {
 
         TimeTableBasic info = getCurrentBasic();
         reload();
-        final Drawable fav_yes = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_white_24dp);
-        final Drawable fav_no = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_favorite_border_white_24dp);
+
+        final Drawable fav_yes = Utility.getFavYes(getApplicationContext()) ;
+        final Drawable fav_no = Utility.getFavNo(getApplicationContext());
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        if(existing_data.contains(info))
-        {
+        if (existing_data.contains(info)) {
             fab.setImageDrawable(fav_yes);
-        }
-        else
-        {
+        } else {
             fab.setImageDrawable(fav_no);
         }
 
@@ -126,5 +131,15 @@ public class TimetableActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

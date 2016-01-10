@@ -5,14 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.data.CSF;
 
 import java.util.ArrayList;
-
-import com.varun.gbu_timetables.R;
 
 /**
  * Created by varun on 12/28/15.
@@ -20,6 +17,7 @@ import com.varun.gbu_timetables.R;
 public class DetailsAdapter extends ArrayAdapter<CSF> {
 
     String type;
+
     public DetailsAdapter(Context context, ArrayList<CSF> values, String type) {
         super(context, 0, values);
         this.type = type;
@@ -46,8 +44,7 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
         TextView fac_name = (TextView) convertView.findViewById(R.id.fac_name);
         fac_name.setText(mCSF.Fac_name);
 
-        if(type.equals("Faculty"))
-        {
+        if (type.equals("Faculty")) {
             fac_code.setText("Section");
             fac_name.setText(mCSF.Section_name);
         }

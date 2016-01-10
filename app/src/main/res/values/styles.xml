@@ -6,6 +6,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="box_bg">@color/box_bg</item>
+        <item name="app_bg">@color/app_bg</item>
+        <item name="theme_green">@color/theme_green</item>
+        <item name="theme_pink">@color/theme_pink</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -13,8 +17,31 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="LightTheme" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+    <style name="DarkTheme" parent="ThemeOverlay.AppCompat.Dark">
+        <item name="colorPrimary">@color/DarkThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/DarkThemeColorPrimaryDark</item>
+        <item name="colorAccent">@color/DarkThemeColorAccent</item>
+        <item name="box_bg">@color/box_bg_dark</item>
+        <item name="app_bg">@color/app_bg_dark</item>
+        <item name="theme_green">@color/theme_green_dark</item>
+        <item name="theme_pink">@color/theme_pink_dark</item>
+    </style>
+
+
+    <style name="DarkTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="DarkTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
 
 </resources>

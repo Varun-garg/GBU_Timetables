@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#FFFFFF">
+    android:background="?attr/box_bg"
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -15,6 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="6dp"
-        android:textSize="15dp"/>
+        android:textSize="15sp" />
 
 </LinearLayout>

@@ -8,12 +8,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.SectionsFragment;
+import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.Utility;
 
 import java.util.HashMap;
 import java.util.List;
-
-import com.varun.gbu_timetables.R;
 
 /*
 Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
@@ -21,11 +20,6 @@ Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/androi
 
 public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
 
-    public static class Common_type
-    {
-        public Long id;
-        public String Name;
-    }
 
     private Context _context;
     private List<String> _listDataHeader;
@@ -92,7 +86,7 @@ public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
-        String headerTitle = (String) getGroup(groupPosition);
+        String headerTitle = Utility.getSchool((String) getGroup(groupPosition));
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -103,7 +97,6 @@ public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.list_group_tv);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);
-
         return convertView;
     }
 
@@ -115,5 +108,10 @@ public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    public static class Common_type {
+        public Long id;
+        public String Name;
     }
 }

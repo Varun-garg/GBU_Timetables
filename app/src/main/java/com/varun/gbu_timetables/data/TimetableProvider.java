@@ -33,10 +33,10 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_FACULTY + "/" + TimetableContract.PATH_CSF + "/*", FACULTY_BY_CSF);
         matcher.addURI(authority, TimetableContract.PATH_SUBJECT + "/" + TimetableContract.PATH_CSF + "/*", SUBJECT_BY_CSF);
         matcher.addURI(authority, TimetableContract.PATH_ROOM + "/*", ROOM_BY_ID);
-        matcher.addURI(authority, TimetableContract.PATH_SCHOOL,SCHOOLS);
-        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_PROGRAM +  "/*",SECTIONS_BY_PROGRAM_ID);
-        matcher.addURI(authority, TimetableContract.PATH_FACULTY,FACULTY);
-        matcher.addURI(authority, TimetableContract.PATH_SECTION +  "/*",SECTION_BY_ID);
+        matcher.addURI(authority, TimetableContract.PATH_SCHOOL, SCHOOLS);
+        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_PROGRAM + "/*", SECTIONS_BY_PROGRAM_ID);
+        matcher.addURI(authority, TimetableContract.PATH_FACULTY, FACULTY);
+        matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*", SECTION_BY_ID);
 
         return matcher;
     }
@@ -48,7 +48,7 @@ public class TimetableProvider extends ContentProvider {
 
     @Override
     public String getType(Uri uri) { //TODO Improve return type
-           final int match = sUriMatcher.match(uri);
+        final int match = sUriMatcher.match(uri);
 
         switch (match) {
             case CELL_BY_SECTION_DAY_SLOT:
@@ -96,21 +96,21 @@ public class TimetableProvider extends ContentProvider {
     private Cursor getFaculty() {
 
         String query = "SELECT distinct Teacher._ROWID_ as _id,Teacher.id as faculty_id, Teacher.name,Teacher.school from Teacher,School,M_Time_Table,CSF_Faculty where Teacher.school = School.name " +
-                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id";
+                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id order by Teacher.name";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getSectionsByProgramID(Uri uri)
-    {
+    private Cursor getSectionsByProgramID(Uri uri) {
         Long program_id = TimetableContract.getProgramFromUri(uri);
-        String query = "SELECT _ROWID_ as _id,id as section_id,name from Section where ShowTimetable = 1 and  program = " + program_id;
+        String query = "SELECT _ROWID_ as _id,id as section_id,name from Section" +
+                " where ShowTimetable = 1 and  program = " + program_id
+                + " order by Section.name";
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
 
-    private Cursor getSectionById(Uri uri)
-    {
+    private Cursor getSectionById(Uri uri) {
         Long section_id = TimetableContract.getSectionFromUri(uri);
         String query = "SELECT _ROWID_ as _id,id as section_id,Name from Section where id = " + section_id;
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);

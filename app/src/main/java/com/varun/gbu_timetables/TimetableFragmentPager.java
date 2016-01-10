@@ -1,49 +1,23 @@
 package com.varun.gbu_timetables;
 
-import android.app.ActionBar;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.CSF;
 import com.varun.gbu_timetables.data.CSF_FAC_KEY;
-import com.varun.gbu_timetables.data.FetchDbTask;
-import com.varun.gbu_timetables.data.TimetableDbHelper;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -53,11 +27,12 @@ import java.util.HashMap;
  */
 public class TimetableFragmentPager extends Fragment {
 
-    static String LOG_TAG = "TimeTableActivityFragmentPager";
     String[] day_names = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     String title;
     String type;
-    HashMap<CSF_FAC_KEY,CSF> CSF_Details;
+    HashMap<CSF_FAC_KEY, CSF> CSF_Details;
+    ProgressDialog dialog;
+
     public TimetableFragmentPager() {
 
     }
@@ -68,23 +43,18 @@ public class TimetableFragmentPager extends Fragment {
         title = getActivity().getIntent().getExtras().getString("Timetable_title");
         getActivity().setTitle(title);
 
+        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
+
         View rootView = inflater.inflate(R.layout.fragment_timetable_pager, container, false);
 
         ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.timetable_pager);
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(getContext());
-        if(viewPager == null)
-            Log.d("view pager","null");
-        else
-            Log.d("view pager", viewPager.toString());
-
-        if(timetablePagerAdapter == null)
-            Log.d("adapter","null");
-        else
-            Log.d("adapter", timetablePagerAdapter.toString());
 
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK);
-        if(day  == 1) day = 6; //bring sunday to last
+        if (day == 1) day = 6; //bring sunday to last
         else day -= 2;
 
         viewPager.setAdapter(timetablePagerAdapter);
@@ -96,9 +66,13 @@ public class TimetableFragmentPager extends Fragment {
         return rootView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        dialog.hide();
+    }
 
-    public class TimetablePagerAdapter extends PagerAdapter
-    {
+    public class TimetablePagerAdapter extends PagerAdapter {
 
         Context mContext;
         LayoutInflater mLayoutInflater;
@@ -106,8 +80,8 @@ public class TimetableFragmentPager extends Fragment {
         ArrayList<Integer> periods;
         Long id;
         TimetableAdapter timetableAdapter;
-        public TimetablePagerAdapter(Context context)
-        {
+
+        public TimetablePagerAdapter(Context context) {
             mContext = context;
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             days = new ArrayList<>();
@@ -121,27 +95,23 @@ public class TimetableFragmentPager extends Fragment {
 
             type = getActivity().getIntent().getExtras().getString("Type");
             id = null;
-            if(type.equals("Section"))
-            {
+            if (type.equals("Section")) {
                 id = getActivity().getIntent().getExtras().getLong("Section_id");
-            }
-            else if (type.equals("Faculty"))
-            {
+            } else if (type.equals("Faculty")) {
                 id = getActivity().getIntent().getExtras().getLong("Faculty_id");
             }
-            timetableAdapter = new TimetableAdapter(getContext(), days, id,type,periods,title);
+            timetableAdapter = new TimetableAdapter(getContext(), days, id, type, periods, title);
             CSF_Details = timetableAdapter.getCSFDetails();
         }
 
-        public int getCount()
-        {
+        public int getCount() {
             return day_names.length;
         }
 
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
-            final LinearLayout linearLayout = (LinearLayout)parent_view.findViewById(R.id.linear_layout);
+            final LinearLayout linearLayout = (LinearLayout) parent_view.findViewById(R.id.linear_layout);
             int beg_hr = 8;
             int beg_min = 30;
             final ArrayList<LinearLayout> items_list = new ArrayList<>();
@@ -149,21 +119,18 @@ public class TimetableFragmentPager extends Fragment {
             int item_pos = -1;
             int repeat = 1;
             int repeat_hr = 0;
-            if (beg_hr == 13) beg_hr = 1;
-            for(int j = 0; j<periods.size();j++) {
+            for (int j = 0; j < periods.size(); j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
                 ArrayList<CSF_FAC_KEY> keys = (ArrayList) item.getTag(R.string.current_csf_fac_key_list);
                 String time_string = (String) item.getTag(R.string.time_string);
-                if(time_string.length() >0 && time_string.equals(prev_time_string))
-                {
+                if (time_string.length() > 0 && time_string.equals(prev_time_string)) {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
                     if (repeat_hr == 13) repeat_hr = 1;
                     textView.setText(Integer.toString(repeat_hr) + ":" + Integer.toString(beg_min) + " - ");
-                    if (repeat_hr == 13) repeat_hr = 1;
                     int end = repeat_hr + repeat;
-                    if(end == 13) end =1;
+                    if (end == 13) end = 1;
                     textView.append(Integer.toString(end) + ":" + Integer.toString(beg_min));
                     textView.setBackgroundResource(R.drawable.back);
                     textView.setTypeface(null, Typeface.BOLD);
@@ -184,8 +151,7 @@ public class TimetableFragmentPager extends Fragment {
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
                 if (beg_hr == 13) beg_hr = 1;
                 textView.setText(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min) + " - ");
-                if (beg_hr == 13) beg_hr = 1;
-                textView.append(Integer.toString(beg_hr+1) + ":" + Integer.toString(beg_min));
+                textView.append(Integer.toString(beg_hr + 1) + ":" + Integer.toString(beg_min));
                 beg_hr++;
                 textView.setBackgroundResource(R.drawable.back);
                 textView.setTypeface(null, Typeface.BOLD);
@@ -196,45 +162,43 @@ public class TimetableFragmentPager extends Fragment {
                 linearLayout.addView(item_view, layoutParams);
 
                 final ArrayList<CSF> current_csf_list = new ArrayList<>();
-                if(keys!=null)
-                    for (int i = 0; i < keys.size(); i++)
-                    {
+                if (keys != null)
+                    for (int i = 0; i < keys.size(); i++) {
                         current_csf_list.add(CSF_Details.get(keys.get(i)));
                     }
 
-                final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(),current_csf_list,type);
+                final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), current_csf_list, type);
                 final LinearLayout footer = (LinearLayout) parent_view.findViewById(R.id.footer_ll);
                 item_view.setOnClickListener(new View.OnClickListener() {
                     LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+
                     @Override
                     public void onClick(View v) {
                         footer.removeAllViews();
-                        for(int i=0;i<current_csf_list.size();i++)
-                        {
+                        for (int i = 0; i < current_csf_list.size(); i++) {
                             final View detail_item = detailsAdapter.getView(i, null, null);
                             detail_item.setPadding(20, 0, 20, 0);
-                            detail_item.setOnClickListener(new View.OnClickListener()
-                           {
-                               @Override
-                               public void onClick(View v) {
-                                   CSF csf = (CSF) detail_item.getTag();
-                                   Intent intent = new Intent(getActivity(),TimetableActivity.class);
+                            detail_item.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    CSF csf = (CSF) detail_item.getTag();
+                                    Intent intent = new Intent(getActivity(), TimetableActivity.class);
 
-                                   if(type.equals("Faculty"))
-                                   {
-                                       intent.putExtra("Section_id",csf.Section_id);
-                                       intent.putExtra("Timetable_title",csf.Section_name);
-                                       intent.putExtra("Type","Section");
-                                   }
-                                   else  if(type.equals("Section"))
-                                   {
-                                       intent.putExtra("Faculty_id",csf.Fac_id);
-                                       intent.putExtra("Timetable_title",csf.Fac_name);
-                                       intent.putExtra("Type","Faculty");
-                                   }
-                                   startActivity(intent);
-                               }
-                           });
+                                    if (type.equals("Faculty")) {
+                                        dialog.setMessage("Loading " + csf.Section_name);
+                                        intent.putExtra("Section_id", csf.Section_id);
+                                        intent.putExtra("Timetable_title", csf.Section_name);
+                                        intent.putExtra("Type", "Section");
+                                    } else if (type.equals("Section")) {
+                                        dialog.setMessage("Loading " + csf.Fac_name);
+                                        intent.putExtra("Faculty_id", csf.Fac_id);
+                                        intent.putExtra("Timetable_title", csf.Fac_name);
+                                        intent.putExtra("Type", "Faculty");
+                                    }
+                                    dialog.show();
+                                    startActivity(intent);
+                                }
+                            });
 
                             footer.addView(detail_item, item_layoutParams);
                             detail_item.setBackgroundResource(R.drawable.back);
@@ -242,9 +206,9 @@ public class TimetableFragmentPager extends Fragment {
                         item_view.setBackgroundResource(R.drawable.blue_margin);
                         item_view.setPadding(6, 6, 6, 6);
 
-                        for(int i = 0;i<items_list.size();i++) //remove border from other rows
+                        for (int i = 0; i < items_list.size(); i++) //remove border from other rows
                         {
-                            if(i == final_item_pos) continue;
+                            if (i == final_item_pos) continue;
                             LinearLayout cur_item = items_list.get(i);
                             cur_item.setBackgroundResource(0);
                             cur_item.setPadding(0, 0, 0, 0);
@@ -263,7 +227,7 @@ public class TimetableFragmentPager extends Fragment {
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object view) {
-            ((ViewPager) container).removeView((View) view);
+            container.removeView((View) view);
         }
 
         @Override
@@ -271,9 +235,5 @@ public class TimetableFragmentPager extends Fragment {
             // Generate title based on item position
             return day_names[position];
         }
-
-
     }
-
-
 }

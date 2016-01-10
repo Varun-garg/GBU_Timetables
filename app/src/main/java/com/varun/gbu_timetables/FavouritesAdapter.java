@@ -5,15 +5,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.data.CSF;
+import com.varun.gbu_timetables.data.TimeTableBasic;
 
 import java.util.ArrayList;
-
-import com.varun.gbu_timetables.R;
-import com.varun.gbu_timetables.data.TimeTableBasic;
 
 /**
  * Created by varun on 12/28/15.
@@ -21,6 +17,7 @@ import com.varun.gbu_timetables.data.TimeTableBasic;
 public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
     String type;
+
     public FavouritesAdapter(Context context, ArrayList<TimeTableBasic> values) {
         super(context, 0, values);
         this.type = type;

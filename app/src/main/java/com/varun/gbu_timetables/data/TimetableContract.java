@@ -30,9 +30,9 @@ public class TimetableContract {
     public static String PATH_SCHOOL = "school";
     public static final Uri SCHOOL_CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SCHOOL).build();
     public static String PATH_SECTION = "section";
-    public static String PATH_PROGRAM = "program";
     public static final Uri SECTION_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
+    public static String PATH_PROGRAM = "program";
 
     public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day, long slot) {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).appendPath(Long.toString(fac_id))
@@ -46,13 +46,11 @@ public class TimetableContract {
                 .appendQueryParameter(PARAM_SLOT, Long.toString(slot)).build();
     }
 
-    public static Uri BuildSchool()
-    {
+    public static Uri BuildSchool() {
         return SCHOOL_CONTENT_URI;
     }
 
-    public static Uri BuildFaculty()
-    {
+    public static Uri BuildFaculty() {
         return FACULTY_CONTENT_URI;
     }
 
@@ -61,9 +59,9 @@ public class TimetableContract {
     }
 
     public static long getSectionFromUri(Uri uri) {
-        if(TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.CELL_BY_SECTION_DAY_SLOT)
+        if (TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.CELL_BY_SECTION_DAY_SLOT)
             return Long.parseLong(uri.getPathSegments().get(2));
-        else if(TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.SECTION_BY_ID)
+        else if (TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.SECTION_BY_ID)
             return Long.parseLong(uri.getPathSegments().get(1));
         return -1;
     }
@@ -84,15 +82,13 @@ public class TimetableContract {
         return FACULTY_CONTENT_URI.buildUpon().appendPath(PATH_CSF).appendPath(Long.toString(csf_id)).build();
     }
 
-    public static Uri BuildSectionWithProgramId(long program_id)
-    {
-        return  SECTION_CONTENT_URI.buildUpon().appendPath(PATH_PROGRAM).appendPath(Long.toString(program_id)).build();
+    public static Uri BuildSectionWithProgramId(long program_id) {
+        return SECTION_CONTENT_URI.buildUpon().appendPath(PATH_PROGRAM).appendPath(Long.toString(program_id)).build();
     }
 
 
-    public static Uri BuildSectionWithId(long section_id)
-    {
-        return  SECTION_CONTENT_URI.buildUpon().appendPath(Long.toString(section_id)).build();
+    public static Uri BuildSectionWithId(long section_id) {
+        return SECTION_CONTENT_URI.buildUpon().appendPath(Long.toString(section_id)).build();
     }
 
     public static Uri BuildSubjectWithCSFid(long csf_id) {

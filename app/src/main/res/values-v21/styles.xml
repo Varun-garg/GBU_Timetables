@@ -1,4 +1,4 @@
-<resources>>
+<resources>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
@@ -6,4 +6,39 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="LightTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+
+    <style name="DarkTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="LightTheme" parent="android:ThemeOverlay.Material">
+        <item name="box_bg">@color/box_bg</item>
+        <item name="app_bg">@color/app_bg</item>
+        <item name="theme_green">@color/theme_green</item>
+        <item name="theme_pink">@color/theme_pink</item>
+    </style>
+
+    <style name="DarkTheme" parent="android:ThemeOverlay.Material">
+        <item name="colorPrimary">@color/DarkThemeColorPrimary</item>
+        <item name="colorPrimaryDark">@color/DarkThemeColorPrimaryDark</item>
+        <item name="colorAccent">@color/DarkThemeColorAccent</item>
+        <item name="android:textColor">@color/DarkText_secondary</item>
+        <item name="box_bg">@color/box_bg_dark</item>
+        <item name="app_bg">@color/app_bg_dark</item>
+        <item name="theme_green">@color/theme_green_dark</item>
+        <item name="theme_pink">@color/theme_pink_dark</item>
+    </style>
+
 </resources>

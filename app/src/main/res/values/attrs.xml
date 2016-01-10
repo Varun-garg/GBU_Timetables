@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="box_bg" format="color" />
+    <attr name="app_bg" format="color" />
+    <attr name="theme_green" format="color" />
+    <attr name="theme_pink" format="color" />
+</resources>

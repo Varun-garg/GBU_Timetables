@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
+import com.varun.gbu_timetables.data.SchoolsFacultyAdapter;
 import com.varun.gbu_timetables.data.TimetableContract;
 
 import java.util.ArrayList;
@@ -18,21 +20,19 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.varun.gbu_timetables.data.SchoolsFacultyAdapter;
-
 /**
  * A placeholder fragment containing a simple view.
  */
 public class FacultyFragment extends Fragment {
 
 
-
     List<String> Header_data;
-    HashMap<String,List<SchoolsFacultyAdapter.Common_type>> Children_data;
+    HashMap<String, List<SchoolsFacultyAdapter.Common_type>> Children_data;
+    ProgressDialog dialog;
 
     public FacultyFragment() {
         Header_data = new ArrayList<String>();
-        Children_data = new HashMap<String,List<SchoolsFacultyAdapter.Common_type>>();
+        Children_data = new HashMap<String, List<SchoolsFacultyAdapter.Common_type>>();
 
     }
 
@@ -43,23 +43,25 @@ public class FacultyFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
 
+        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog.setCancelable(false);
+        dialog.setInverseBackgroundForced(false);
 
         ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
         Uri Faculty_uri = TimetableContract.BuildFaculty();
-        Cursor faculty_cursor = getContext().getContentResolver().query(Faculty_uri,null,null,null,null);
+        Cursor faculty_cursor = getContext().getContentResolver().query(Faculty_uri, null, null, null, null);
 
-        while (faculty_cursor.moveToNext())
-        {
+        while (faculty_cursor.moveToNext()) {
             String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
             SchoolsFacultyAdapter.Common_type ct = new SchoolsFacultyAdapter.Common_type();
-            ct.id =  faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
-            ct.Name =  faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
+            ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
+            ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
             Header_data.add(school);
 
             List<SchoolsFacultyAdapter.Common_type> facultyList = Children_data.get(school);
-            if(facultyList == null) facultyList = new ArrayList<>();
+            if (facultyList == null) facultyList = new ArrayList<>();
             facultyList.add(ct);
-            Children_data.put(school,facultyList);
+            Children_data.put(school, facultyList);
         }
         faculty_cursor.close();
 
@@ -67,7 +69,7 @@ public class FacultyFragment extends Fragment {
         Header_data.clear();
         Header_data.addAll(hs);
 
-        SchoolsFacultyAdapter schoolsAdapter = new SchoolsFacultyAdapter(getContext(),Header_data,Children_data);
+        SchoolsFacultyAdapter schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
         schools_lv.setAdapter(schoolsAdapter);
 
         schools_lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -77,15 +79,25 @@ public class FacultyFragment extends Fragment {
                                         int groupPosition, int childPosition, long id) {
                 String program = Header_data.get(groupPosition);
                 SchoolsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
-                Intent intent = new Intent(getActivity(),TimetableActivity.class);
-                intent.putExtra("Type","Faculty");
-                intent.putExtra("Faculty_id",s.id);
-                intent.putExtra("Timetable_title",s.Name);
+
+                dialog.setMessage("Loading " + s.Name);
+                dialog.show();
+
+                Intent intent = new Intent(getActivity(), TimetableActivity.class);
+                intent.putExtra("Type", "Faculty");
+                intent.putExtra("Faculty_id", s.id);
+                intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
                 return false;
             }
         });
 
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        dialog.hide();
     }
 }

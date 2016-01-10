@@ -10,12 +10,20 @@ public class CSF_FAC_KEY {
         this.y = FAC_ID;
     }
 
+    public Long getCSF_id() {
+        return x;
+    }
+
+    public Long getFAC_ID() {
+        return y;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Key)) return false;
+        if (!(o instanceof CSF_FAC_KEY)) return false;
         CSF_FAC_KEY key = (CSF_FAC_KEY) o;
-        return x == key.x && y == key.y;
+        return x.longValue() == key.x.longValue() && y.longValue() == key.y.longValue();
     }
 
     @Override
