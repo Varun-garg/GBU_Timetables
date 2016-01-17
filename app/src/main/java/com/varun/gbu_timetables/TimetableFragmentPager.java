@@ -143,10 +143,8 @@ public class TimetableFragmentPager extends Fragment {
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
                     textView.setText(Integer.toString(Utility.getPeriodTitleNo(j-repeat)) + ":" + Integer.toString(beg_min) + " - ");
-                    textView.append(Integer.toString(Utility.getPeriodTitleNo(j+1)) + ":" + Integer.toString(beg_min));
-                    textView.setBackgroundResource(back_id);
-                    textView.setTypeface(null, Typeface.BOLD);
-                    textView.setPadding(10, 0, 0, 0);
+                    textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
+                    textView.append(" (" + Integer.toString(repeat +1) + " Hrs)");
                     continue;
                 }
                 repeat = 0;
@@ -160,10 +158,10 @@ public class TimetableFragmentPager extends Fragment {
 
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
                 textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
-                textView.append(Integer.toString(Utility.getPeriodTitleNo(j+1)) + ":" + Integer.toString(beg_min));
+                textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
                 textView.setBackgroundResource(back_id);
                 textView.setTypeface(null, Typeface.BOLD);
-                textView.setPadding(10, 0, 0, 0);
+                textView.setPadding(0, 15, 0, 15);
 
                 layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.setMargins(20, 20, 20, 0);
