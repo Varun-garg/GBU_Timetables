@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -63,13 +62,13 @@ public class TimetableFragmentPager extends Fragment {
 
         viewPager.setAdapter(timetablePagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) inflater.inflate(R.layout.tab_layout,null);
+        TabLayout tabLayout = (TabLayout) inflater.inflate(R.layout.tab_layout, null);
         tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.setCurrentItem(day);
 
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        appBarLayout.addView(tabLayout,layoutParams);
+        appBarLayout.addView(tabLayout, layoutParams);
 
         return rootView;
     }
@@ -101,9 +100,6 @@ public class TimetableFragmentPager extends Fragment {
             for (int i = 1; i <= 7; i++) {
                 days.add(i);
             }
-            for (int i = 1; i <= 9; i++) {
-                periods.add(i);
-            }
 
             type = getActivity().getIntent().getExtras().getString("Type");
             id = null;
@@ -112,7 +108,7 @@ public class TimetableFragmentPager extends Fragment {
             } else if (type.equals("Faculty")) {
                 id = getActivity().getIntent().getExtras().getLong("Faculty_id");
             }
-            timetableAdapter = new TimetableAdapter(getContext(), days, id, type, periods, title);
+            timetableAdapter = new TimetableAdapter(getContext(), days, id, type, title);
             CSF_Details = timetableAdapter.getCSFDetails();
         }
 
@@ -133,7 +129,7 @@ public class TimetableFragmentPager extends Fragment {
             int repeat_hr = 0;
             for (int j = 0; j < periods.size(); j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
-                HashSet<CSF_FAC_KEY> key_hashmap = (HashSet)item.getTag(R.string.current_csf_fac_key_list);
+                HashSet<CSF_FAC_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
                 ArrayList<CSF_FAC_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
                 if (time_string.length() > 0 && time_string.equals(prev_time_string)) {

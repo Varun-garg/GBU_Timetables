@@ -31,8 +31,8 @@ public class FacultyFragment extends Fragment {
     ProgressDialog dialog;
 
     public FacultyFragment() {
-        Header_data = new ArrayList<String>();
-        Children_data = new HashMap<String, List<SchoolsFacultyAdapter.Common_type>>();
+        Header_data = new ArrayList<>();
+        Children_data = new HashMap<>();
 
     }
 

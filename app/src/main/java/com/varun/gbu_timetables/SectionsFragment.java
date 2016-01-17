@@ -30,8 +30,8 @@ public class SectionsFragment extends Fragment {
     ProgressDialog dialog;
 
     public SectionsFragment() {
-        Header_data = new ArrayList<String>();
-        Children_data = new HashMap<String, List<SchoolsFacultyAdapter.Common_type>>();
+        Header_data = new ArrayList<>();
+        Children_data = new HashMap<>();
     }
 
     @Override

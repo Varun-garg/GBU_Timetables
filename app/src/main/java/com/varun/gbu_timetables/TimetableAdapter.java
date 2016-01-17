@@ -2,11 +2,7 @@ package com.varun.gbu_timetables;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,29 +33,44 @@ public class TimetableAdapter {
     String title;
     HashMap<CSF_FAC_KEY, CSF> CSF_Details = new HashMap();
 
-    ArrayList<Integer> periods;
-
     HashMap<Key, String> cache = new HashMap();
     HashMap<Key, HashSet> keymap = new HashMap<>();
 
     int back;
     int pink;
     int green;
+    long max_period = 0;
+    long min_period = 0;
 
-    public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, ArrayList<Integer> periods, String title) {
+    public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, String title) {
         this.title = title;
         this.day_nos = day_nos;
         this.timetable_type = timetable_type;
         this.timetable_id = timetable_id;
         this.context = context;
-        this.periods = periods;
+
+        Uri max_uri;
+        if(this.timetable_type.equals(TimetableContract.PATH_SECTION))
+        {
+            max_uri =  TimetableContract.BuildMaxPeriodBySection(this.timetable_id);
+        }
+        else
+        {
+            max_uri =  TimetableContract.BuildMaxPeriodByFaculty(this.timetable_id);
+        }
+      //  Log.d("max_uri",max_uri.toString());
+        Cursor max_c =  context.getContentResolver().query(max_uri,null,null,null,null);
+        max_c.moveToNext();
+        max_period = max_c.getLong(max_c.getColumnIndex("max(TT_Period)"));
+        min_period = max_c.getLong(max_c.getColumnIndex("min(TT_Period)"));
+        max_c.close();
 
         back = Utility.getBackDrawable(context);
         pink = Utility.getPinkDrawable(context);
         green = Utility.getGreenDrawable(context);
 
         for (int i = 0; i < day_nos.size(); i++)
-            for (int j = 0; j < periods.size(); j++)
+            for (int j = (int) min_period; j <= max_period; j++)
                 BuildTimeString(i, j);
     }
 
@@ -67,7 +78,18 @@ public class TimetableAdapter {
         return CSF_Details;
     }
 
-    public View getView(final int row_no, final int column_no) {
+    public long getMaxPeriods()
+    {
+        return max_period;
+    }
+
+
+    public long getMinPeriods()
+    {
+        return min_period;
+    }
+
+    public View getView(final int row_no, final int period_no) {
 
         LinearLayout linearLayout = new LinearLayout(context);
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, context.getResources().getDisplayMetrics());
@@ -78,7 +100,7 @@ public class TimetableAdapter {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Key key = new Key(row_no, column_no);
+        Key key = new Key(row_no, period_no);
         Set<CSF_FAC_KEY> current_csf_fac_key_list = keymap.get(key);
         String day_str = cache.get(key);
         if (day_str == null) day_str = "";
@@ -95,8 +117,7 @@ public class TimetableAdapter {
                     textView.setBackgroundResource(pink);
                 else
                     textView.setBackgroundResource(green);
-            }
-            else
+            } else
                 textView.setBackgroundResource(back);
         }
         linearLayout.setTag(R.string.current_csf_fac_key_list, current_csf_fac_key_list);
@@ -107,7 +128,6 @@ public class TimetableAdapter {
 
     public void BuildTimeString(int Day_Pos, int Period_Pos) {
 
-        int Period_no = periods.get(Period_Pos);
         int Day_no = day_nos.get(Day_Pos);
         final Key key = new Key(Day_Pos, Period_Pos);
 
@@ -119,9 +139,9 @@ public class TimetableAdapter {
 
         Uri uri = null;
         if (timetable_type.equals("Section"))
-            uri = TimetableContract.BuildTTCellWithSectionDaySlot(timetable_id, Day_no, Period_no);
+            uri = TimetableContract.BuildTTCellWithSectionDaySlot(timetable_id, Day_no, Period_Pos);
         else if (timetable_type.equals("Faculty"))
-            uri = TimetableContract.BuildTTCellWithFacultyDaySlot(timetable_id, Day_no, Period_no);
+            uri = TimetableContract.BuildTTCellWithFacultyDaySlot(timetable_id, Day_no, Period_Pos);
 
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
 
@@ -146,12 +166,12 @@ public class TimetableAdapter {
 
 
                 //subject
-                Uri sec_uri = TimetableContract.BuildSubjectWithCSFid(CSF_Id);
-                Cursor sec_cursor = context.getContentResolver().query(sec_uri, null, null, null, null);
-                sec_cursor.moveToNext();
-                String Sub_Code = sec_cursor.getString(sec_cursor.getColumnIndex("code")).trim();
-                String Sub_name = sec_cursor.getString(sec_cursor.getColumnIndex("name")).trim();
-                sec_cursor.close();
+                Uri sub_uri = TimetableContract.BuildSubjectWithCSFid(CSF_Id);
+                Cursor sub_cursor = context.getContentResolver().query(sub_uri, null, null, null, null);
+                sub_cursor.moveToNext();
+                String Sub_Code = sub_cursor.getString(sub_cursor.getColumnIndex("code")).trim();
+                String Sub_name = sub_cursor.getString(sub_cursor.getColumnIndex("name")).trim();
+                sub_cursor.close();
 
                 ArrayList<CSF> myArr = new ArrayList<>();
                 while (fac_cursor.moveToNext()) {
@@ -169,10 +189,10 @@ public class TimetableAdapter {
                         mCSF.Sub_Code = Sub_Code;
                         mCSF.Sub_name = Sub_name;
 
-                        if (timetable_type.equals("Section")) {
+                        if (timetable_type.equals(TimetableContract.PATH_SECTION)) {
                             mCSF.Section_id = timetable_id;
                             mCSF.Section_name = title;
-                        } else if (timetable_type.equals("Faculty")) {
+                        } else if (timetable_type.equals(TimetableContract.PATH_FACULTY)) {
                             mCSF.Section_id = cursor.getLong(cursor.getColumnIndex("Section_Id"));
                             Uri section_uri = TimetableContract.BuildSectionWithId(mCSF.Section_id);
                             Cursor section_cursor = context.getContentResolver().query(section_uri, null, null, null, null);
@@ -214,14 +234,15 @@ public class TimetableAdapter {
                     time_string += " LAB";
 
             } catch (Exception e) {
-                Log.d("day_no",Integer.toString(Day_no));
-                Log.d("period_no",Integer.toString(Period_no));
+                Log.d("day_no", Integer.toString(Day_no));
+                Log.d("period_no", Integer.toString(Period_Pos));
                 Log.d("TimetableAdapter", "caught error in CSF_id" + CSF_Id.toString());
                 Log.d("TimetableAdapter", e.toString());
             }
         }
         cursor.close();
         cache.put(key, time_string.trim());
+    //    Log.d("string", Integer.toString(Day_no) + "," + Integer.toString(Period_Pos) + " " + time_string.trim());
     }
 
 }

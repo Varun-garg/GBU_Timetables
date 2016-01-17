@@ -3,7 +3,6 @@ package com.varun.gbu_timetables;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.TypedValue;
@@ -35,8 +34,7 @@ public class TimetableFragmentSinglePage extends Fragment {
     String type;
     TableLayout tableLayout;
     ProgressDialog dialog;
-    int back_id;
-
+    int back_id, max_period, min_period;
     public TimetableFragmentSinglePage() {
 
     }
@@ -57,12 +55,8 @@ public class TimetableFragmentSinglePage extends Fragment {
         dialog.setInverseBackgroundForced(false);
 
         final ArrayList<Integer> days = new ArrayList<>();
-        ArrayList<Integer> periods = new ArrayList<>();
         for (int i = 1; i <= 7; i++) {
             days.add(i);
-        }
-        for (int i = 1; i <= 9; i++) {
-            periods.add(i);
         }
 
 
@@ -79,7 +73,6 @@ public class TimetableFragmentSinglePage extends Fragment {
 
         //We insert Periods
         TableRow header = (TableRow) inflater.inflate(R.layout.timetable_row, null);
-        int beg_hr = 8;
         int beg_min = 30;
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
         TableRow.LayoutParams cellParams = new TableRow.LayoutParams(width, TableRow.LayoutParams.MATCH_PARENT);
@@ -90,18 +83,17 @@ public class TimetableFragmentSinglePage extends Fragment {
         blank.setLayoutParams(halfparams);
         blank.setBackgroundResource(back_id);
         header.addView(blank);
+        final TimetableAdapter timetableAdapter = new TimetableAdapter(getContext(), days, id, type, title);
+        max_period = (int) timetableAdapter.getMaxPeriods();
+        min_period = (int) timetableAdapter.getMinPeriods();
 
-        //  SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        //  String db_md5 = sharedPreferences.getString(TimetableDbHelper.DB_MD5_PATH,"");
-        //  db_md5 = db_md5.substring(0,10);
-        //  blank.setText(db_md5);
-        for (int i = 0; i < periods.size(); i++) {
+        for (int i = min_period; i <= max_period; i++) {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(cellParams);
-            textView.setText(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min) + " - ");
-            beg_hr++;
-            if (beg_hr == 13) beg_hr = 1;
-            textView.append(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min));
+            textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
+  //          beg_hr++;
+//            if (beg_hr == 13) beg_hr = 1;
+            textView.append(Integer.toString(Utility.getPeriodTitleNo(i+1)) + ":" + Integer.toString(beg_min));
             textView.setBackgroundResource(back_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
@@ -109,7 +101,6 @@ public class TimetableFragmentSinglePage extends Fragment {
         }
         tableLayout.addView(header);
 
-        final TimetableAdapter timetableAdapter = new TimetableAdapter(getContext(), days, id, type, periods, title);
         for (int i = 0; i < days.size(); i++) { //we are only interested in position not what is inside days
 
             TableRow tableRow = (TableRow) inflater.inflate(R.layout.timetable_row, null);
@@ -125,7 +116,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             String prev_time_string = "";
             int duplicates = 1;
             LinearLayout prev_item = null;
-            for (int j = 0; j < periods.size(); j++) {
+            for (int j = min_period; j <= max_period; j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(i, j);
                 String this_time_string = (String) item.getTag(R.string.time_string);
 

@@ -16,11 +16,12 @@ public class TimetableContract {
     public static String PATH_SUBJECT = "subject";
     public static final Uri SUBJECT_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_SUBJECT).build();
-    public static String PATH_FACULTY = "faculty";
+    public static String PATH_FACULTY = "Faculty";
     public static final Uri FACULTY_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).build();
     public static String PATH_CSF = "CSF";
     public static String PATH_ROOM = "room";
+    public static String PATH_MAX = "max";
     public static final Uri ROOM_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_ROOM).build();
     public static String PARAM_SLOT = "slot";
@@ -29,7 +30,7 @@ public class TimetableContract {
 
     public static String PATH_SCHOOL = "school";
     public static final Uri SCHOOL_CONTENT_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_SCHOOL).build();
-    public static String PATH_SECTION = "section";
+    public static String PATH_SECTION = "Section";
     public static final Uri SECTION_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
     public static String PATH_PROGRAM = "program";
@@ -44,6 +45,20 @@ public class TimetableContract {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).appendPath(Long.toString(section_id))
                 .appendQueryParameter(PARAM_DAY, Long.toString(day))
                 .appendQueryParameter(PARAM_SLOT, Long.toString(slot)).build();
+    }
+
+
+    public static Uri BuildMaxPeriodBySection(long section_id) {
+        return TT_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).
+                appendPath(PATH_MAX).
+                appendPath(Long.toString(section_id)).build();
+    }
+
+
+    public static Uri BuildMaxPeriodByFaculty(long faculty_id) {
+        return TT_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).
+                appendPath(PATH_MAX).
+                appendPath(Long.toString(faculty_id)).build();
     }
 
     public static Uri BuildSchool() {
@@ -64,6 +79,16 @@ public class TimetableContract {
         else if (TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.SECTION_BY_ID)
             return Long.parseLong(uri.getPathSegments().get(1));
         return -1;
+    }
+
+    public static long getSectionFromMaxPeriodUri(Uri uri)
+    {
+        return Long.parseLong(uri.getPathSegments().get(3));
+    }
+
+    public static long getFacultyFromMaxPeriodUri(Uri uri)
+    {
+        return Long.parseLong(uri.getPathSegments().get(3));
     }
 
     public static long getProgramFromUri(Uri uri) {

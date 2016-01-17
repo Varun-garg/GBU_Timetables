@@ -38,7 +38,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         this.context = context;
 
         Cursor c = this.getWritableDatabase().rawQuery("SELECT name from sqlite_master where type = 'table'", null);
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         if (c.moveToFirst()) {
             while (!c.isAfterLast()) {
                 //   Log.d(LOG_TAG,"Table Name => "+c.getString(0));

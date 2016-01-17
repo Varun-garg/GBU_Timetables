@@ -14,6 +14,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity
     public void onCreate(Bundle savedInstance) {
 
         super.onCreate(savedInstance);
+
+        //I know some methods below are deprecated but there is no alternative by google for API <11
+        //And my app's compatibility goes back to API 8, so I will use them anyway
+
         addPreferencesFromResource(R.xml.pref_general);
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_tt_display_type_key)));

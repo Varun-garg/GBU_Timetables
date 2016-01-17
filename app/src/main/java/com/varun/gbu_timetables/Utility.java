@@ -3,12 +3,9 @@ package com.varun.gbu_timetables;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.TypedArray;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.util.TypedValue;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)
@@ -34,59 +31,53 @@ public class Utility {
             return R.style.DarkTheme;
     }
 
-    public static Drawable getFavYes(Context context)
-    {
+    public static Drawable getFavYes(Context context) {
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
         else
             return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
     }
 
-    public static Drawable getFavNo(Context context)
-    {
+    public static Drawable getFavNo(Context context) {
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_white_24dp);
         else
             return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
     }
 
-    public static int getBackDrawable(Context context)
-    {
+    public static int getBackDrawable(Context context) {
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return R.drawable.back_light;
         else
             return R.drawable.back_dark;
     }
 
-    public static int getPinkDrawable(Context context)
-    {
+    public static int getPinkDrawable(Context context) {
 
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return R.drawable.pink_light;
         else
             return R.drawable.pink_dark;
     }
 
 
-    public static int getGreenDrawable(Context context)
-    {
+    public static int getGreenDrawable(Context context) {
 
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return R.drawable.green_light;
         else
             return R.drawable.green_dark;
     }
 
-    public static int getMarginDrawable(Context context)
-    {
+    public static int getMarginDrawable(Context context) {
 
         int theme_id = getThemeId(context);
-        if(theme_id == R.style.LightTheme)
+        if (theme_id == R.style.LightTheme)
             return R.drawable.margin_light;
         else
             return R.drawable.margin_dark;
@@ -129,5 +120,14 @@ public class Utility {
             return "Humanities and Social Sciences";
         else
             return src;
+    }
+
+    public static int getPeriodTitleNo(int Period_no)
+    {
+        //for period 1, we have 8 (8:30)
+        Period_no += 7;
+        if(Period_no > 12) //12 hr clock
+            Period_no -= 12;
+        return Period_no;
     }
 }
