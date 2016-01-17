@@ -52,8 +52,8 @@ public class AboutActivity extends AppCompatActivity {
         textView.append("Developed under guidance of Dr. Amit K. Awasthi\n\n");
         textView.append("Developed by Varun Garg <");
         textView.append(Html.fromHtml("<a href=\"mailto:varun.10@live.com\">varun.10@live.com</a>"));
-        textView.append(">\n");
-        textView.append("Released Under GPLv3 Licence\n\n");
+        textView.append(">\nThanks to CyanogenMod for MD5 library\n");
+        textView.append("Released Under GPLv3 Licence");
     }
 
     @Override

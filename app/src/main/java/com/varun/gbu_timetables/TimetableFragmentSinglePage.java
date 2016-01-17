@@ -91,8 +91,6 @@ public class TimetableFragmentSinglePage extends Fragment {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(cellParams);
             textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
-  //          beg_hr++;
-//            if (beg_hr == 13) beg_hr = 1;
             textView.append(Integer.toString(Utility.getPeriodTitleNo(i+1)) + ":" + Integer.toString(beg_min));
             textView.setBackgroundResource(back_id);
             textView.setTypeface(null, Typeface.BOLD);

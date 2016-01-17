@@ -34,6 +34,7 @@ public class TimetableFragmentPager extends Fragment {
     String type;
     HashMap<CSF_FAC_KEY, CSF> CSF_Details;
     ProgressDialog dialog;
+    int max_period, min_period;
 
     public TimetableFragmentPager() {
 
@@ -110,6 +111,8 @@ public class TimetableFragmentPager extends Fragment {
             }
             timetableAdapter = new TimetableAdapter(getContext(), days, id, type, title);
             CSF_Details = timetableAdapter.getCSFDetails();
+            max_period = (int) timetableAdapter.getMaxPeriods();
+            min_period = (int) timetableAdapter.getMinPeriods();
         }
 
         public int getCount() {
@@ -120,35 +123,33 @@ public class TimetableFragmentPager extends Fragment {
         public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
             final LinearLayout linearLayout = (LinearLayout) parent_view.findViewById(R.id.linear_layout);
-            int beg_hr = 8;
             int beg_min = 30;
             final ArrayList<LinearLayout> items_list = new ArrayList<>();
             String prev_time_string = "";
             int item_pos = -1;
             int repeat = 1;
-            int repeat_hr = 0;
-            for (int j = 0; j < periods.size(); j++) {
+            for (int j = min_period; j <= max_period; j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
                 HashSet<CSF_FAC_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
                 ArrayList<CSF_FAC_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
+                if(time_string.equals(""))
+                {
+                    repeat = 0;
+                    continue;
+                }
                 if (time_string.length() > 0 && time_string.equals(prev_time_string)) {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
-                    if (repeat_hr == 13) repeat_hr = 1;
-                    textView.setText(Integer.toString(repeat_hr) + ":" + Integer.toString(beg_min) + " - ");
-                    int end = repeat_hr + repeat;
-                    if (end == 13) end = 1;
-                    textView.append(Integer.toString(end) + ":" + Integer.toString(beg_min));
+                    textView.setText(Integer.toString(Utility.getPeriodTitleNo(j-repeat)) + ":" + Integer.toString(beg_min) + " - ");
+                    textView.append(Integer.toString(Utility.getPeriodTitleNo(j+1)) + ":" + Integer.toString(beg_min));
                     textView.setBackgroundResource(back_id);
                     textView.setTypeface(null, Typeface.BOLD);
                     textView.setPadding(10, 0, 0, 0);
-                    beg_hr++;
                     continue;
                 }
-                repeat = 1;
-                repeat_hr = beg_hr;
+                repeat = 0;
                 prev_time_string = time_string;
                 item_pos++;
                 final int final_item_pos = item_pos;
@@ -158,10 +159,8 @@ public class TimetableFragmentPager extends Fragment {
                 item_view.addView(item, layoutParams);
 
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
-                if (beg_hr == 13) beg_hr = 1;
-                textView.setText(Integer.toString(beg_hr) + ":" + Integer.toString(beg_min) + " - ");
-                textView.append(Integer.toString(beg_hr + 1) + ":" + Integer.toString(beg_min));
-                beg_hr++;
+                textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
+                textView.append(Integer.toString(Utility.getPeriodTitleNo(j+1)) + ":" + Integer.toString(beg_min));
                 textView.setBackgroundResource(back_id);
                 textView.setTypeface(null, Typeface.BOLD);
                 textView.setPadding(10, 0, 0, 0);
