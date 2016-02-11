@@ -29,7 +29,7 @@
 
     <string-array name="pref_theme_options">
         <item>Light Theme</item>
-        <item>DarkTheme</item>
+        <item>Dark Theme</item>
     </string-array>
 
     <string-array name="pref_theme_values">
