@@ -201,6 +201,7 @@ public class TimetableAdapter {
                             Cursor section_cursor = context.getContentResolver().query(section_uri, null, null, null, null);
                             section_cursor.moveToNext();
                             mCSF.Section_name = section_cursor.getString(section_cursor.getColumnIndex("Name")).trim();
+                            mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name,context);
                             section_cursor.close();
                         }
 

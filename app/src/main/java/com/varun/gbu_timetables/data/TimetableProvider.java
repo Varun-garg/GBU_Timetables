@@ -24,8 +24,7 @@ public class TimetableProvider extends ContentProvider {
     static final int SECTION_BY_ID = 108;
     static final int MAX_PERIOD_BY_SECTION = 109;
     static final int MAX_PERIOD_BY_FACULTY = 110;
-
-    static final int RELOAD_DB = 111;
+    static final int FULL_SECTION_NAME = 111;
 
     static final UriMatcher sUriMatcher = buildUriMatcher();
     private TimetableDbHelper mOpenHelper;
@@ -45,7 +44,7 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_PROGRAM + "/*", SECTIONS_BY_PROGRAM_ID);
         matcher.addURI(authority, TimetableContract.PATH_FACULTY, FACULTY);
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*", SECTION_BY_ID);
-        matcher.addURI(authority, TimetableContract.PATH_RELOAD_DB , RELOAD_DB);
+        matcher.addURI(authority, TimetableContract.PATH_FULL_SECTION_NAME , FULL_SECTION_NAME);
 
         return matcher;
     }
@@ -157,6 +156,13 @@ public class TimetableProvider extends ContentProvider {
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
+    private Cursor getFullSectionName(Uri uri)
+    {
+        String SectionCode = TimetableContract.getSectionCodeFromUri(uri);
+        String query = "Select _ROWID_ as _id, Name FROM Program where code = '" + SectionCode + "'";
+        return  mOpenHelper.getReadableDatabase().rawQuery(query,null);
+    }
+
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] SelectionArgs, String sortOrder) {
         Cursor retCursor;
@@ -194,9 +200,8 @@ public class TimetableProvider extends ContentProvider {
             case MAX_PERIOD_BY_SECTION:
                 retCursor = getMaxPeriodFromSection(uri);
                 break;
-            case RELOAD_DB:
-                reloadDb();
-                retCursor = null;
+            case FULL_SECTION_NAME:
+                retCursor = getFullSectionName(uri);
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

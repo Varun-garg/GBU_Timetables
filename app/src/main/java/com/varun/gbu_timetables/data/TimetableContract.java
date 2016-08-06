@@ -35,8 +35,15 @@ public class TimetableContract {
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
     public static String PATH_PROGRAM = "program";
 
-    public static String PATH_RELOAD_DB = "reload_db";
-    public static final Uri RELOAD_DB_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_RELOAD_DB).build();
+    public static String PATH_FULL_SECTION_NAME = "full_section_name";
+    public static String PARAM_NAME = "name";
+
+    public static final Uri BuildFullSectionName(String SectionCode) {
+        return BASE_CONTENT_URI.buildUpon().appendPath(PATH_FULL_SECTION_NAME)
+                .appendQueryParameter(PARAM_NAME,SectionCode)
+                .build();
+    }
+
 
     public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day, long slot) {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).appendPath(Long.toString(fac_id))
@@ -82,6 +89,10 @@ public class TimetableContract {
         else if (TimetableProvider.sUriMatcher.match(uri) == TimetableProvider.SECTION_BY_ID)
             return Long.parseLong(uri.getPathSegments().get(1));
         return -1;
+    }
+
+    public static String getSectionCodeFromUri(Uri uri) {
+        return uri.getQueryParameter(PARAM_NAME);
     }
 
     public static long getSectionFromMaxPeriodUri(Uri uri)

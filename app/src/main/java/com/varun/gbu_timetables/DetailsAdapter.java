@@ -48,7 +48,6 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
 
         if (type.equals("Faculty")) {
             fac_code.setText("Section");
-            mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name);
             fac_name.setText(mCSF.Section_name);
         }
         

@@ -60,7 +60,7 @@ public class SectionsFragment extends Fragment {
                 SchoolsFacultyAdapter.Common_type s = new SchoolsFacultyAdapter.Common_type();
                 s.id = program_cursor.getLong(program_cursor.getColumnIndex("section_id"));
                 s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
-                s.Name = Utility.getFullSectionName(s.Name);
+                s.Name = Utility.getFullSectionName(s.Name,getContext());
                 Sections.add(s);
             }
             program_cursor.close();
