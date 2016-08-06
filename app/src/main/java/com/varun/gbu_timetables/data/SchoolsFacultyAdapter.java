@@ -2,6 +2,7 @@ package com.varun.gbu_timetables.data;
 
 import android.content.Context;
 import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,9 @@ public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
     public SchoolsFacultyAdapter(Context context, List<String> listDataHeader,
                                  HashMap<String, List<Common_type>> listChildData) {
         this._context = context;
+
+        java.util.Collections.sort(listDataHeader); //sort schools alphabetically
+
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
     }
@@ -58,7 +62,9 @@ public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.list_child_tv);
 
+
         txtListChild.setText(childSection.Name);
+
         return convertView;
     }
 

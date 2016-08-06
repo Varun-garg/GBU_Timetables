@@ -1,7 +1,9 @@
 package com.varun.gbu_timetables;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -9,8 +11,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
     FetchDbTask fetchDbTask;
     int set_theme;
+    public static String ContentType_KEY = "NotificationContentType";
+    public static String Content_KEY = "NotificationContent";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +78,69 @@ public class MainActivity extends AppCompatActivity {
             set_theme = saved_theme;
             recreate();
         }
+
+        Bundle Extras = getIntent().getExtras();
+
+        if(Extras != null) { //explore notifications
+
+/*
+            Log.d(this.getClass().getSimpleName(),"Extras Data : " +  Extras.toString());
+
+            for (String key : Extras.keySet()) {
+                Object value = Extras.get(key);
+                Log.d(this.getClass().getSimpleName()
+                        , String.format("%s %s (%s)", key,
+                        value.toString(), value.getClass().getName()));
+            }
+
+
+            String BuildInfo = Extras.getString("BuildInfo"); //notifications are pushed into tray anyway
+            //no point to check if they were for debugging
+*/
+            String ContentType = Extras.getString(ContentType_KEY);
+            String Content = Extras.getString(Content_KEY);
+
+            if(ContentType != null && Content != null)
+            {
+                if(ContentType.equalsIgnoreCase("PlayStorePackage"))
+                {
+                    try {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Content)));
+                    } catch (android.content.ActivityNotFoundException e) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + Content)));
+                    }
+                }
+                else if(ContentType.equalsIgnoreCase("BrowserUrl"))
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Content)));
+                else if(ContentType.equalsIgnoreCase("MessageDialog"));
+                {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+                    builder1.setMessage(Html.fromHtml(Content));
+                    builder1.setCancelable(false);
+
+                    builder1.setPositiveButton(
+                            "Continue",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alertDialog = builder1.create();
+                    alertDialog.show();
+                }
+
+                //Our Work is Done, Now let's clear our bundle to prevent onResume to print same
+                // notifications each time app is opened
+
+                getIntent().removeExtra(ContentType_KEY);
+                getIntent().removeExtra(Content_KEY);
+
+            }
+
+
+        }
+
     }
 
     // Backwards compatible recreate().

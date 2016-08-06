@@ -15,12 +15,9 @@ public class CSF {
     public String Section_name;
 
     public CSF() {
-
     }
 
     public CSF(Long CSF_Id, Context context) {
         this.CSF_Id = CSF_Id;
-
-
     }
 }

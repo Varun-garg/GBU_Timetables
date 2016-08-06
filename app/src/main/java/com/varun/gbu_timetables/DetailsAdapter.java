@@ -42,12 +42,16 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
         fac_code.setText(mCSF.Fac_abbr);
 
         TextView fac_name = (TextView) convertView.findViewById(R.id.fac_name);
+
         fac_name.setText(mCSF.Fac_name);
+
 
         if (type.equals("Faculty")) {
             fac_code.setText("Section");
+            mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name);
             fac_name.setText(mCSF.Section_name);
         }
+        
         convertView.setTag(mCSF);
         return convertView;
     }

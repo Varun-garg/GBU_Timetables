@@ -3,13 +3,17 @@ package com.varun.gbu_timetables.data;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentProviderClient;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -95,7 +99,18 @@ public class FetchDbTask extends AsyncTask<Void, String, Integer> {
                 timetableDbHelper.copy_db(mContext, 1, downloaded_file_path);
                 File f = new File(downloaded_file_path);
                 f.delete();
-                publishProgress("Timetables Updates Successfully!");
+
+                /*Uri reloadDBUri = TimetableContract.RELOAD_DB_URI;
+                mContext.getContentResolver().query(reloadDBUri,null,null,null,null);
+                */
+
+                ContentResolver resolver = mContext.getContentResolver(); //no need of non working uri method - better way
+                ContentProviderClient client = resolver.acquireContentProviderClient(TimetableContract.CONTENT_AUTHORITY);
+                TimetableProvider provider = (TimetableProvider) client.getLocalContentProvider();
+                provider.reloadDb();
+                client.release();
+
+                publishProgress("Timetables Updated Successfully!");
                 return 1;
             } else {
                 publishProgress("Already upto date!");
@@ -120,12 +135,19 @@ public class FetchDbTask extends AsyncTask<Void, String, Integer> {
     protected void onPostExecute(Integer status) {
         if (status == 1) {
             if (!silent) {
+                /* Old code that restarted app
                 Intent mStartActivity = new Intent(mContext, MainActivity.class);
                 int mPendingIntentId = 123456;
                 PendingIntent mPendingIntent = PendingIntent.getActivity(mContext, mPendingIntentId, mStartActivity, PendingIntent.FLAG_CANCEL_CURRENT);
                 AlarmManager mgr = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
                 mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
                 System.exit(0);
+                */
+
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(intent);
+
             } else {
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(mContext)

@@ -35,6 +35,9 @@ public class TimetableContract {
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_SECTION).build();
     public static String PATH_PROGRAM = "program";
 
+    public static String PATH_RELOAD_DB = "reload_db";
+    public static final Uri RELOAD_DB_URI = BASE_CONTENT_URI.buildUpon().appendPath(PATH_RELOAD_DB).build();
+
     public static Uri BuildTTCellWithFacultyDaySlot(long fac_id, long day, long slot) {
         return TT_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).appendPath(Long.toString(fac_id))
                 .appendQueryParameter(PARAM_DAY, Long.toString(day))
@@ -131,4 +134,5 @@ public class TimetableContract {
     public static Long getRoomFromUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(1));
     }
+
 }

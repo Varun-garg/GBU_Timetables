@@ -18,6 +18,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         //I know some methods below are deprecated but there is no alternative by google for API <11
         //And my app's compatibility goes back to API 8, so I will use them anyway
 
+        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int set_theme = R.style.AppTheme;
+        if (set_theme != saved_theme)
+            setTheme(saved_theme);
+        this.setContentView(R.layout.settings_activity);
+
         addPreferencesFromResource(R.xml.pref_general);
 
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_tt_display_type_key)));

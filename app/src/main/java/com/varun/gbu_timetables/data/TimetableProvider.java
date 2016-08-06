@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 /**
  * varun.timetables_sql.data (Timetables_sql)
@@ -23,6 +24,8 @@ public class TimetableProvider extends ContentProvider {
     static final int SECTION_BY_ID = 108;
     static final int MAX_PERIOD_BY_SECTION = 109;
     static final int MAX_PERIOD_BY_FACULTY = 110;
+
+    static final int RELOAD_DB = 111;
 
     static final UriMatcher sUriMatcher = buildUriMatcher();
     private TimetableDbHelper mOpenHelper;
@@ -42,6 +45,7 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_PROGRAM + "/*", SECTIONS_BY_PROGRAM_ID);
         matcher.addURI(authority, TimetableContract.PATH_FACULTY, FACULTY);
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*", SECTION_BY_ID);
+        matcher.addURI(authority, TimetableContract.PATH_RELOAD_DB , RELOAD_DB);
 
         return matcher;
     }
@@ -49,6 +53,12 @@ public class TimetableProvider extends ContentProvider {
     public boolean onCreate() {
         mOpenHelper = new TimetableDbHelper(getContext());
         return true;
+    }
+
+    public void reloadDb()
+    {
+        mOpenHelper = new TimetableDbHelper(getContext());
+        Log.d(this.getClass().getSimpleName(), "DB Reloaded");
     }
 
     @Override
@@ -183,6 +193,10 @@ public class TimetableProvider extends ContentProvider {
                 break;
             case MAX_PERIOD_BY_SECTION:
                 retCursor = getMaxPeriodFromSection(uri);
+                break;
+            case RELOAD_DB:
+                reloadDb();
+                retCursor = null;
                 break;
             default:
                 throw new UnsupportedOperationException("Unknown uri: " + uri);

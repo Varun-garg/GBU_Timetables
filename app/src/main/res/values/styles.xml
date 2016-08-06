@@ -10,6 +10,7 @@
         <item name="app_bg">@color/app_bg</item>
         <item name="theme_green">@color/theme_green</item>
         <item name="theme_pink">@color/theme_pink</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -37,6 +38,9 @@
         <item name="app_bg">@color/app_bg_dark</item>
         <item name="theme_green">@color/theme_green_dark</item>
         <item name="theme_pink">@color/theme_pink_dark</item>
+
+        <item name="android:textColorSecondary">#f0f4c3</item>
+        <item name="android:textColorTertiary">#f0f4c3</item>
     </style>
 
 

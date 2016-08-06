@@ -130,4 +130,111 @@ public class Utility {
             Period_no -= 12;
         return Period_no;
     }
+
+    public static String getFullSectionName(String SectionCode)
+    {
+        String splitted[] = SectionCode.split("-");
+        String Year = null;
+        if (splitted.length >= 2)
+            Year = " (" + splitted[1] + ")";
+
+        switch (splitted[0])
+        {
+            case "CS":
+                return "B.Tech Computer Science" + Year;
+            case "EC":
+                return "B.Tech Electronics and Communication" + Year;
+            case "CE":
+                return "B.Tech Civil" + Year;
+            case "ME":
+                return "B.Tech Mechanical" + Year;
+            case "EE":
+                return "B.Tech Electrical" + Year;
+            case "MAM":
+                return "B.Tech M.Sc. (Applied Mathematics)" + Year;
+            case "MAP":
+                return "M.Sc. (Applied Physics)" + Year;
+            case "MAC":
+                return "M.Sc. (Applied Chemistry)" + Year;
+            case "MFS":
+                return "M.Sc. (Food Science)" + Year;
+            case "MES":
+                return "M.Sc. (Environmental Sciences)" + Year;
+            case "FT":
+                return "Food Tech and Proc" + Year;
+            case "BT":
+                return "Biotechnology (B.Tech)" + Year;
+            case "MTF":
+                return "M.Tech. (Food Technology)" + Year;
+            case "MTV":
+                return "M.Tech. (VLSI Design)" + Year;
+            case "MTW":
+                return "M.Tech. (Wireless Comm.)" + Year;
+            case "MTS":
+                return "M.Tech. (Software)" + Year;
+            case "MTCS":
+                return "M.Tech. (Computer Science)" + Year;
+            case "MTI":
+                return "M.Tech. (Intelligent ..?)" + Year;
+            case "MABS":
+                return "M.A. in Buddhist Studies and Civilization" + Year;
+            case "MBS":
+                return "M.Phil in Buddhist Studies and Civilization" + Year;
+            case "PBSC":
+                return "Ph.D. in Buddhist Studies and Civilization" + Year;
+            case "Ph.D.":
+                return "Ph.D. Applied Science" + Year;
+            case "MTI.":
+                return "M.Tech. Industrial Engineering and Mgmt" + Year;
+            case "MTB2":
+                return "M. Tech. (Biotechnology) (2 Years Program)" + Year;
+            case "MTB3.":
+                return "M. Tech. (Biotechnology) (3 Years Program)" + Year;
+            case "MAE":
+                return "M.A. (Economics Planning and Development)" + Year;
+            case "BALLB":
+                return "BA LLB" + Year;
+            case "MSW":
+                return "Masters in Social Works" + Year;
+            case "PhDICT.":
+                return "Ph.D. in ICT" + Year;
+            case "MTP":
+                return "M.Tech (Power System)" + Year;
+            case "IntMBA":
+                return "Integrated MBA" + Year;
+            case "MBA":
+                return "MBA" + Year;
+            case "MTD":
+                return "M.Tech (Design)" + Year;
+            case "MTT":
+                return "M.Tech (Thermal)" + Year;
+            case "PhDBT":
+                return "Ph.D. Biotechnology" + Year;
+            case "MTE":
+                return "M.Tech. (Embeded Systems)" + Year;
+            case "PhDMBA":
+                return "Ph.D. in Management" + Year;
+            case "MAAP":
+                return "M.A. (Applied Psychology)" + Year;
+            case "MCP":
+                return "M.Phil. (Clinical Psychology)" + Year;
+            case "MTPED":
+                return "M.Tech. (Power Electronics and Drives)" + Year;
+            case "MTM":
+                return "M.Tech. (Manufacturing)" + Year;
+            case "MTST":
+                return "M.Tech. (Structural)" + Year;
+            case "MTEN":
+                return "M.Tech. (Environmental)" + Year;
+            case "BARC":
+                return "B.Tech Architecture " + Year;
+            case "MURP":
+                return "Masters in Urban and Regional Planning" + Year;
+            case "BBLB":
+                return "BBA LLB" + Year;
+
+            default:
+                return SectionCode;
+        }
+    }
 }

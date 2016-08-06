@@ -56,6 +56,7 @@ public class FacultyFragment extends Fragment {
             SchoolsFacultyAdapter.Common_type ct = new SchoolsFacultyAdapter.Common_type();
             ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
             ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
+
             Header_data.add(school);
 
             List<SchoolsFacultyAdapter.Common_type> facultyList = Children_data.get(school);
@@ -86,6 +87,7 @@ public class FacultyFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
                 intent.putExtra("Type", "Faculty");
                 intent.putExtra("Faculty_id", s.id);
+
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
                 return false;

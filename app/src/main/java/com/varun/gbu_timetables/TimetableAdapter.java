@@ -189,6 +189,9 @@ public class TimetableAdapter {
                         mCSF.Sub_Code = Sub_Code;
                         mCSF.Sub_name = Sub_name;
 
+                        if(mCSF.Fac_abbr.equals("SS"))
+                            mCSF.Fac_abbr += " ADB";
+
                         if (timetable_type.equals(TimetableContract.PATH_SECTION)) {
                             mCSF.Section_id = timetable_id;
                             mCSF.Section_name = title;
