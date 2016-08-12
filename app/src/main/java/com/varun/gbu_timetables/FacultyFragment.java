@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,27 +30,27 @@ public class FacultyFragment extends Fragment {
     List<String> Header_data;
     HashMap<String, List<SchoolsFacultyAdapter.Common_type>> Children_data;
     ProgressDialog dialog;
+    SchoolsFacultyAdapter schoolsAdapter;
+
 
     public FacultyFragment() {
         Header_data = new ArrayList<>();
         Children_data = new HashMap<>();
-
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
         dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 
-        ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
         Uri Faculty_uri = TimetableContract.BuildFaculty();
         Cursor faculty_cursor = getContext().getContentResolver().query(Faculty_uri, null, null, null, null);
+
 
         while (faculty_cursor.moveToNext()) {
             String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
@@ -70,7 +71,16 @@ public class FacultyFragment extends Fragment {
         Header_data.clear();
         Header_data.addAll(hs);
 
-        SchoolsFacultyAdapter schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
+        schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
+        ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+
         schools_lv.setAdapter(schoolsAdapter);
 
         schools_lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -87,7 +97,6 @@ public class FacultyFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
                 intent.putExtra("Type", "Faculty");
                 intent.putExtra("Faculty_id", s.id);
-
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
                 dialog.dismiss();

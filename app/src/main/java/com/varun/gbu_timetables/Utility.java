@@ -149,6 +149,7 @@ public class Utility {
         Cursor cursor = context.getContentResolver().query(uri,null, null, null, null);
 
         if (!(cursor.moveToFirst()) || cursor.getCount() ==0){
+            cursor.close();
             return SectionCode;
         }
 
@@ -156,12 +157,14 @@ public class Utility {
 
             cursor.moveToFirst();
             String SectionFullName = cursor.getString(cursor.getColumnIndex("Name"));
+            cursor.close();
             return SectionFullName + Year;
         }
         catch (Exception e)
         {
             Log.d(Utility.class.getSimpleName(),e.toString());
             Log.d(Utility.class.getSimpleName(),"Dump :" + DatabaseUtils.dumpCursorToString(cursor));
+            cursor.close();
             return SectionCode;
         }
     }

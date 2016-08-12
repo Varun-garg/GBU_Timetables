@@ -41,10 +41,10 @@ public class SectionsFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
 
-        Log.d(this.getClass().getSimpleName(),"onCreate Called");
         dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
+
 
         Uri Schools_uri = TimetableContract.BuildSchool();
         Cursor schools_c = getContext().getContentResolver().query(Schools_uri, null, null, null, null);
@@ -74,15 +74,13 @@ public class SectionsFragment extends Fragment {
         Header_data.addAll(hs);
 
         schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
-
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        Log.d(this.getClass().getSimpleName(),"onCreateView Called");
-
         View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
 
         ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
@@ -104,6 +102,7 @@ public class SectionsFragment extends Fragment {
                 intent.putExtra("Section_id", s.id);
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
+                dialog.dismiss();
                 return false;
             }
         });

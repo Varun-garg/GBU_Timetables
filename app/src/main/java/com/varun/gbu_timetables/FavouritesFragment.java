@@ -106,6 +106,7 @@ public class FavouritesFragment extends Fragment {
                 else
                     intent.putExtra("Faculty_id", item.Id);
                 startActivity(intent);
+                dialog.dismiss();
             }
         });
 
