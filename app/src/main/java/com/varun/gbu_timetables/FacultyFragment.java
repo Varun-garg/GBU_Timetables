@@ -90,6 +90,7 @@ public class FacultyFragment extends Fragment {
 
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
+                dialog.dismiss();
                 return false;
             }
         });
