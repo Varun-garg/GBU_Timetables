@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
                 MainActivity.this));
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(2); // open page no 3
+        viewPager.setOffscreenPageLimit(2); // Cache all pages = N-1
         tabLayout.setupWithViewPager(viewPager);
 
         fetchDbTask = new FetchDbTask(getApplicationContext(), false);
@@ -204,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[]{"Programs", "Faculty", "Favourites"};
+        private String tabTitles[] = new String[]{"Sections", "Faculty", "Favourites"};
         private Context context;
 
         public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {

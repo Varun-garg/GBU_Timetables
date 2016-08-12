@@ -8,12 +8,12 @@ android {
         applicationId "com.varun.gbu_timetables"
         minSdkVersion 9 // need 9 with firebase messanging library otherwise use 7
         targetSdkVersion 23
-        versionCode 65
-        versionName "10.41"
+        versionCode 66
+        versionName "10.42"
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

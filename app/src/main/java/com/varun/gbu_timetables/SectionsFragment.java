@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ public class SectionsFragment extends Fragment {
     List<String> Header_data;
     HashMap<String, List<SchoolsFacultyAdapter.Common_type>> Children_data;
     ProgressDialog dialog;
+    SchoolsFacultyAdapter schoolsAdapter;
 
     public SectionsFragment() {
         Header_data = new ArrayList<>();
@@ -35,16 +37,15 @@ public class SectionsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
-
+        Log.d(this.getClass().getSimpleName(),"onCreate Called");
         dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 
-        ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
         Uri Schools_uri = TimetableContract.BuildSchool();
         Cursor schools_c = getContext().getContentResolver().query(Schools_uri, null, null, null, null);
 
@@ -72,7 +73,19 @@ public class SectionsFragment extends Fragment {
         Header_data.clear();
         Header_data.addAll(hs);
 
-        SchoolsFacultyAdapter schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
+        schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        Log.d(this.getClass().getSimpleName(),"onCreateView Called");
+
+        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
+
+        ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
         schools_lv.setAdapter(schoolsAdapter);
 
         schools_lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {

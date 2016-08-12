@@ -6,11 +6,13 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -46,10 +48,22 @@ public class FavouritesFragment extends Fragment {
         }.getType();
 
         String json = prefs.getString(existing_TAG, null);
-        if (json != null && json.length() > 0) {
-            existing_data = gson.fromJson(json, favourites_type);
-            no_elements = existing_data.size();
+        try {
+
+            if (json != null && json.length() > 0) {
+                existing_data = gson.fromJson(json, favourites_type);
+                no_elements = existing_data.size();
+            }
         }
+        catch (Exception e)
+        {
+            existing_data = new HashSet<>();
+            no_elements = 0;
+            String Message = "Fatal error: plz clear app data or reinstall this app from play store";
+            Toast.makeText(getContext(),e.toString(), Toast.LENGTH_LONG).show();
+            Log.d(this.getClass().getSimpleName(),e.toString());
+        }
+
         if (no_elements == 0)
             existing_data.add(empty);
 
