@@ -176,6 +176,7 @@ public class TimetableFragmentPager extends Fragment {
                 final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), current_csf_list, type);
                 final LinearLayout footer = (LinearLayout) parent_view.findViewById(R.id.footer_ll);
                 footer.setPadding(0,20,0,0);
+
                 item_view.setOnClickListener(new View.OnClickListener() {
                     LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -221,6 +222,11 @@ public class TimetableFragmentPager extends Fragment {
                         }
                     }
                 });
+
+                if(item_pos == 0) //first item , initially item_pos = -1 but it is incremented before it is reaches here first time
+                {
+                    item_view.performClick();//select first item by default in UI by "clicking" it
+                }
             }
             container.addView(parent_view);
             return parent_view;
