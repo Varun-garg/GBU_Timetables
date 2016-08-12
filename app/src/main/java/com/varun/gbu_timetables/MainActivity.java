@@ -1,15 +1,19 @@
 package com.varun.gbu_timetables;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.FetchDbTask;
@@ -28,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
     FetchDbTask fetchDbTask;
     int set_theme;
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    SampleFragmentPagerAdapter sampleFragmentPagerAdapter;
+
     public static String ContentType_KEY = "NotificationContentType";
     public static String Content_KEY = "NotificationContent";
 
@@ -41,24 +50,40 @@ public class MainActivity extends AppCompatActivity {
             setTheme(saved_theme);
         set_theme = saved_theme;
 
-        PACKAGE_NAME = getApplicationContext().getPackageName();
+        setContentView(R.layout.splash_screen);
+        ImageView imageView = (ImageView) findViewById(R.id.image_view);
+        imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo));
+
+        sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager(), MainActivity.this);
+
+        new Handler().postDelayed(new Runnable(){
+            @Override
+            public void run() {
+                MainWork();
+            }
+        }, 2000L);
+
+        fetchDbTask = new FetchDbTask(getApplicationContext(), false);
+        fetchDbTask.execute();
+    }
+
+
+    protected void MainWork()
+    {
+
         setContentView(R.layout.activity_main);
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        viewPager = (ViewPager) findViewById(R.id.pager);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
-                MainActivity.this));
+        viewPager.setAdapter(sampleFragmentPagerAdapter);
         viewPager.setCurrentItem(2); // open page no 3
         viewPager.setOffscreenPageLimit(2); // Cache all pages = N-1
         tabLayout.setupWithViewPager(viewPager);
 
-        fetchDbTask = new FetchDbTask(getApplicationContext(), false);
-        fetchDbTask.execute();
 
     }
 
@@ -233,5 +258,4 @@ public class MainActivity extends AppCompatActivity {
             return tabTitles[position];
         }
     }
-
 }
