@@ -1,6 +1,5 @@
-package com.varun.gbu_timetables.data;
+package com.varun.gbu_timetables.AsyncTasks;
 
-import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentProviderClient;
@@ -8,7 +7,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
@@ -19,6 +17,9 @@ import android.widget.Toast;
 
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.data.Database.TimetableDbHelper;
+import com.varun.gbu_timetables.data.Database.TimetableProvider;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 import org.json.JSONObject;
 
@@ -31,12 +32,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class FetchDbTask extends AsyncTask<Void, String, Integer> {
+public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
     private boolean silent = false;
 
-    public FetchDbTask(Context context, boolean silent) {
+    public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
         this.silent = silent;
     }

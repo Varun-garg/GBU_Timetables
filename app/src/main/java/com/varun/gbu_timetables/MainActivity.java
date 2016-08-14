@@ -1,6 +1,5 @@
 package com.varun.gbu_timetables;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,7 +7,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,19 +17,18 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.varun.gbu_timetables.data.FetchDbTask;
-import com.varun.gbu_timetables.data.UpdateService;
+import com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask;
+import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
 public class MainActivity extends AppCompatActivity {
     public static String PACKAGE_NAME;
-    FetchDbTask fetchDbTask;
+    UpdateDatabaseOnlineTask updateDatabaseOnlineTask;
     int set_theme;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -63,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 2000L);
 
-        fetchDbTask = new FetchDbTask(getApplicationContext(), false);
-        fetchDbTask.execute();
+        updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), false);
+        updateDatabaseOnlineTask.execute();
     }
 
 
@@ -188,15 +185,15 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_refresh) {
-            if (fetchDbTask.getStatus() == AsyncTask.Status.RUNNING) {
+            if (updateDatabaseOnlineTask.getStatus() == AsyncTask.Status.RUNNING) {
                 Toast toast = Toast.makeText(getApplicationContext(), "Refresh is already going on", Toast.LENGTH_LONG);
                 toast.show();
-            } else if (fetchDbTask.getStatus() == AsyncTask.Status.FINISHED) {
-                fetchDbTask = new FetchDbTask(getApplicationContext(), false);
-                fetchDbTask.execute();
+            } else if (updateDatabaseOnlineTask.getStatus() == AsyncTask.Status.FINISHED) {
+                updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), false);
+                updateDatabaseOnlineTask.execute();
             } else {
-                fetchDbTask.execute();
-                fetchDbTask = null;
+                updateDatabaseOnlineTask.execute();
+                updateDatabaseOnlineTask = null;
             }
             return true;
         }
@@ -220,12 +217,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Method to start the service
     public void startService() {
-        startService(new Intent(getBaseContext(), UpdateService.class));
+        startService(new Intent(getBaseContext(), UpdateDatabaseService.class));
     }
 
     // Method to stop the service
     public void stopService(View view) {
-        stopService(new Intent(getBaseContext(), UpdateService.class));
+        stopService(new Intent(getBaseContext(), UpdateDatabaseService.class));
     }
 
     public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {

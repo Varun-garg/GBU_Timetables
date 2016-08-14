@@ -6,14 +6,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
-import com.varun.gbu_timetables.data.SchoolsFacultyAdapter;
-import com.varun.gbu_timetables.data.TimetableContract;
+import com.varun.gbu_timetables.data.SectionsFacultyAdapter;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +26,9 @@ import java.util.Set;
 public class SectionsFragment extends Fragment {
 
     List<String> Header_data;
-    HashMap<String, List<SchoolsFacultyAdapter.Common_type>> Children_data;
+    HashMap<String, List<SectionsFacultyAdapter.Common_type>> Children_data;
     ProgressDialog dialog;
-    SchoolsFacultyAdapter schoolsAdapter;
+    SectionsFacultyAdapter schoolsAdapter;
 
     public SectionsFragment() {
         Header_data = new ArrayList<>();
@@ -55,10 +54,10 @@ public class SectionsFragment extends Fragment {
             Long Program_id = schools_c.getLong(schools_c.getColumnIndex("program_id"));
             Uri Program_uri = TimetableContract.BuildSectionWithProgramId(Program_id);
             Cursor program_cursor = getContext().getContentResolver().query(Program_uri, null, null, null, null);
-            List<SchoolsFacultyAdapter.Common_type> Sections = Children_data.get(school);
+            List<SectionsFacultyAdapter.Common_type> Sections = Children_data.get(school);
             if (Sections == null) Sections = new ArrayList<>();
             while (program_cursor.moveToNext()) {
-                SchoolsFacultyAdapter.Common_type s = new SchoolsFacultyAdapter.Common_type();
+                SectionsFacultyAdapter.Common_type s = new SectionsFacultyAdapter.Common_type();
                 s.id = program_cursor.getLong(program_cursor.getColumnIndex("section_id"));
                 s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
                 s.Name = Utility.getFullSectionName(s.Name,getContext());
@@ -73,7 +72,7 @@ public class SectionsFragment extends Fragment {
         Header_data.clear();
         Header_data.addAll(hs);
 
-        schoolsAdapter = new SchoolsFacultyAdapter(getContext(), Header_data, Children_data);
+        schoolsAdapter = new SectionsFacultyAdapter(getContext(), Header_data, Children_data);
     }
 
 
@@ -92,7 +91,7 @@ public class SectionsFragment extends Fragment {
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 String program = Header_data.get(groupPosition);
-                SchoolsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
+                SectionsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
 
                 dialog.setMessage("Loading " + s.Name);
                 dialog.show();

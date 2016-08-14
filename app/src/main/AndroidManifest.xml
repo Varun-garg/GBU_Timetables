@@ -24,7 +24,7 @@
         </activity>
 
         <provider
-            android:name=".data.TimetableProvider"
+            android:name=".data.Database.TimetableProvider"
             android:authorities="com.varun.gbu_timetables"
             android:enabled="true"
             android:exported="true" />
@@ -48,19 +48,10 @@
         </activity>
 
         <service
-            android:name=".data.UpdateService"
+            android:name=".service.UpdateDatabaseService"
             android:exported="false"
             android:icon="@mipmap/ic_launcher"
             android:process=":timetableUpdater" />
-
-        <receiver
-            android:name=".data.MyReciever"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
 
         <activity
             android:name=".AboutActivity"

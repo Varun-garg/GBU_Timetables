@@ -16,8 +16,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.data.CSF;
-import com.varun.gbu_timetables.data.CSF_FAC_KEY;
+import com.varun.gbu_timetables.data.Model.CSF;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_KEY;
 
 import java.util.ArrayList;
 import java.util.HashMap;

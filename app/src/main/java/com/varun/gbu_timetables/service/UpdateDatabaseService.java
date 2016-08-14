@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data;
+package com.varun.gbu_timetables.service;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
+import com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask;
+
 /**
  * com.varun.gbu_timetables.data (Timetables_sql)
  * Created by Varun garg <varun.10@live.com> on 1/9/2016 7:43 PM.
  */
-public class UpdateService extends Service {
+public class UpdateDatabaseService extends Service {
 
     /**
      * indicates how to behave if the service is killed
@@ -28,7 +30,7 @@ public class UpdateService extends Service {
      * indicates whether onRebind should be used
      */
     boolean mAllowRebind;
-    FetchDbTask fetchDbTask = null;
+    UpdateDatabaseOnlineTask updateDatabaseOnlineTask = null;
 
     /**
      * Called when the service is being created.
@@ -43,12 +45,12 @@ public class UpdateService extends Service {
      */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        if (fetchDbTask != null)
-            if (fetchDbTask.getStatus() == AsyncTask.Status.RUNNING)
+        if (updateDatabaseOnlineTask != null)
+            if (updateDatabaseOnlineTask.getStatus() == AsyncTask.Status.RUNNING)
                 return mStartMode;
 
-        fetchDbTask = new FetchDbTask(getApplicationContext(), true);
-        fetchDbTask.execute();
+        updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), true);
+        updateDatabaseOnlineTask.execute();
 
         mStartMode = Service.START_NOT_STICKY;
         return mStartMode;
@@ -84,7 +86,7 @@ public class UpdateService extends Service {
     @Override
     public void onDestroy() {
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        Intent serviceIntent = new Intent(getApplicationContext(), UpdateService.class);
+        Intent serviceIntent = new Intent(getApplicationContext(), UpdateDatabaseService.class);
         PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.set(AlarmManager.RTC_WAKEUP, 30000, pi);
 

@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data;
+package com.varun.gbu_timetables.data.Database;
 
 import android.annotation.TargetApi;
 import android.content.ContentProvider;

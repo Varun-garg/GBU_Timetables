@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.data.TimeTableBasic;
+import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 
 import java.util.ArrayList;
 

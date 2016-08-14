@@ -19164,7 +19164,7 @@ com.varun.gbu_timetables.FavouritesFragment -> com.varun.gbu_timetables.f:
     android.widget.ListView lv -> a
     com.varun.gbu_timetables.FavouritesAdapter favouritesAdapter -> b
     android.app.ProgressDialog dialog -> c
-    com.varun.gbu_timetables.data.TimeTableBasic empty -> d
+    com.varun.gbu_timetables.data.Model.TimeTableBasic empty -> d
     int no_elements -> no_elements
     30:37:void <init>() -> <init>
     40:69:java.util.ArrayList getFavourites() -> a
@@ -19180,7 +19180,7 @@ com.varun.gbu_timetables.FavouritesFragment$2 -> com.varun.gbu_timetables.h:
     92:107:void onItemClick(android.widget.AdapterView,android.view.View,int,long) -> onItemClick
 com.varun.gbu_timetables.MainActivity -> com.varun.gbu_timetables.MainActivity:
     java.lang.String PACKAGE_NAME -> i
-    com.varun.gbu_timetables.data.FetchDbTask fetchDbTask -> j
+    com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask fetchDbTask -> j
     int set_theme -> k
     java.lang.String ContentType_KEY -> l
     java.lang.String Content_KEY -> m
@@ -19235,7 +19235,7 @@ com.varun.gbu_timetables.TimetableActivity -> com.varun.gbu_timetables.Timetable
     java.lang.String message -> p
     22:32:void <init>() -> <init>
     35:39:void reload() -> l
-    42:55:com.varun.gbu_timetables.data.TimeTableBasic getCurrentBasic() -> k
+    42:55:com.varun.gbu_timetables.data.Model.TimeTableBasic getCurrentBasic() -> k
     60:130:void onCreate(android.os.Bundle) -> onCreate
     134:140:boolean onOptionsItemSelected(android.view.MenuItem) -> onOptionsItemSelected
     22:22:void access$000(com.varun.gbu_timetables.TimetableActivity) -> a
@@ -19341,7 +19341,7 @@ com.varun.gbu_timetables.Utility -> com.varun.gbu_timetables.v:
     112:129:java.lang.String getSchool(java.lang.String) -> a
     135:138:int getPeriodTitleNo(int) -> a
     143:165:java.lang.String getFullSectionName(java.lang.String,android.content.Context) -> a
-com.varun.gbu_timetables.data.CSF -> com.varun.gbu_timetables.data.a:
+com.varun.gbu_timetables.data.Model.CSF -> com.varun.gbu_timetables.data.a:
     java.lang.Long CSF_Id -> a
     java.lang.Long Fac_id -> b
     java.lang.String Fac_abbr -> c
@@ -19352,13 +19352,13 @@ com.varun.gbu_timetables.data.CSF -> com.varun.gbu_timetables.data.a:
     java.lang.String Section_name -> h
     17:18:void <init>() -> <init>
     20:22:void <init>(java.lang.Long,android.content.Context) -> <init>
-com.varun.gbu_timetables.data.CSF_FAC_KEY -> com.varun.gbu_timetables.data.b:
+com.varun.gbu_timetables.data.Model.CSF_FAC_KEY -> com.varun.gbu_timetables.data.b:
     java.lang.Long x -> x
     java.lang.Long y -> y
     8:11:void <init>(java.lang.Long,java.lang.Long) -> <init>
     23:26:boolean equals(java.lang.Object) -> equals
     31:33:int hashCode() -> hashCode
-com.varun.gbu_timetables.data.FetchDbTask -> com.varun.gbu_timetables.data.c:
+com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask -> com.varun.gbu_timetables.data.c:
     android.content.Context mContext -> mContext
     boolean silent -> silent
     37:42:void <init>(android.content.Context,boolean) -> <init>
@@ -19368,7 +19368,7 @@ com.varun.gbu_timetables.data.FetchDbTask -> com.varun.gbu_timetables.data.c:
     34:34:void onProgressUpdate(java.lang.Object[]) -> onProgressUpdate
     34:34:void onPostExecute(java.lang.Object) -> onPostExecute
     34:34:java.lang.Object doInBackground(java.lang.Object[]) -> doInBackground
-com.varun.gbu_timetables.data.Key -> com.varun.gbu_timetables.data.d:
+com.varun.gbu_timetables.data.Model.Key -> com.varun.gbu_timetables.data.d:
     int x -> x
     int y -> y
     8:11:void <init>(int,int) -> <init>
@@ -19381,12 +19381,12 @@ com.varun.gbu_timetables.data.MyReciever -> com.varun.gbu_timetables.data.MyReci
     long REPEAT_TIME -> REPEAT_TIME
     12:12:void <init>() -> <init>
     19:37:void onReceive(android.content.Context,android.content.Intent) -> onReceive
-com.varun.gbu_timetables.data.SchoolsFacultyAdapter -> com.varun.gbu_timetables.data.f:
+com.varun.gbu_timetables.data.SectionsFacultyAdapter -> com.varun.gbu_timetables.data.f:
     android.content.Context _context -> _context
     java.util.List _listDataHeader -> _listDataHeader
     java.util.HashMap _listDataChild -> _listDataChild
     30:37:void <init>(android.content.Context,java.util.List,java.util.HashMap) -> <init>
-    41:42:com.varun.gbu_timetables.data.SchoolsFacultyAdapter$Common_type getChild(int,int) -> a
+    41:42:com.varun.gbu_timetables.data.SectionsFacultyAdapter$Common_type getChild(int,int) -> a
     47:47:long getChildId(int,int) -> getChildId
     54:68:android.view.View getChildView(int,int,boolean,android.view.View,android.view.ViewGroup) -> getChildView
     73:74:int getChildrenCount(int) -> getChildrenCount
@@ -19397,18 +19397,18 @@ com.varun.gbu_timetables.data.SchoolsFacultyAdapter -> com.varun.gbu_timetables.
     111:111:boolean hasStableIds() -> hasStableIds
     116:116:boolean isChildSelectable(int,int) -> isChildSelectable
     22:22:java.lang.Object getChild(int,int) -> getChild
-com.varun.gbu_timetables.data.SchoolsFacultyAdapter$Common_type -> com.varun.gbu_timetables.data.g:
+com.varun.gbu_timetables.data.SectionsFacultyAdapter$Common_type -> com.varun.gbu_timetables.data.g:
     java.lang.Long id -> a
     java.lang.String Name -> b
     119:119:void <init>() -> <init>
-com.varun.gbu_timetables.data.TimeTableBasic -> com.varun.gbu_timetables.data.h:
+com.varun.gbu_timetables.data.Model.TimeTableBasic -> com.varun.gbu_timetables.data.h:
     java.lang.Long Id -> a
     java.lang.String Type -> b
     java.lang.String Title -> c
     9:9:void <init>() -> <init>
     17:24:boolean equals(java.lang.Object) -> equals
     30:30:int hashCode() -> hashCode
-com.varun.gbu_timetables.data.TimetableContract -> com.varun.gbu_timetables.data.i:
+com.varun.gbu_timetables.data.Database.TimetableContract -> com.varun.gbu_timetables.data.i:
     java.lang.String CONTENT_AUTHORITY -> a
     android.net.Uri BASE_CONTENT_URI -> b
     java.lang.String PATH_TIMETABLE -> c
@@ -19454,7 +19454,7 @@ com.varun.gbu_timetables.data.TimetableContract -> com.varun.gbu_timetables.data
     142:142:java.lang.Long getCSFfromUri(android.net.Uri) -> i
     146:146:java.lang.Long getRoomFromUri(android.net.Uri) -> j
     11:39:void <clinit>() -> <clinit>
-com.varun.gbu_timetables.data.TimetableDbHelper -> com.varun.gbu_timetables.data.j:
+com.varun.gbu_timetables.data.Database.TimetableDbHelper -> com.varun.gbu_timetables.data.j:
     java.lang.String DB_VERSION_PATH -> a
     java.lang.String DB_MD5_PATH -> b
     android.content.Context context -> c
@@ -19466,9 +19466,9 @@ com.varun.gbu_timetables.data.TimetableDbHelper -> com.varun.gbu_timetables.data
     117:118:void onCreate(android.database.sqlite.SQLiteDatabase) -> onCreate
     123:123:void onUpgrade(android.database.sqlite.SQLiteDatabase,int,int) -> onUpgrade
     27:28:void <clinit>() -> <clinit>
-com.varun.gbu_timetables.data.TimetableProvider -> com.varun.gbu_timetables.data.TimetableProvider:
+com.varun.gbu_timetables.data.Database.TimetableProvider -> com.varun.gbu_timetables.data.Database.TimetableProvider:
     android.content.UriMatcher sUriMatcher -> a
-    com.varun.gbu_timetables.data.TimetableDbHelper mOpenHelper -> mOpenHelper
+    com.varun.gbu_timetables.data.Database.TimetableDbHelper mOpenHelper -> mOpenHelper
     15:15:void <init>() -> <init>
     33:49:android.content.UriMatcher buildUriMatcher() -> a
     53:54:boolean onCreate() -> onCreate
@@ -19492,11 +19492,11 @@ com.varun.gbu_timetables.data.TimetableProvider -> com.varun.gbu_timetables.data
     226:226:int delete(android.net.Uri,java.lang.String,java.lang.String[]) -> delete
     232:234:void shutdown() -> shutdown
     29:29:void <clinit>() -> <clinit>
-com.varun.gbu_timetables.data.UpdateService -> com.varun.gbu_timetables.data.UpdateService:
+com.varun.gbu_timetables.service.UpdateDatabaseService -> com.varun.gbu_timetables.service.UpdateDatabaseService:
     int mStartMode -> a
     android.os.IBinder mBinder -> b
     boolean mAllowRebind -> c
-    com.varun.gbu_timetables.data.FetchDbTask fetchDbTask -> d
+    com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask fetchDbTask -> d
     15:31:void <init>() -> <init>
     39:39:void onCreate() -> onCreate
     46:54:int onStartCommand(android.content.Intent,int,int) -> onStartCommand

@@ -1,0 +1,9 @@
+1) Possible update crash solution: https://stackoverflow.com/questions/16563916/proguard-issue-while-using-gson
+
+2) Work more refactoring (Check if subdirectories are possible in drawable)
+
+3) Move Possible code to timetable directory, and seperate out loading screen, about, settings as much as possible
+
+4) Fix issues with ui, dark theme
+
+5) Push these changes to play store and start working on other modules

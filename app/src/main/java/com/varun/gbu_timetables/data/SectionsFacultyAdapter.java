@@ -19,15 +19,15 @@ import java.util.List;
 Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/android-expandable-list-view-tutorial/
 */
 
-public class SchoolsFacultyAdapter extends BaseExpandableListAdapter {
+public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
 
 
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, List<Common_type>> _listDataChild;
 
-    public SchoolsFacultyAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, List<Common_type>> listChildData) {
+    public SectionsFacultyAdapter(Context context, List<String> listDataHeader,
+                                  HashMap<String, List<Common_type>> listChildData) {
         this._context = context;
 
         java.util.Collections.sort(listDataHeader); //sort schools alphabetically

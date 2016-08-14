@@ -12,7 +12,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.database.DatabaseUtilsCompat;
 import android.util.Log;
 
-import com.varun.gbu_timetables.data.TimetableContract;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)
@@ -57,18 +57,18 @@ public class Utility {
     public static int getBackDrawable(Context context) {
         int theme_id = getThemeId(context);
         if (theme_id == R.style.LightTheme)
-            return R.drawable.back_light;
+            return R.drawable.bg_box_default_light;
         else
-            return R.drawable.back_dark;
+            return R.drawable.bg_box_default_dark;
     }
 
     public static int getPinkDrawable(Context context) {
 
         int theme_id = getThemeId(context);
         if (theme_id == R.style.LightTheme)
-            return R.drawable.pink_light;
+            return R.drawable.bg_box_pink_light;
         else
-            return R.drawable.pink_dark;
+            return R.drawable.bg_box_pink_dark;
     }
 
 
@@ -76,9 +76,9 @@ public class Utility {
 
         int theme_id = getThemeId(context);
         if (theme_id == R.style.LightTheme)
-            return R.drawable.green_light;
+            return R.drawable.bg_box_green_light;
         else
-            return R.drawable.green_dark;
+            return R.drawable.bg_box_green_dark;
     }
 
     public static int getMarginDrawable(Context context) {
