@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/16563916/proguard-issue-while-using-gson
