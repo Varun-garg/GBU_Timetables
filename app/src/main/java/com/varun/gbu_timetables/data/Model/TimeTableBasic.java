@@ -19,6 +19,18 @@ public class TimeTableBasic {
     @SerializedName(value = "Title",alternate={"c"})
     private String Title;
 
+    public TimeTableBasic(Long Id, String Type, String Title)
+    {
+        this.Id = Id;
+        this.Type = Type;
+        this.Title = Title;
+    }
+
+    public TimeTableBasic()
+    {
+
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

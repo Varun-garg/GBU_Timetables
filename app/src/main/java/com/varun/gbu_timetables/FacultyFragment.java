@@ -26,30 +26,25 @@ import java.util.Set;
 public class FacultyFragment extends Fragment {
 
 
-    List<String> Header_data;
-    HashMap<String, List<SectionsFacultyAdapter.Common_type>> Children_data;
-    ProgressDialog dialog;
+    List<String> HeaderListData;
+    HashMap<String, List<SectionsFacultyAdapter.Common_type>> ChildrenListData;
+    ProgressDialog progressDialog;
     SectionsFacultyAdapter schoolsAdapter;
-
-
-    public FacultyFragment() {
-        Header_data = new ArrayList<>();
-        Children_data = new HashMap<>();
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
+        progressDialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
+        progressDialog.setCancelable(false);
+        progressDialog.setInverseBackgroundForced(false);
+
+        HeaderListData = new ArrayList<>();
+        ChildrenListData = new HashMap<>();
 
         Uri Faculty_uri = TimetableContract.BuildFaculty();
         Cursor faculty_cursor = getContext().getContentResolver().query(Faculty_uri, null, null, null, null);
-
 
         while (faculty_cursor.moveToNext()) {
             String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
@@ -57,20 +52,20 @@ public class FacultyFragment extends Fragment {
             ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
             ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
 
-            Header_data.add(school);
+            HeaderListData.add(school);
 
-            List<SectionsFacultyAdapter.Common_type> facultyList = Children_data.get(school);
+            List<SectionsFacultyAdapter.Common_type> facultyList = ChildrenListData.get(school);
             if (facultyList == null) facultyList = new ArrayList<>();
             facultyList.add(ct);
-            Children_data.put(school, facultyList);
+            ChildrenListData.put(school, facultyList);
         }
         faculty_cursor.close();
 
-        Set<String> hs = new LinkedHashSet<>(Header_data); // now we remove duplicates
-        Header_data.clear();
-        Header_data.addAll(hs);
+        Set<String> hs = new LinkedHashSet<>(HeaderListData); // now we remove duplicates
+        HeaderListData.clear();
+        HeaderListData.addAll(hs);
 
-        schoolsAdapter = new SectionsFacultyAdapter(getContext(), Header_data, Children_data);
+        schoolsAdapter = new SectionsFacultyAdapter(getContext(), HeaderListData, ChildrenListData);
     }
 
     @Override
@@ -87,18 +82,17 @@ public class FacultyFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                String program = Header_data.get(groupPosition);
-                SectionsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
+                String program = HeaderListData.get(groupPosition);
+                SectionsFacultyAdapter.Common_type s = ChildrenListData.get(program).get(childPosition);
 
-                dialog.setMessage("Loading " + s.Name);
-                dialog.show();
+                progressDialog.setMessage("Loading " + s.Name);
+                progressDialog.show();
 
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
                 intent.putExtra("Type", "Faculty");
                 intent.putExtra("Faculty_id", s.id);
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
-                dialog.dismiss();
                 return false;
             }
         });
@@ -109,6 +103,6 @@ public class FacultyFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        dialog.hide();
+        progressDialog.dismiss();
     }
 }

@@ -24,23 +24,26 @@ import java.util.HashSet;
 
 public class FavouritesFragment extends Fragment {
 
-    ListView lv;
+    ListView listView;
     FavouritesAdapter favouritesAdapter;
-    ProgressDialog dialog;
-    TimeTableBasic empty;
-    private int no_elements = 0;
+    ProgressDialog progressDialog;
+    TimeTableBasic emptyTimeTableBasic;
+    private int ElementsCount = 0;
+    ArrayList<TimeTableBasic> FavouritesList;
 
-    public FavouritesFragment() {
-        empty = new TimeTableBasic();
-        empty.setTitle("No Favourites Yet.");
-        empty.setId(Long.valueOf(0));
-        empty.setType("");
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        emptyTimeTableBasic = new TimeTableBasic();
+        emptyTimeTableBasic.setTitle("No Favourites Yet.");
+        emptyTimeTableBasic.setId(Long.valueOf(0));
+        emptyTimeTableBasic.setType("");
+        FavouritesList = new ArrayList<>();
     }
 
     public ArrayList<TimeTableBasic> getFavourites() {
         HashSet<TimeTableBasic> existing_data = new HashSet<>();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-
 
         Gson gson = new Gson();
         String existing_TAG = "favourites";
@@ -52,29 +55,26 @@ public class FavouritesFragment extends Fragment {
 
             if (json != null && json.length() > 0) {
                 existing_data = gson.fromJson(json, favourites_type);
-                no_elements = existing_data.size();
+                ElementsCount = existing_data.size();
             }
         }
         catch (Exception e)
         {
             existing_data = new HashSet<>();
-            no_elements = 0;
-            String Message = "Fatal error: plz clear app data or reinstall this app from play store";
+            ElementsCount = 0;
+            String Message = "Fatal error: plz screenshot next messages and mail them to varun.10@live.com. Thank you.";
             Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
             Message = "Old Data " + json;
             Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
-            existing_data.add(empty);
+            existing_data.add(emptyTimeTableBasic);
             json = gson.toJson(existing_data);
             Message = "New Format " + json;
             Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
             Log.d(this.getClass().getSimpleName(),e.toString());
         }
 
-        if (no_elements == 0)
-            existing_data.add(empty);
-
-        Toast.makeText(getContext(),"JSON = " + json, Toast.LENGTH_LONG).show();
-
+        if (ElementsCount == 0)
+            existing_data.add(emptyTimeTableBasic);
 
         ArrayList<TimeTableBasic> existing_data_list = new ArrayList<>(existing_data);
         return existing_data_list;
@@ -83,29 +83,27 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View rootView = inflater.inflate(R.layout.favourites, container, false);
-        lv = (ListView) rootView.findViewById(R.id.listView);
+        listView = (ListView) rootView.findViewById(R.id.listView);
+        favouritesAdapter = new FavouritesAdapter(getContext(),FavouritesList);
+        listView.setAdapter(favouritesAdapter);
 
-        ArrayList<TimeTableBasic> existing_data_list = getFavourites();
+        progressDialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
+        progressDialog.setCancelable(false);
+        progressDialog.setInverseBackgroundForced(false);
 
-        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
-
-        favouritesAdapter = new FavouritesAdapter(getContext(), existing_data_list);
-        lv.setAdapter(favouritesAdapter);
-
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView = (ListView) rootView.findViewById(R.id.listView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-
-                if (no_elements == 0)
+                if (ElementsCount == 0)
                     return;
 
                 TimeTableBasic item = (TimeTableBasic) view.getTag();
-                dialog.setMessage("Loading " + item.getTitle());
-                dialog.show();
+                progressDialog.setMessage("Loading " + item.getTitle());
+                progressDialog.show();
 
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
                 intent.putExtra("Type", item.getType());
@@ -115,7 +113,6 @@ public class FavouritesFragment extends Fragment {
                 else
                     intent.putExtra("Faculty_id", item.getId());
                 startActivity(intent);
-                dialog.dismiss();
             }
         });
 
@@ -125,14 +122,16 @@ public class FavouritesFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        dialog.hide();
+        progressDialog.dismiss();
 
-        ArrayList<TimeTableBasic> existing_data_list = getFavourites();
-        favouritesAdapter.clear();
-        for (int i = 0; i < existing_data_list.size(); i++) {
-            TimeTableBasic item = existing_data_list.get(i);
+        FavouritesList = getFavourites();
+        favouritesAdapter.clear(); //clear previous data
+
+        for (int i = 0; i < FavouritesList.size(); i++) { //add all requires api 11
+            TimeTableBasic item = FavouritesList.get(i);
             favouritesAdapter.add(item);
         }
+
         favouritesAdapter.notifyDataSetChanged();
     }
 

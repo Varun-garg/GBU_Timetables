@@ -25,36 +25,33 @@ import java.util.Set;
  */
 public class SectionsFragment extends Fragment {
 
-    List<String> Header_data;
-    HashMap<String, List<SectionsFacultyAdapter.Common_type>> Children_data;
-    ProgressDialog dialog;
+    List<String> HeaderListData;
+    HashMap<String, List<SectionsFacultyAdapter.Common_type>> ChildrenListData;
+    ProgressDialog progressDialog;
     SectionsFacultyAdapter schoolsAdapter;
-
-    public SectionsFragment() {
-        Header_data = new ArrayList<>();
-        Children_data = new HashMap<>();
-    }
-
+    
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
 
-        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
-        dialog.setCancelable(false);
-        dialog.setInverseBackgroundForced(false);
+        progressDialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
+        progressDialog.setCancelable(false);
+        progressDialog.setInverseBackgroundForced(false);
 
+        HeaderListData = new ArrayList<>();
+        ChildrenListData = new HashMap<>();
 
         Uri Schools_uri = TimetableContract.BuildSchool();
         Cursor schools_c = getContext().getContentResolver().query(Schools_uri, null, null, null, null);
 
         while (schools_c.moveToNext()) {
             String school = schools_c.getString(schools_c.getColumnIndex("school"));
-            Header_data.add(school);
+            HeaderListData.add(school);
             Long Program_id = schools_c.getLong(schools_c.getColumnIndex("program_id"));
             Uri Program_uri = TimetableContract.BuildSectionWithProgramId(Program_id);
             Cursor program_cursor = getContext().getContentResolver().query(Program_uri, null, null, null, null);
-            List<SectionsFacultyAdapter.Common_type> Sections = Children_data.get(school);
+            List<SectionsFacultyAdapter.Common_type> Sections = ChildrenListData.get(school);
             if (Sections == null) Sections = new ArrayList<>();
             while (program_cursor.moveToNext()) {
                 SectionsFacultyAdapter.Common_type s = new SectionsFacultyAdapter.Common_type();
@@ -64,18 +61,16 @@ public class SectionsFragment extends Fragment {
                 Sections.add(s);
             }
             program_cursor.close();
-            Children_data.put(school, Sections);
+            ChildrenListData.put(school, Sections);
         }
         schools_c.close();
 
-        Set<String> hs = new LinkedHashSet<>(Header_data); // now we remove duplicates
-        Header_data.clear();
-        Header_data.addAll(hs);
+        Set<String> hs = new LinkedHashSet<>(HeaderListData); // now we remove duplicates
+        HeaderListData.clear();
+        HeaderListData.addAll(hs);
 
-        schoolsAdapter = new SectionsFacultyAdapter(getContext(), Header_data, Children_data);
+        schoolsAdapter = new SectionsFacultyAdapter(getContext(), HeaderListData, ChildrenListData);
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,18 +85,17 @@ public class SectionsFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                String program = Header_data.get(groupPosition);
-                SectionsFacultyAdapter.Common_type s = Children_data.get(program).get(childPosition);
+                String program = HeaderListData.get(groupPosition);
+                SectionsFacultyAdapter.Common_type s = ChildrenListData.get(program).get(childPosition);
 
-                dialog.setMessage("Loading " + s.Name);
-                dialog.show();
+                progressDialog.setMessage("Loading " + s.Name);
+                progressDialog.show();
 
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
                 intent.putExtra("Type", "Section");
                 intent.putExtra("Section_id", s.id);
                 intent.putExtra("Timetable_title", s.Name);
                 startActivity(intent);
-                dialog.dismiss();
                 return false;
             }
         });
@@ -112,6 +106,6 @@ public class SectionsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        dialog.hide();
+        progressDialog.dismiss();
     }
 }
