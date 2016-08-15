@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -39,25 +38,25 @@ public class TimetableActivity extends AppCompatActivity {
     }
 
     public TimeTableBasic getCurrentBasic() {
-        String title = getIntent().getExtras().getString("Timetable_title");
-        String type = getIntent().getExtras().getString("Type");
-        Long id = null;
-        if (type.equals("Section")) {
-            id = getIntent().getExtras().getLong("Section_id");
-        } else if (type.equals("Faculty")) {
-            id = getIntent().getExtras().getLong("Faculty_id");
+        String Title = getIntent().getExtras().getString("Timetable_title");
+        String Type = getIntent().getExtras().getString("Type");
+        Long Id = null;
+        if (Type.equals("Section")) {
+            Id = getIntent().getExtras().getLong("Section_id");
+        } else if (Type.equals("Faculty")) {
+            Id = getIntent().getExtras().getLong("Faculty_id");
         }
 
         TimeTableBasic info = new TimeTableBasic();
-        info.Title = title;
-        info.Id = id;
-        info.Type = type;
+        info.setTitle(Title);
+        info.setId(Id);
+        info.setType(Type);
         return info;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         setTheme(saved_theme);
 
         super.onCreate(savedInstanceState);
@@ -91,8 +90,8 @@ public class TimetableActivity extends AppCompatActivity {
         TimeTableBasic info = getCurrentBasic();
         reload();
 
-        final Drawable fav_yes = Utility.getFavYes(getApplicationContext());
-        final Drawable fav_no = Utility.getFavNo(getApplicationContext());
+        final Drawable fav_yes = Utility.ThemeTools.FavouriteIcon.getFavYes(getApplicationContext());
+        final Drawable fav_no = Utility.ThemeTools.FavouriteIcon.getFavNo(getApplicationContext());
 
         final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 

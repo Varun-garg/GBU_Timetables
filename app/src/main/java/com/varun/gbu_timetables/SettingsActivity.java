@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatPreferenceActivity
@@ -16,9 +15,9 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         super.onCreate(savedInstance);
 
         //I know some methods below are deprecated but there is no alternative by google for API <11
-        //And my app's compatibility goes back to API 8, so I will use them anyway
+        //And my app's compatibility goes BgBoxDefault to API 8, so I will use them anyway
 
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         int set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
             setTheme(saved_theme);

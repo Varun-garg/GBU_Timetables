@@ -1,11 +1,11 @@
 package com.varun.gbu_timetables.data.Model;
 
-public class Key {
+public class PairKey {
 
     private final int x;
     private final int y;
 
-    public Key(int x, int y) {
+    public PairKey(int x, int y) {
         this.x = x;
         this.y = y;
     }
@@ -13,8 +13,8 @@ public class Key {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Key)) return false;
-        Key key = (Key) o;
+        if (!(o instanceof PairKey)) return false;
+        PairKey key = (PairKey) o;
         return x == key.x && y == key.y;
     }
 

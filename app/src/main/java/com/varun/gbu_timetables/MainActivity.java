@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
             setTheme(saved_theme);
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
 
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         if (set_theme != saved_theme) {
             setTheme(saved_theme);
             set_theme = saved_theme;

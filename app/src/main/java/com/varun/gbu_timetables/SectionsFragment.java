@@ -40,7 +40,7 @@ public class SectionsFragment extends Fragment {
     {
         super.onCreate(savedInstanceState);
 
-        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 

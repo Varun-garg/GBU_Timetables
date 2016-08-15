@@ -59,7 +59,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                publishProgress("An error occurred");
+                publishProgress("Update Failed: An internet error occurred");
                 return -1;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -118,7 +118,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 return 0;
             }
         } catch (Exception e) {
-            publishProgress("An error occurred!");
+            publishProgress("Update Failed: An internet error occurred");
             Log.d("error", e.toString());
         }
         return 0;

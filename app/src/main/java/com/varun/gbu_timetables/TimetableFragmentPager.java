@@ -17,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.data.Model.CSF;
-import com.varun.gbu_timetables.data.Model.CSF_FAC_KEY;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,7 +32,7 @@ public class TimetableFragmentPager extends Fragment {
     String[] day_names = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
     String title;
     String type;
-    HashMap<CSF_FAC_KEY, CSF> CSF_Details;
+    HashMap<CSF_FAC_MAP_KEY, CSF> CSF_Details;
     ProgressDialog dialog;
     int max_period, min_period;
 
@@ -46,7 +46,7 @@ public class TimetableFragmentPager extends Fragment {
         title = getActivity().getIntent().getExtras().getString("Timetable_title");
         getActivity().setTitle(title);
 
-        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 
@@ -88,7 +88,7 @@ public class TimetableFragmentPager extends Fragment {
         ArrayList<Integer> periods;
         Long id;
         TimetableAdapter timetableAdapter;
-        int back_id;
+        int BgBoxDefault_id;
         int margin_id;
 
         public TimetablePagerAdapter(Context context) {
@@ -96,8 +96,8 @@ public class TimetableFragmentPager extends Fragment {
             mLayoutInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             days = new ArrayList<>();
             periods = new ArrayList<>();
-            back_id = Utility.getBackDrawable(context);
-            margin_id = Utility.getMarginDrawable(context);
+            BgBoxDefault_id = Utility.ThemeTools.BackgroundIcons.getBgBoxDefaultDrawable(context);
+            margin_id = Utility.ThemeTools.getMarginDrawable(context);
             for (int i = 1; i <= 7; i++) {
                 days.add(i);
             }
@@ -130,8 +130,8 @@ public class TimetableFragmentPager extends Fragment {
             int repeat = 1;
             for (int j = min_period; j <= max_period; j++) {
                 LinearLayout item = (LinearLayout) timetableAdapter.getView(position, j);
-                HashSet<CSF_FAC_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
-                ArrayList<CSF_FAC_KEY> keys = new ArrayList<>(key_hashmap);
+                HashSet<CSF_FAC_MAP_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
+                ArrayList<CSF_FAC_MAP_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
                 if(time_string.equals(""))
                 {
@@ -159,7 +159,7 @@ public class TimetableFragmentPager extends Fragment {
                 TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
                 textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
                 textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
-                textView.setBackgroundResource(back_id);
+                textView.setBackgroundResource(BgBoxDefault_id);
                 textView.setTypeface(null, Typeface.BOLD);
                 textView.setPadding(0, 15, 0, 15);
 
@@ -186,7 +186,7 @@ public class TimetableFragmentPager extends Fragment {
                         for (int i = 0; i < current_csf_list.size(); i++) {
                             final View detail_item = detailsAdapter.getView(i, null, null);
                             detail_item.setPadding(20, 0, 20, 0);
-                            detail_item.setBackgroundResource(back_id);
+                            detail_item.setBackgroundResource(BgBoxDefault_id);
                             detail_item.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {

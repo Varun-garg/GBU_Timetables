@@ -35,7 +35,7 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
         TimeTableBasic info = getItem(position);
 
         TextView textView = (TextView) convertView.findViewById(R.id.textview);
-        textView.setText(info.Title);
+        textView.setText(info.getTitle());
 
         convertView.setTag(info);
         return convertView;

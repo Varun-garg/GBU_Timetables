@@ -2,15 +2,22 @@ package com.varun.gbu_timetables.data.Model;
 
 import android.util.Log;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * com.varun.gbu_timetables.data (Timetables_sql)
  * Created by Varun garg <varun.10@live.com> on 1/3/2016 5:11 PM.
  */
 public class TimeTableBasic {
 
-    public Long Id;
-    public String Type;
-    public String Title;
+    @SerializedName(value = "Id",alternate={"a"}) // alternates a,b,c to fix recent regression issues
+    private Long Id;
+
+    @SerializedName(value = "Type",alternate={"b"})
+    private String Type;
+
+    @SerializedName(value = "Title",alternate={"c"})
+    private String Title;
 
     @Override
     public boolean equals(Object o) {
@@ -29,4 +36,35 @@ public class TimeTableBasic {
     public int hashCode() {
         return Type.hashCode() + Id.hashCode();
     }
+
+    public long getId()
+    {
+        return Id;
+    }
+
+    public String getTitle()
+    {
+        return Title;
+    }
+
+    public String getType()
+    {
+        return Type;
+    }
+
+    public void setId(Long Id)
+    {
+        this.Id = Id;
+    }
+
+    public void setTitle(String Title)
+    {
+        this.Title = Title;
+    }
+
+    public void setType(String Type)
+    {
+        this.Type = Type;
+    }
+
 }

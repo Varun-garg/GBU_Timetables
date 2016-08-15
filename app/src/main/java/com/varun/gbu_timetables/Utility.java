@@ -9,7 +9,6 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.database.DatabaseUtilsCompat;
 import android.util.Log;
 
 import com.varun.gbu_timetables.data.Database.TimetableContract;
@@ -20,90 +19,89 @@ import com.varun.gbu_timetables.data.Database.TimetableContract;
  */
 public class Utility {
 
-    public static int getThemeId(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    public static class ThemeTools
+    {
 
-        String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0");
-        if (theme.equals("0"))
-            return R.style.LightTheme;
-        else
-            return R.style.DarkTheme;
-    }
+        public static int getThemeId(Context context) {
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
+            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0");
+            if (theme.equals("0"))
+                return R.style.LightTheme;
+            else
+                return R.style.DarkTheme;
+        }
 
-    public static int getThemeId(String theme) {
-        if (theme.equals("0"))
-            return R.style.LightTheme;
-        else
-            return R.style.DarkTheme;
-    }
+        public static int getMarginDrawable(Context context) {
+            int theme_id = getThemeId(context);
+            if (theme_id == R.style.LightTheme)
+                return R.drawable.margin_light;
+            else
+                return R.drawable.margin_dark;
+        }
 
-    public static Drawable getFavYes(Context context) {
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
-        else
-            return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
-    }
-
-    public static Drawable getFavNo(Context context) {
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_white_24dp);
-        else
-            return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
-    }
-
-    public static int getBackDrawable(Context context) {
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return R.drawable.bg_box_default_light;
-        else
-            return R.drawable.bg_box_default_dark;
-    }
-
-    public static int getPinkDrawable(Context context) {
-
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return R.drawable.bg_box_pink_light;
-        else
-            return R.drawable.bg_box_pink_dark;
-    }
-
-
-    public static int getGreenDrawable(Context context) {
-
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return R.drawable.bg_box_green_light;
-        else
-            return R.drawable.bg_box_green_dark;
-    }
-
-    public static int getMarginDrawable(Context context) {
-
-        int theme_id = getThemeId(context);
-        if (theme_id == R.style.LightTheme)
-            return R.drawable.margin_light;
-        else
-            return R.drawable.margin_dark;
-    }
-
-    public static int getDialogThemeId(Context context) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-
-        String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0");
-        if (theme.equals("0")) {
-            if (android.os.Build.VERSION.SDK_INT >= 21) {
-                return android.R.style.Theme_Material_Light_Dialog;
+        public static int getDialogThemeId(Context context) {
+            int theme_id = getThemeId(context);
+            if (theme_id == R.style.LightTheme) {
+                if (android.os.Build.VERSION.SDK_INT >= 21) {
+                    return android.R.style.Theme_Material_Light_Dialog;
+                } else {
+                    return ProgressDialog.THEME_HOLO_LIGHT;
+                }
+            } else if (android.os.Build.VERSION.SDK_INT >= 21) {
+                return android.R.style.Theme_Material_Dialog;
             } else {
-                return ProgressDialog.THEME_HOLO_LIGHT;
+                return ProgressDialog.THEME_HOLO_DARK;
             }
-        } else if (android.os.Build.VERSION.SDK_INT >= 21) {
-            return android.R.style.Theme_Material_Dialog;
-        } else {
-            return ProgressDialog.THEME_HOLO_DARK;
+        }
+
+        public static class FavouriteIcon
+        {
+            public static Drawable getFavYes(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
+            }
+
+            public static Drawable getFavNo(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_white_24dp);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
+            }
+        }
+
+        public static class BackgroundIcons
+        {
+
+            public static int getBgBoxDefaultDrawable(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return R.drawable.bg_box_default_light;
+                else
+                    return R.drawable.bg_box_default_dark;
+            }
+
+            public static int getBgBoxPinkDrawable(Context context) {
+
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return R.drawable.bg_box_pink_light;
+                else
+                    return R.drawable.bg_box_pink_dark;
+            }
+
+            public static int getBgBoxGreenDrawable(Context context) {
+
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return R.drawable.bg_box_green_light;
+                else
+                    return R.drawable.bg_box_green_dark;
+            }
         }
     }
 

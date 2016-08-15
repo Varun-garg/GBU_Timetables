@@ -2,7 +2,6 @@ package com.varun.gbu_timetables;
 
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -17,7 +16,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         int set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
             setTheme(saved_theme);

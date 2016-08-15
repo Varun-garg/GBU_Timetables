@@ -32,9 +32,9 @@ public class FavouritesFragment extends Fragment {
 
     public FavouritesFragment() {
         empty = new TimeTableBasic();
-        empty.Title = "No Favourites Yet.";
-        empty.Id = Long.valueOf(0);
-        empty.Type = "";
+        empty.setTitle("No Favourites Yet.");
+        empty.setId(Long.valueOf(0));
+        empty.setType("");
     }
 
     public ArrayList<TimeTableBasic> getFavourites() {
@@ -60,12 +60,21 @@ public class FavouritesFragment extends Fragment {
             existing_data = new HashSet<>();
             no_elements = 0;
             String Message = "Fatal error: plz clear app data or reinstall this app from play store";
-            Toast.makeText(getContext(),e.toString(), Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
+            Message = "Old Data " + json;
+            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
+            existing_data.add(empty);
+            json = gson.toJson(existing_data);
+            Message = "New Format " + json;
+            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
             Log.d(this.getClass().getSimpleName(),e.toString());
         }
 
         if (no_elements == 0)
             existing_data.add(empty);
+
+        Toast.makeText(getContext(),"JSON = " + json, Toast.LENGTH_LONG).show();
+
 
         ArrayList<TimeTableBasic> existing_data_list = new ArrayList<>(existing_data);
         return existing_data_list;
@@ -79,7 +88,7 @@ public class FavouritesFragment extends Fragment {
 
         ArrayList<TimeTableBasic> existing_data_list = getFavourites();
 
-        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 
@@ -95,16 +104,16 @@ public class FavouritesFragment extends Fragment {
                     return;
 
                 TimeTableBasic item = (TimeTableBasic) view.getTag();
-                dialog.setMessage("Loading " + item.Title);
+                dialog.setMessage("Loading " + item.getTitle());
                 dialog.show();
 
                 Intent intent = new Intent(getActivity(), TimetableActivity.class);
-                intent.putExtra("Type", item.Type);
-                intent.putExtra("Timetable_title", item.Title);
-                if (item.Type.equals("Section"))
-                    intent.putExtra("Section_id", item.Id);
+                intent.putExtra("Type", item.getType());
+                intent.putExtra("Timetable_title", item.getTitle());
+                if (item.getType().equals("Section"))
+                    intent.putExtra("Section_id", item.getId());
                 else
-                    intent.putExtra("Faculty_id", item.Id);
+                    intent.putExtra("Faculty_id", item.getId());
                 startActivity(intent);
                 dialog.dismiss();
             }

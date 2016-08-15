@@ -1,11 +1,11 @@
 package com.varun.gbu_timetables.data.Model;
 
-public class CSF_FAC_KEY {
+public class CSF_FAC_MAP_KEY {
 
     private final Long x;
     private final Long y;
 
-    public CSF_FAC_KEY(Long CSF_id, Long FAC_ID) {
+    public CSF_FAC_MAP_KEY(Long CSF_id, Long FAC_ID) {
         this.x = CSF_id;
         this.y = FAC_ID;
     }
@@ -21,8 +21,8 @@ public class CSF_FAC_KEY {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CSF_FAC_KEY)) return false;
-        CSF_FAC_KEY key = (CSF_FAC_KEY) o;
+        if (!(o instanceof CSF_FAC_MAP_KEY)) return false;
+        CSF_FAC_MAP_KEY key = (CSF_FAC_MAP_KEY) o;
         return x.longValue() == key.x.longValue() && y.longValue() == key.y.longValue();
     }
 

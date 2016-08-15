@@ -17,7 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.data.Model.CSF;
-import com.varun.gbu_timetables.data.Model.CSF_FAC_KEY;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class TimetableFragmentSinglePage extends Fragment {
     String type;
     TableLayout tableLayout;
     ProgressDialog dialog;
-    int back_id, max_period, min_period;
+    int BgBoxDefault_id, max_period, min_period;
     public TimetableFragmentSinglePage() {
 
     }
@@ -45,12 +45,12 @@ public class TimetableFragmentSinglePage extends Fragment {
         setHasOptionsMenu(true);
         title = getActivity().getIntent().getExtras().getString("Timetable_title");
         getActivity().setTitle(title);
-        back_id = Utility.getBackDrawable(getContext());
+        BgBoxDefault_id = Utility.ThemeTools.BackgroundIcons.getBgBoxDefaultDrawable(getContext());
 
         View rootView = inflater.inflate(R.layout.fragment_timetable, container, false);
-        HashMap<CSF_FAC_KEY, CSF> CSF_Details;
+        HashMap<CSF_FAC_MAP_KEY, CSF> CSF_Details;
 
-        dialog = new ProgressDialog(getContext(), Utility.getDialogThemeId(getContext()));
+        dialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
         dialog.setCancelable(false);
         dialog.setInverseBackgroundForced(false);
 
@@ -81,7 +81,7 @@ public class TimetableFragmentSinglePage extends Fragment {
 
         TextView blank = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
         blank.setLayoutParams(halfparams);
-        blank.setBackgroundResource(back_id);
+        blank.setBackgroundResource(BgBoxDefault_id);
         header.addView(blank);
         final TimetableAdapter timetableAdapter = new TimetableAdapter(getContext(), days, id, type, title);
         max_period = (int) timetableAdapter.getMaxPeriods();
@@ -92,7 +92,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             textView.setLayoutParams(cellParams);
             textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
             textView.append(Integer.toString(Utility.getPeriodTitleNo(i+1)) + ":" + Integer.toString(beg_min));
-            textView.setBackgroundResource(back_id);
+            textView.setBackgroundResource(BgBoxDefault_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
             header.addView(textView);
@@ -106,7 +106,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(halfparams);
             textView.setText(day_names[i]);
-            textView.setBackgroundResource(back_id);
+            textView.setBackgroundResource(BgBoxDefault_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
 

@@ -12,8 +12,8 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.data.Model.CSF;
-import com.varun.gbu_timetables.data.Model.CSF_FAC_KEY;
-import com.varun.gbu_timetables.data.Model.Key;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
+import com.varun.gbu_timetables.data.Model.PairKey;
 import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 import java.util.ArrayList;
@@ -31,14 +31,14 @@ public class TimetableAdapter {
     Long timetable_id;
     ArrayList<Integer> day_nos;
     String title;
-    HashMap<CSF_FAC_KEY, CSF> CSF_Details = new HashMap();
+    HashMap<CSF_FAC_MAP_KEY, CSF> CSF_Details = new HashMap();
 
-    HashMap<Key, String> cache = new HashMap();
-    HashMap<Key, HashSet> keymap = new HashMap<>();
+    HashMap<PairKey, String> cache = new HashMap();
+    HashMap<PairKey, HashSet> keymap = new HashMap<>();
 
-    int back;
-    int pink;
-    int green;
+    int BgBoxDefault;
+    int BgBoxPink;
+    int BgBoxGreen;
     long max_period = 0;
     long min_period = 0;
 
@@ -65,16 +65,16 @@ public class TimetableAdapter {
         min_period = max_c.getLong(max_c.getColumnIndex("min(TT_Period)"));
         max_c.close();
 
-        back = Utility.getBackDrawable(context);
-        pink = Utility.getPinkDrawable(context);
-        green = Utility.getGreenDrawable(context);
+        BgBoxDefault = Utility.ThemeTools.BackgroundIcons.getBgBoxDefaultDrawable(context);
+        BgBoxPink = Utility.ThemeTools.BackgroundIcons.getBgBoxPinkDrawable(context);
+        BgBoxGreen = Utility.ThemeTools.BackgroundIcons.getBgBoxGreenDrawable(context);
 
         for (int i = 0; i < day_nos.size(); i++)
             for (int j = (int) min_period; j <= max_period; j++)
                 BuildTimeString(i, j);
     }
 
-    public HashMap<CSF_FAC_KEY, CSF> getCSFDetails() {
+    public HashMap<CSF_FAC_MAP_KEY, CSF> getCSFDetails() {
         return CSF_Details;
     }
 
@@ -100,8 +100,8 @@ public class TimetableAdapter {
         linearLayout.setOrientation(LinearLayout.VERTICAL);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        Key key = new Key(row_no, period_no);
-        Set<CSF_FAC_KEY> current_csf_fac_key_list = keymap.get(key);
+        PairKey key = new PairKey(row_no, period_no);
+        Set<CSF_FAC_MAP_KEY> current_csf_fac_key_list = keymap.get(key);
         String day_str = cache.get(key);
         if (day_str == null) day_str = "";
         String lines[] = day_str.split("\\r?\\n");
@@ -114,11 +114,11 @@ public class TimetableAdapter {
 
             if (lines.length >= 2) {
                 if (i % 2 == 0)
-                    textView.setBackgroundResource(pink);
+                    textView.setBackgroundResource(BgBoxPink);
                 else
-                    textView.setBackgroundResource(green);
+                    textView.setBackgroundResource(BgBoxGreen);
             } else
-                textView.setBackgroundResource(back);
+                textView.setBackgroundResource(BgBoxDefault);
         }
         linearLayout.setTag(R.string.current_csf_fac_key_list, current_csf_fac_key_list);
         linearLayout.setTag(R.string.time_string, day_str);
@@ -129,9 +129,9 @@ public class TimetableAdapter {
     public void BuildTimeString(int Day_Pos, int Period_Pos) {
 
         int Day_no = day_nos.get(Day_Pos);
-        final Key key = new Key(Day_Pos, Period_Pos);
+        final PairKey key = new PairKey(Day_Pos, Period_Pos);
 
-        HashSet<CSF_FAC_KEY> current_key_list = keymap.get(key);
+        HashSet<CSF_FAC_MAP_KEY> current_key_list = keymap.get(key);
         if (current_key_list == null) {
             current_key_list = new HashSet<>();
             keymap.put(key, current_key_list);
@@ -176,7 +176,7 @@ public class TimetableAdapter {
                 ArrayList<CSF> myArr = new ArrayList<>();
                 while (fac_cursor.moveToNext()) {
                     Long Fac_id = fac_cursor.getLong(fac_cursor.getColumnIndex("faculty_id"));
-                    CSF_FAC_KEY csf_fac_key = new CSF_FAC_KEY(CSF_Id, Fac_id);
+                    CSF_FAC_MAP_KEY csf_fac_key = new CSF_FAC_MAP_KEY(CSF_Id, Fac_id);
 
                     CSF mCSF = CSF_Details.get(csf_fac_key);
                     if (mCSF == null) {

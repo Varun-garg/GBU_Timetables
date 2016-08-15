@@ -26,7 +26,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        int saved_theme = Utility.getThemeId(getApplicationContext());
+        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         int set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
             setTheme(saved_theme);
