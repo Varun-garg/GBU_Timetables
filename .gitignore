@@ -10,7 +10,7 @@
 .idea/workspace.xml
 
 # Built application files
-*.apk
+/app/*.apk
 *.ap_
 
 # Files for the Dalvik VM
