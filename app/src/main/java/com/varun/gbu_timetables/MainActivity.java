@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -19,7 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.varun.gbu_timetables.asyncTasks.UpdateDatabaseOnlineTask;
+import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
 public class MainActivity extends AppCompatActivity {

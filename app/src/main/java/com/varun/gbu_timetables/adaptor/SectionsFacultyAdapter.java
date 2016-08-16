@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data;
+package com.varun.gbu_timetables.adaptor;
 
 import android.content.Context;
 import android.graphics.Typeface;

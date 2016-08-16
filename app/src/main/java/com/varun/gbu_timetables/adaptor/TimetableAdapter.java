@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables;
+package com.varun.gbu_timetables.adaptor;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.Utility;
 import com.varun.gbu_timetables.data.model.CSF;
 import com.varun.gbu_timetables.data.model.CSF_FAC_MAP_KEY;
 import com.varun.gbu_timetables.data.model.PairKey;

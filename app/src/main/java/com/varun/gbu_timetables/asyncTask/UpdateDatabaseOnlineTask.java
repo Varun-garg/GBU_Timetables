@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.asyncTasks;
+package com.varun.gbu_timetables.asyncTask;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
