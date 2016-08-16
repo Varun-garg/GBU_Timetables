@@ -17505,7 +17505,7 @@ com.varun.gbu_timetables.MainActivity$1 -> com.varun.gbu_timetables.i:
     com.varun.gbu_timetables.MainActivity this$0 -> a
     void <init>(com.varun.gbu_timetables.MainActivity) -> <init>
     void onClick(android.content.DialogInterface,int) -> onClick
-com.varun.gbu_timetables.MainActivity$SampleFragmentPagerAdapter -> com.varun.gbu_timetables.j:
+com.varun.gbu_timetables.MainActivity$FragmentPagerAdapter -> com.varun.gbu_timetables.j:
     int PAGE_COUNT -> a
     java.lang.String[] tabTitles -> c
     android.content.Context context -> d

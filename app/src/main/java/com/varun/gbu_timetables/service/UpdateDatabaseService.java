@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
 
-import com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask;
+import com.varun.gbu_timetables.asyncTasks.UpdateDatabaseOnlineTask;
 
 /**
  * com.varun.gbu_timetables.data (Timetables_sql)

@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.AsyncTasks;
+package com.varun.gbu_timetables.asyncTasks;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,9 +17,9 @@ import android.widget.Toast;
 
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
-import com.varun.gbu_timetables.data.Database.TimetableDbHelper;
-import com.varun.gbu_timetables.data.Database.TimetableProvider;
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableDbHelper;
+import com.varun.gbu_timetables.data.database.TimetableProvider;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import org.json.JSONObject;
 

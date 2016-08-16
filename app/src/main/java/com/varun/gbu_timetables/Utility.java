@@ -3,15 +3,17 @@ package com.varun.gbu_timetables;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v4.content.ContextCompat;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)
@@ -65,6 +67,14 @@ public class Utility {
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
             }
 
+            public static Drawable getFavYesInverse(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
+            }
+
             public static Drawable getFavNo(Context context) {
                 int theme_id = getThemeId(context);
                 if (theme_id == R.style.LightTheme)
@@ -72,6 +82,15 @@ public class Utility {
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
             }
+        }
+
+        public static Drawable getListGroupIconInverseDrawable(Context context)
+        {
+            int theme_id = getThemeId(context);
+            if (theme_id == R.style.LightTheme)
+                return ContextCompat.getDrawable(context, R.drawable.ic_school_black_24dp);
+            else
+                return ContextCompat.getDrawable(context, R.drawable.ic_school_white_24dp);
         }
 
         public static class BackgroundIcons
@@ -166,4 +185,36 @@ public class Utility {
             return SectionCode;
         }
     }
+
+
+
+    /**
+     * This method converts dp unit to equivalent pixels, depending on device density.
+     *
+     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value to represent px equivalent to dp depending on device density
+     */
+    public static int convertDpToPixel(int dp, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        int px = dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return px;
+    }
+
+    /**
+     * This method converts device specific pixels to density independent pixels.
+     *
+     * @param px A value in px (pixels) unit. Which we need to convert into db
+     * @param context Context to get resources and device specific display metrics
+     * @return A float value t1o represent dp equivalent to px value
+     */
+    public static float convertPixelsToDp(float px, Context context){
+        Resources resources = context.getResources();
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        float dp = px / ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp;
+    }
+
+
 }

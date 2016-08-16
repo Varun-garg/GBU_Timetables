@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="box_bg">@color/box_bg</item>
         <item name="app_bg">@color/app_bg</item>
+        <item name="main_activity_bg">@color/main_activity_bg</item>
         <item name="theme_green">@color/theme_green</item>
         <item name="theme_pink">@color/theme_pink</item>
 
@@ -36,6 +37,7 @@
         <item name="colorAccent">@color/DarkThemeColorAccent</item>
         <item name="box_bg">@color/box_bg_dark</item>
         <item name="app_bg">@color/app_bg_dark</item>
+        <item name="main_activity_bg">@color/main_activity_bg_dark</item>
         <item name="theme_green">@color/theme_green_dark</item>
         <item name="theme_pink">@color/theme_pink_dark</item>
 

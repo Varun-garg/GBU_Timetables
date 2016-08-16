@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.Model;
+package com.varun.gbu_timetables.data.model;
 
 public class CSF_FAC_MAP_KEY {
 

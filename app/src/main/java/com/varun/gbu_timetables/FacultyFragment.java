@@ -9,10 +9,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ExpandableListView;
 
 import com.varun.gbu_timetables.data.SectionsFacultyAdapter;
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,10 +73,22 @@ public class FacultyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View rootView = inflater.inflate(R.layout.timetable_expandable_lv, container, false);
-        ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+        View rootView = inflater.inflate(R.layout.expandable_listview, container, false);
+        final ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
 
         schools_lv.setAdapter(schoolsAdapter);
+
+        ViewTreeObserver vto = schools_lv.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    schools_lv.setIndicatorBounds(schools_lv.getRight()- Utility.convertDpToPixel(60,getContext()), schools_lv.getWidth());
+                } else {
+                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight()- Utility.convertDpToPixel(60,getContext()), schools_lv.getWidth());
+                }
+            }
+        });
 
         schools_lv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 

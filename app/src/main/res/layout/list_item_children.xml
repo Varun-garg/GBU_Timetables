@@ -8,13 +8,14 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:paddingLeft="15dp" />
+        android:paddingLeft="39dp" />
+    <!-- padding left of icon in list_group_item (10) + icon (24dp) + padding right (5dp)  = 39dp-->
 
     <TextView
         android:id="@+id/list_child_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        android:textSize="15sp" />
+        android:padding="8dp"
+        android:textSize="16sp" />
 
 </LinearLayout>

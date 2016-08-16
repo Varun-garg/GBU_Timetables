@@ -2,11 +2,12 @@ package com.varun.gbu_timetables.data;
 
 import android.content.Context;
 import android.graphics.Typeface;
-import android.text.Html;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.R;
@@ -25,6 +26,7 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, List<Common_type>> _listDataChild;
+    Drawable GroupIconDrawable;
 
     public SectionsFacultyAdapter(Context context, List<String> listDataHeader,
                                   HashMap<String, List<Common_type>> listChildData) {
@@ -34,6 +36,7 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
 
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        GroupIconDrawable = Utility.ThemeTools.getListGroupIconInverseDrawable(context);
     }
 
     @Override
@@ -97,6 +100,9 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group_item, null);
+
+            ImageView GroupIcon = (ImageView) convertView.findViewById(R.id.image_view);
+            GroupIcon.setImageDrawable(GroupIconDrawable);
         }
 
         TextView lblListHeader = (TextView) convertView

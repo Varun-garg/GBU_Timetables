@@ -1,9 +1,7 @@
-package com.varun.gbu_timetables.data.Database;
+package com.varun.gbu_timetables.data.database;
 
 import android.content.ContentResolver;
 import android.net.Uri;
-
-import com.varun.gbu_timetables.data.Database.TimetableProvider;
 
 /**
  * varun.timetables_sql.data (Timetables_sql)
@@ -40,7 +38,7 @@ public class TimetableContract {
     public static String PATH_FULL_SECTION_NAME = "full_section_name";
     public static String PARAM_NAME = "name";
 
-    public static final Uri BuildFullSectionName(String SectionCode) {
+    public static Uri BuildFullSectionName(String SectionCode) {
         return BASE_CONTENT_URI.buildUpon().appendPath(PATH_FULL_SECTION_NAME)
                 .appendQueryParameter(PARAM_NAME,SectionCode)
                 .build();

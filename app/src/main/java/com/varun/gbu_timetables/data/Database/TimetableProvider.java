@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.Database;
+package com.varun.gbu_timetables.data.database;
 
 import android.annotation.TargetApi;
 import android.content.ContentProvider;
@@ -146,6 +146,7 @@ public class TimetableProvider extends ContentProvider {
         Cursor cursor = mOpenHelper.getReadableDatabase().rawQuery(query, null);
         cursor.moveToNext();
         String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
+        cursor.close();
         String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code= '" + code + "'";
         return mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
     }

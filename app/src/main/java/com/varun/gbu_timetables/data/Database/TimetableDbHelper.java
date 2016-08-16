@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.Database;
+package com.varun.gbu_timetables.data.database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -63,7 +63,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             if (current_db_version != saved_db_version) {
                 copy_db(context, 0, null);
                 editor.putInt(DB_VERSION_PATH, current_db_version);
-                editor.commit();
+                editor.apply();
                 Log.d("updating", "due to version mismatch");
                 Log.d("Difference", "new version = " + Integer.toString(current_db_version) + ", old db version = " + Integer.toString(saved_db_version));
             }

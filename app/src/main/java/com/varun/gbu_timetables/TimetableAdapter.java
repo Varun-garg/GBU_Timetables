@@ -11,10 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.data.Model.CSF;
-import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
-import com.varun.gbu_timetables.data.Model.PairKey;
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.model.CSF;
+import com.varun.gbu_timetables.data.model.CSF_FAC_MAP_KEY;
+import com.varun.gbu_timetables.data.model.PairKey;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;

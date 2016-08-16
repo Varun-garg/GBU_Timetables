@@ -15,16 +15,10 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
 
         <provider
-            android:name=".data.Database.TimetableProvider"
+            android:name=".data.database.TimetableProvider"
             android:authorities="com.varun.gbu_timetables"
             android:enabled="true"
             android:exported="true" />
@@ -41,7 +35,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity">>
+            android:parentActivityName=".MainActivity">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
@@ -57,26 +52,37 @@
             android:name=".AboutActivity"
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">>
+            android:theme="@style/AppTheme.NoActionBar">
+            >
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
 
+        <service android:name=".service.FirebaseNotificationReceiver">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <service
-            android:name=".service.FirebaseNotificationReceiver">
+            android:name=".service.MyFirebaseInstanceIdService"
+            android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
 
-        <service android:name=".service.MyFirebaseInstanceIdService" android:exported="true">
+        <activity
+            android:name=".SplashScreenActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
             </intent-filter>
-        </service>
-
+        </activity>
     </application>
 
 </manifest>

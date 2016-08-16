@@ -1,6 +1,5 @@
 package com.varun.gbu_timetables;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -10,8 +9,6 @@ import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -20,19 +17,18 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.varun.gbu_timetables.AsyncTasks.UpdateDatabaseOnlineTask;
+import com.varun.gbu_timetables.asyncTasks.UpdateDatabaseOnlineTask;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
 public class MainActivity extends AppCompatActivity {
-    public static String PACKAGE_NAME;
+
     UpdateDatabaseOnlineTask updateDatabaseOnlineTask;
     int set_theme;
     TabLayout tabLayout;
     ViewPager viewPager;
-    SampleFragmentPagerAdapter sampleFragmentPagerAdapter;
+    FragmentPagerAdapter fragmentPagerAdapter;
 
     public static String ContentType_KEY = "NotificationContentType";
     public static String Content_KEY = "NotificationContent";
@@ -47,41 +43,26 @@ public class MainActivity extends AppCompatActivity {
             setTheme(saved_theme);
         set_theme = saved_theme;
 
-        setContentView(R.layout.splash_screen);
-        ImageView imageView = (ImageView) findViewById(R.id.image_view);
-        imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo));
-
-        sampleFragmentPagerAdapter = new SampleFragmentPagerAdapter(getSupportFragmentManager(), MainActivity.this);
-
-        new Handler().postDelayed(new Runnable(){
-            @Override
-            public void run() {
-                MainWork();
-            }
-        }, 2000L);
-
-        updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), false);
-        updateDatabaseOnlineTask.execute();
-    }
-
-
-    protected void MainWork()
-    {
+        fragmentPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager());
 
         setContentView(R.layout.activity_main);
+
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         viewPager = (ViewPager) findViewById(R.id.pager);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        viewPager.setAdapter(sampleFragmentPagerAdapter);
+
+        viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setCurrentItem(2); // open page no 3
         viewPager.setOffscreenPageLimit(2); // Cache all pages = N-1
         tabLayout.setupWithViewPager(viewPager);
 
-
+        updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), false);
+        updateDatabaseOnlineTask.execute();
     }
 
     @Override
@@ -225,14 +206,12 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(getBaseContext(), UpdateDatabaseService.class));
     }
 
-    public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
+    public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
         final int PAGE_COUNT = 3;
         private String tabTitles[] = new String[]{"Sections", "Faculty", "Favourites"};
-        private Context context;
 
-        public SampleFragmentPagerAdapter(FragmentManager fm, Context context) {
+        public FragmentPagerAdapter(FragmentManager fm) {
             super(fm);
-            this.context = context;
         }
 
         @Override

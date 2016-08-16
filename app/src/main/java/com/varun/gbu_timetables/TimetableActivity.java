@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.varun.gbu_timetables.data.Model.TimeTableBasic;
+import com.varun.gbu_timetables.data.model.TimeTableBasic;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -121,7 +121,7 @@ public class TimetableActivity extends AppCompatActivity {
                 json = gson.toJson(existing_data);
 
                 editor.putString(existing_TAG, json);
-                editor.commit();
+                editor.apply();
 
                 Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
             }
