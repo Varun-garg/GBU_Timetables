@@ -23,14 +23,13 @@ import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String ContentType_KEY = "NotificationContentType";
+    public static String Content_KEY = "NotificationContent";
     UpdateDatabaseOnlineTask updateDatabaseOnlineTask;
     int set_theme;
     TabLayout tabLayout;
     ViewPager viewPager;
     FragmentPagerAdapter fragmentPagerAdapter;
-
-    public static String ContentType_KEY = "NotificationContentType";
-    public static String Content_KEY = "NotificationContent";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,38 +83,22 @@ public class MainActivity extends AppCompatActivity {
 
         Bundle Extras = getIntent().getExtras();
 
-        if(Extras != null) { //explore notifications
+        if (Extras != null) { //explore notifications
 
-/*
-            Log.d(this.getClass().getSimpleName(),"Extras Data : " +  Extras.toString());
-
-            for (String key : Extras.keySet()) {
-                Object value = Extras.get(key);
-                Log.d(this.getClass().getSimpleName()
-                        , String.format("%s %s (%s)", key,
-                        value.toString(), value.getClass().getName()));
-            }
-
-
-            String BuildInfo = Extras.getString("BuildInfo"); //notifications are pushed into tray anyway
-            //no point to check if they were for debugging
-*/
             String ContentType = Extras.getString(ContentType_KEY);
             String Content = Extras.getString(Content_KEY);
 
-            if(ContentType != null && Content != null)
-            {
-                if(ContentType.equalsIgnoreCase("PlayStorePackage"))
-                {
+            if (ContentType != null && Content != null) {
+                if (ContentType.equalsIgnoreCase("PlayStorePackage")) {
                     try {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + Content)));
                     } catch (android.content.ActivityNotFoundException e) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + Content)));
                     }
                 }
-                else if(ContentType.equalsIgnoreCase("BrowserUrl"))
+                else if (ContentType.equalsIgnoreCase("BrowserUrl"))
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Content)));
-                else if(ContentType.equalsIgnoreCase("MessageDialog"));
+                else if (ContentType.equalsIgnoreCase("MessageDialog")) ;
                 {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
                     builder1.setMessage(Html.fromHtml(Content));

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class SettingsActivity extends AppCompatPreferenceActivity
@@ -15,7 +16,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         super.onCreate(savedInstance);
 
         //I know some methods below are deprecated but there is no alternative by google for API <11
-        //And my app's compatibility goes BgBoxDefault to API 8, so I will use them anyway
+        //And my app uses BgBoxDefault to support API 8, so I will use them anyway
 
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         int set_theme = R.style.AppTheme;
@@ -24,10 +25,11 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         this.setContentView(R.layout.settings_activity);
 
         addPreferencesFromResource(R.xml.pref_general);
-
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_tt_display_type_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_theme_key)));
 
+        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

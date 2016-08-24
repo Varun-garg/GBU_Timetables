@@ -1,16 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:gravity="top"
-    android:background="?attr/app_bg"
-    >
-    <ListView android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@android:id/list"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        />
+    android:fitsSystemWindows="true"
+    tools:context="com.varun.gbu_timetables.SettingsActivity">
 
-</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+        </android.support.design.widget.AppBarLayout>
+
+        <ListView
+            android:id="@android:id/list"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="?attr/app_bg"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>

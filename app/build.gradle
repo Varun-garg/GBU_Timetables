@@ -1,15 +1,15 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion '24.0.1'
 
     defaultConfig {
         applicationId "com.varun.gbu_timetables"
-        minSdkVersion 9 // need 9 with firebase messanging library otherwise use 7
-        targetSdkVersion 23
-        versionCode 67
-        versionName "10.5"
+        minSdkVersion 9 // need 9 with firebase messaging library otherwise use 7
+        targetSdkVersion 24
+        versionCode 68
+        versionName "10.51"
     }
     buildTypes {
         release {
@@ -21,12 +21,12 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:design:24.1.1'
     compile 'com.google.code.gson:gson:2.7'
-    compile 'com.android.support:gridlayout-v7:23.1.1'
-    compile 'com.android.support:cardview-v7:23.1.1'
-    compile 'com.android.support:support-v4:23.1.1'
+    compile 'com.android.support:gridlayout-v7:24.1.1'
+    compile 'com.android.support:cardview-v7:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
     compile 'com.google.firebase:firebase-messaging:9.2.1'
     compile 'com.google.firebase:firebase-core:9.2.1'
 	compile 'com.google.firebase:firebase-crash:9.2.1'

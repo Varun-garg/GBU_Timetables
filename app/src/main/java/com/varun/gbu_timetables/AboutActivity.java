@@ -1,14 +1,23 @@
 package com.varun.gbu_timetables;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.varun.gbu_timetables.service.MyFirebaseInstanceIdService;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -31,16 +40,41 @@ public class AboutActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView textView = (TextView) findViewById(R.id.textView);
+
         textView.setText(Html.fromHtml("<h2><b>GBU Timetables</b></h2>"));
+        String BuildInfo = "";
         PackageInfo info;
         try {
             info = getPackageManager().getPackageInfo(getPackageName(), 0);
             int build = info.versionCode;
             String name = info.versionName;
-            textView.append("Version " + name + "\n Build number " + Integer.toString(build) + "\n\n");
+            BuildInfo = "Version " + name + "\n Build number " + Integer.toString(build) + "\n\n";
         } catch (Exception e) {
             Log.d("error", e.toString());
         }
+        final String FinalBuildInfo = BuildInfo;
+
+        SpannableString ss = new SpannableString(BuildInfo);
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(View textView) {
+                Toast.makeText(getApplicationContext(),"Copied id to clipboard.",Toast.LENGTH_LONG).show();
+                Utility.setClipboard(getApplicationContext(),Utility.getFirebaseInstanceId(getApplicationContext()));
+            }
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan,0, FinalBuildInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        MyFirebaseInstanceIdService myFirebaseInstanceIdService = new MyFirebaseInstanceIdService();
+        Intent intent= new Intent(getApplicationContext(),myFirebaseInstanceIdService.getClass());
+     //   Log.d(this.getClass().getSimpleName(),"Starting MyFirebaseInstanceIdService");
+        startService(intent);
+
+        textView.append(ss);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
         textView.append("Official Timetables Android Client for students and faculty of GBU\n\n");
         textView.append("Source code:\n");

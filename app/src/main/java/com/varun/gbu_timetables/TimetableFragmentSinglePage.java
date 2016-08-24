@@ -36,6 +36,7 @@ public class TimetableFragmentSinglePage extends Fragment {
     TableLayout tableLayout;
     ProgressDialog dialog;
     int BgBoxDefault_id, max_period, min_period;
+
     public TimetableFragmentSinglePage() {
 
     }
@@ -92,7 +93,7 @@ public class TimetableFragmentSinglePage extends Fragment {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(cellParams);
             textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
-            textView.append(Integer.toString(Utility.getPeriodTitleNo(i+1)) + ":" + Integer.toString(beg_min));
+            textView.append(Integer.toString(Utility.getPeriodTitleNo(i + 1)) + ":" + Integer.toString(beg_min));
             textView.setBackgroundResource(BgBoxDefault_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);

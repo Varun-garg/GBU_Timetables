@@ -33,8 +33,8 @@ public class TimetableProvider extends ContentProvider {
         final UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
         final String authority = TimetableContract.CONTENT_AUTHORITY;
 
-        matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_SECTION + "/" +  TimetableContract.PATH_MAX + "/*", MAX_PERIOD_BY_SECTION);
-        matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_FACULTY + "/" +  TimetableContract.PATH_MAX + "/*", MAX_PERIOD_BY_FACULTY);
+        matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_MAX + "/*", MAX_PERIOD_BY_SECTION);
+        matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_FACULTY + "/" + TimetableContract.PATH_MAX + "/*", MAX_PERIOD_BY_FACULTY);
         matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_SECTION + "/*", CELL_BY_SECTION_DAY_SLOT);
         matcher.addURI(authority, TimetableContract.PATH_TIMETABLE + "/" + TimetableContract.PATH_FACULTY + "/*", CELL_BY_FACULTY_DAY_SLOT);
         matcher.addURI(authority, TimetableContract.PATH_FACULTY + "/" + TimetableContract.PATH_CSF + "/*", FACULTY_BY_CSF);
@@ -44,7 +44,7 @@ public class TimetableProvider extends ContentProvider {
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/" + TimetableContract.PATH_PROGRAM + "/*", SECTIONS_BY_PROGRAM_ID);
         matcher.addURI(authority, TimetableContract.PATH_FACULTY, FACULTY);
         matcher.addURI(authority, TimetableContract.PATH_SECTION + "/*", SECTION_BY_ID);
-        matcher.addURI(authority, TimetableContract.PATH_FULL_SECTION_NAME , FULL_SECTION_NAME);
+        matcher.addURI(authority, TimetableContract.PATH_FULL_SECTION_NAME, FULL_SECTION_NAME);
 
         return matcher;
     }
@@ -54,8 +54,7 @@ public class TimetableProvider extends ContentProvider {
         return true;
     }
 
-    public void reloadDb()
-    {
+    public void reloadDb() {
         mOpenHelper = new TimetableDbHelper(getContext());
         Log.d(this.getClass().getSimpleName(), "DB Reloaded");
     }
@@ -157,11 +156,10 @@ public class TimetableProvider extends ContentProvider {
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
-    private Cursor getFullSectionName(Uri uri)
-    {
+    private Cursor getFullSectionName(Uri uri) {
         String SectionCode = TimetableContract.getSectionCodeFromUri(uri);
         String query = "Select _ROWID_ as _id, Name FROM Program where code = '" + SectionCode + "'";
-        return  mOpenHelper.getReadableDatabase().rawQuery(query,null);
+        return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
             fac_code.setText("Section");
             fac_name.setText(mCSF.Section_name);
         }
-        
+
         convertView.setTag(mCSF);
         return convertView;
     }

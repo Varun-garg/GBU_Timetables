@@ -17,9 +17,9 @@ import android.widget.Toast;
 
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 import com.varun.gbu_timetables.data.database.TimetableDbHelper;
 import com.varun.gbu_timetables.data.database.TimetableProvider;
-import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import org.json.JSONObject;
 
@@ -146,7 +146,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 */
 
                 Intent intent = new Intent(mContext, MainActivity.class);
-                intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
             } else {

@@ -26,6 +26,8 @@
 
     <string name="pref_theme_key">pref_them</string>
     <string name="pref_theme_key_label">Theme</string>
+    <string name="pref_firebase_instance_id_key">pref_firebase_instance_id</string>
+    <string name="pref_firebase_instance_id_default_key">default</string>
 
     <string-array name="pref_theme_options">
         <item>Light Theme</item>

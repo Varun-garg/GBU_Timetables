@@ -2,18 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/main_activity_bg"
+    android:background="?attr/app_bg_lighter_on_light_theme"
     android:orientation="horizontal"
+    android:paddingBottom="8dp"
     android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingTop="8dp">
 
     <ImageView
+        android:id="@+id/image_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:paddingLeft="10dp"
-        android:paddingRight="5dp"
-        android:id="@+id/image_view"/>
+        android:paddingRight="5dp" />
+
     <TextView
         android:id="@+id/list_group_tv"
         android:layout_width="fill_parent"

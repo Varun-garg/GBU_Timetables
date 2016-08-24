@@ -30,10 +30,9 @@ public class SectionsFragment extends Fragment {
     HashMap<String, List<SectionsFacultyAdapter.Common_type>> ChildrenListData;
     ProgressDialog progressDialog;
     SectionsFacultyAdapter schoolsAdapter;
-    
+
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         progressDialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));
@@ -58,7 +57,7 @@ public class SectionsFragment extends Fragment {
                 SectionsFacultyAdapter.Common_type s = new SectionsFacultyAdapter.Common_type();
                 s.id = program_cursor.getLong(program_cursor.getColumnIndex("section_id"));
                 s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
-                s.Name = Utility.getFullSectionName(s.Name,getContext());
+                s.Name = Utility.getFullSectionName(s.Name, getContext());
                 Sections.add(s);
             }
             program_cursor.close();
@@ -85,10 +84,10 @@ public class SectionsFragment extends Fragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    schools_lv.setIndicatorBounds(schools_lv.getRight()- Utility.convertDpToPixel(60,getContext()), schools_lv.getWidth());
+                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
+                    schools_lv.setIndicatorBounds(schools_lv.getRight() - Utility.convertDpToPixel(60, getContext()), schools_lv.getWidth());
                 } else {
-                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight()- Utility.convertDpToPixel(60,getContext()), schools_lv.getWidth());
+                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight() - Utility.convertDpToPixel(60, getContext()), schools_lv.getWidth());
                 }
             }
         });

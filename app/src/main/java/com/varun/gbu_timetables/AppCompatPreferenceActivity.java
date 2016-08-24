@@ -1,4 +1,18 @@
-//code built by studio itself
+/*
+ * Copyright (C) 2014 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 package com.varun.gbu_timetables;
 
@@ -17,6 +31,9 @@ import android.view.ViewGroup;
 /**
  * A {@link android.preference.PreferenceActivity} which implements and proxies the necessary calls
  * to be used with AppCompat.
+ *
+ * This technique can be used with an {@link android.app.Activity} class, not just
+ * {@link android.preference.PreferenceActivity}.
  */
 public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
@@ -24,13 +41,6 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
-        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
-        int set_theme = R.style.AppTheme;
-        if (set_theme != saved_theme)
-            setTheme(saved_theme);
-
         getDelegate().installViewFactory();
         getDelegate().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
@@ -109,7 +119,7 @@ public abstract class AppCompatPreferenceActivity extends PreferenceActivity {
         getDelegate().invalidateOptionsMenu();
     }
 
-    private AppCompatDelegate getDelegate() {
+    protected AppCompatDelegate getDelegate() {
         if (mDelegate == null) {
             mDelegate = AppCompatDelegate.create(this, null);
         }

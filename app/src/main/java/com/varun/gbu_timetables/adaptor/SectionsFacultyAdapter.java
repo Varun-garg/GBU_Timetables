@@ -23,10 +23,10 @@ Our ExpandableListAdapter is based on http://www.androidhive.info/2013/07/androi
 public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
 
 
+    Drawable GroupIconDrawable;
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, List<Common_type>> _listDataChild;
-    Drawable GroupIconDrawable;
 
     public SectionsFacultyAdapter(Context context, List<String> listDataHeader,
                                   HashMap<String, List<Common_type>> listChildData) {

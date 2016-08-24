@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
+    android:background="?attr/app_bg_lighter_on_light_theme"
     android:orientation="vertical"
     android:paddingTop="15dp"
-    tools:showIn="@layout/activity_main"
-    android:background="?attr/main_activity_bg">
+    tools:showIn="@layout/activity_main">
 
     <ExpandableListView
         android:id="@+id/expandableListView"

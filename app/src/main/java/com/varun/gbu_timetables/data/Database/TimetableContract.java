@@ -21,9 +21,9 @@ public class TimetableContract {
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_FACULTY).build();
     public static String PATH_CSF = "CSF";
     public static String PATH_ROOM = "room";
-    public static String PATH_MAX = "max";
     public static final Uri ROOM_CONTENT_URI =
             BASE_CONTENT_URI.buildUpon().appendPath(PATH_ROOM).build();
+    public static String PATH_MAX = "max";
     public static String PARAM_SLOT = "slot";
     public static String PARAM_DAY = "day";
     public static String TT_CELL_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + PATH_TIMETABLE;
@@ -40,7 +40,7 @@ public class TimetableContract {
 
     public static Uri BuildFullSectionName(String SectionCode) {
         return BASE_CONTENT_URI.buildUpon().appendPath(PATH_FULL_SECTION_NAME)
-                .appendQueryParameter(PARAM_NAME,SectionCode)
+                .appendQueryParameter(PARAM_NAME, SectionCode)
                 .build();
     }
 
@@ -95,13 +95,11 @@ public class TimetableContract {
         return uri.getQueryParameter(PARAM_NAME);
     }
 
-    public static long getSectionFromMaxPeriodUri(Uri uri)
-    {
+    public static long getSectionFromMaxPeriodUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(3));
     }
 
-    public static long getFacultyFromMaxPeriodUri(Uri uri)
-    {
+    public static long getFacultyFromMaxPeriodUri(Uri uri) {
         return Long.parseLong(uri.getPathSegments().get(3));
     }
 

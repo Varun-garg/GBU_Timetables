@@ -29,8 +29,8 @@ public class FavouritesFragment extends Fragment {
     FavouritesAdapter favouritesAdapter;
     ProgressDialog progressDialog;
     TimeTableBasic emptyTimeTableBasic;
-    private int ElementsCount = 0;
     ArrayList<TimeTableBasic> FavouritesList;
+    private int ElementsCount = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,20 +58,18 @@ public class FavouritesFragment extends Fragment {
                 existing_data = gson.fromJson(json, favourites_type);
                 ElementsCount = existing_data.size();
             }
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             existing_data = new HashSet<>();
             ElementsCount = 0;
             String Message = "Fatal error: plz screenshot next messages and mail them to varun.10@live.com. Thank you.";
-            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), Message, Toast.LENGTH_LONG).show();
             Message = "Old Data " + json;
-            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), Message, Toast.LENGTH_LONG).show();
             existing_data.add(emptyTimeTableBasic);
             json = gson.toJson(existing_data);
             Message = "New Format " + json;
-            Toast.makeText(getContext(),Message, Toast.LENGTH_LONG).show();
-            Log.d(this.getClass().getSimpleName(),e.toString());
+            Toast.makeText(getContext(), Message, Toast.LENGTH_LONG).show();
+            Log.d(this.getClass().getSimpleName(), e.toString());
         }
 
         if (ElementsCount == 0)
@@ -87,7 +85,7 @@ public class FavouritesFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.favourites, container, false);
         listView = (ListView) rootView.findViewById(R.id.listView);
-        favouritesAdapter = new FavouritesAdapter(getContext(),FavouritesList);
+        favouritesAdapter = new FavouritesAdapter(getContext(), FavouritesList);
         listView.setAdapter(favouritesAdapter);
 
         progressDialog = new ProgressDialog(getContext(), Utility.ThemeTools.getDialogThemeId(getContext()));

@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_weight="1"
+    android:background="?attr/app_bg_lighter_on_light_theme"
     android:orientation="vertical"
-    android:paddingTop="15dp"
-    android:background="?attr/main_activity_bg">
+    android:paddingTop="15dp">
 
     <ListView
         android:id="@+id/listView"

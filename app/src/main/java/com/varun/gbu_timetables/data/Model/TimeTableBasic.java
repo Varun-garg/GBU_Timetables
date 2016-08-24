@@ -10,24 +10,23 @@ import com.google.gson.annotations.SerializedName;
  */
 public class TimeTableBasic {
 
-    @SerializedName(value = "Id",alternate={"a"}) // alternates a,b,c to fix recent regression issues
+    @SerializedName(value = "Id", alternate = {"a"})
+    // alternates a,b,c to fix recent regression issues
     private Long Id;
 
-    @SerializedName(value = "Type",alternate={"b"})
+    @SerializedName(value = "Type", alternate = {"b"})
     private String Type;
 
-    @SerializedName(value = "Title",alternate={"c"})
+    @SerializedName(value = "Title", alternate = {"c"})
     private String Title;
 
-    public TimeTableBasic(Long Id, String Type, String Title)
-    {
+    public TimeTableBasic(Long Id, String Type, String Title) {
         this.Id = Id;
         this.Type = Type;
         this.Title = Title;
     }
 
-    public TimeTableBasic()
-    {
+    public TimeTableBasic() {
 
     }
 
@@ -49,33 +48,27 @@ public class TimeTableBasic {
         return Type.hashCode() + Id.hashCode();
     }
 
-    public long getId()
-    {
+    public long getId() {
         return Id;
     }
 
-    public String getTitle()
-    {
-        return Title;
-    }
-
-    public String getType()
-    {
-        return Type;
-    }
-
-    public void setId(Long Id)
-    {
+    public void setId(Long Id) {
         this.Id = Id;
     }
 
-    public void setTitle(String Title)
-    {
+    public String getTitle() {
+        return Title;
+    }
+
+    public void setTitle(String Title) {
         this.Title = Title;
     }
 
-    public void setType(String Type)
-    {
+    public String getType() {
+        return Type;
+    }
+
+    public void setType(String Type) {
         this.Type = Type;
     }
 

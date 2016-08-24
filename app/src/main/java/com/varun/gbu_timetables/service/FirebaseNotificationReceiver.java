@@ -1,6 +1,5 @@
 package com.varun.gbu_timetables.service;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -47,27 +46,26 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
 
         String DebugTAG = data.get("debug");
 
-        if(DebugTAG != null)
-        {
-            if(DebugTAG.equalsIgnoreCase("true"))
+        if (DebugTAG != null) {
+            if (DebugTAG.equalsIgnoreCase("true"))
                 return;
         }
 
         String title = getString(R.string.app_name);
-        sendNotification(title,remoteMessage.getNotification().getBody(),data);
+        sendNotification(title, remoteMessage.getNotification().getBody(), data);
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
     }
 
-    private void sendNotification(String messageTitle,String messageBody,Map<String,String> Data) {
+    private void sendNotification(String messageTitle, String messageBody, Map<String, String> Data) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,0 /* request code */, intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long[] pattern = {500,500,500,500,500};
+        long[] pattern = {500, 500, 500, 500, 500};
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
         NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.logo)
@@ -75,22 +73,21 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setVibrate(pattern)
-                .setLights(Color.BLUE,1,1)
+                .setLights(Color.BLUE, 1, 1)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
         Intent notificationIntent = new Intent(getApplicationContext(), MainActivity.class);
 
-        for (Map.Entry<String, String> entry : Data.entrySet())
-        {
-            Log.d(this.getClass().getSimpleName(),"adding " + entry.getKey() + "/" + entry.getValue());
-            notificationIntent.putExtra(entry.getKey(),entry.getValue());
+        for (Map.Entry<String, String> entry : Data.entrySet()) {
+            Log.d(this.getClass().getSimpleName(), "adding " + entry.getKey() + "/" + entry.getValue());
+            notificationIntent.putExtra(entry.getKey(), entry.getValue());
         }
 
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         int DummyUniqueInt = new Random().nextInt(543254);
-        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(),(int) DummyUniqueInt ,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(), (int) DummyUniqueInt, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         notificationBuilder.setContentIntent(myIntent);
 

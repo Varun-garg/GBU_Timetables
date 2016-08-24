@@ -13,10 +13,10 @@ import android.widget.TextView;
 
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 import com.varun.gbu_timetables.data.model.CSF;
 import com.varun.gbu_timetables.data.model.CSF_FAC_MAP_KEY;
 import com.varun.gbu_timetables.data.model.PairKey;
-import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,16 +52,13 @@ public class TimetableAdapter {
         this.context = context;
 
         Uri max_uri;
-        if(this.timetable_type.equals(TimetableContract.PATH_SECTION))
-        {
-            max_uri =  TimetableContract.BuildMaxPeriodBySection(this.timetable_id);
+        if (this.timetable_type.equals(TimetableContract.PATH_SECTION)) {
+            max_uri = TimetableContract.BuildMaxPeriodBySection(this.timetable_id);
+        } else {
+            max_uri = TimetableContract.BuildMaxPeriodByFaculty(this.timetable_id);
         }
-        else
-        {
-            max_uri =  TimetableContract.BuildMaxPeriodByFaculty(this.timetable_id);
-        }
-      //  Log.d("max_uri",max_uri.toString());
-        Cursor max_c =  context.getContentResolver().query(max_uri,null,null,null,null);
+        //  Log.d("max_uri",max_uri.toString());
+        Cursor max_c = context.getContentResolver().query(max_uri, null, null, null, null);
         max_c.moveToNext();
         max_period = max_c.getLong(max_c.getColumnIndex("max(TT_Period)"));
         min_period = max_c.getLong(max_c.getColumnIndex("min(TT_Period)"));
@@ -80,14 +77,12 @@ public class TimetableAdapter {
         return CSF_Details;
     }
 
-    public long getMaxPeriods()
-    {
+    public long getMaxPeriods() {
         return max_period;
     }
 
 
-    public long getMinPeriods()
-    {
+    public long getMinPeriods() {
         return min_period;
     }
 
@@ -191,7 +186,7 @@ public class TimetableAdapter {
                         mCSF.Sub_Code = Sub_Code;
                         mCSF.Sub_name = Sub_name;
 
-                        if(mCSF.Fac_abbr.equals("SS"))
+                        if (mCSF.Fac_abbr.equals("SS"))
                             mCSF.Fac_abbr += " ADB";
 
                         if (timetable_type.equals(TimetableContract.PATH_SECTION)) {
@@ -203,7 +198,7 @@ public class TimetableAdapter {
                             Cursor section_cursor = context.getContentResolver().query(section_uri, null, null, null, null);
                             section_cursor.moveToNext();
                             mCSF.Section_name = section_cursor.getString(section_cursor.getColumnIndex("Name")).trim();
-                            mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name,context);
+                            mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name, context);
                             section_cursor.close();
                         }
 
@@ -248,7 +243,7 @@ public class TimetableAdapter {
         }
         cursor.close();
         cache.put(key, time_string.trim());
-    //    Log.d("string", Integer.toString(Day_no) + "," + Integer.toString(Period_Pos) + " " + time_string.trim());
+        //    Log.d("string", Integer.toString(Day_no) + "," + Integer.toString(Period_Pos) + " " + time_string.trim());
     }
 
 }

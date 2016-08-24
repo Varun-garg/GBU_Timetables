@@ -26,6 +26,9 @@
     <color name="theme_pink">#ffcdd2</color>
     <color name="theme_pink_dark">#263238</color>
 
+    <color name="app_bg_pure_white_or_black">#FFFFFF</color>
+    <color name="app_bg_pure_white_or_black_dark">#263238</color>
+
 
 </resources><!--
 <resources>

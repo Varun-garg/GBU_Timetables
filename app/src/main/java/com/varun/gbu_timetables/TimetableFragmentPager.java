@@ -134,8 +134,7 @@ public class TimetableFragmentPager extends Fragment {
                 HashSet<CSF_FAC_MAP_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
                 ArrayList<CSF_FAC_MAP_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
-                if(time_string.equals(""))
-                {
+                if (time_string.equals("")) {
                     repeat = 0;
                     continue;
                 }
@@ -143,9 +142,9 @@ public class TimetableFragmentPager extends Fragment {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
-                    textView.setText(Integer.toString(Utility.getPeriodTitleNo(j-repeat)) + ":" + Integer.toString(beg_min) + " - ");
+                    textView.setText(Integer.toString(Utility.getPeriodTitleNo(j - repeat)) + ":" + Integer.toString(beg_min) + " - ");
                     textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
-                    textView.append(" (" + Integer.toString(repeat +1) + " Hrs)");
+                    textView.append(" (" + Integer.toString(repeat + 1) + " Hrs)");
                     continue;
                 }
                 repeat = 0;
@@ -176,7 +175,7 @@ public class TimetableFragmentPager extends Fragment {
 
                 final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), current_csf_list, type);
                 final LinearLayout footer = (LinearLayout) parent_view.findViewById(R.id.footer_ll);
-                footer.setPadding(0,20,0,0);
+                footer.setPadding(0, 20, 0, 0);
 
                 item_view.setOnClickListener(new View.OnClickListener() {
                     LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -224,7 +223,7 @@ public class TimetableFragmentPager extends Fragment {
                     }
                 });
 
-                if(item_pos == 0) //first item , initially item_pos = -1 but it is incremented before it is reaches here first time
+                if (item_pos == 0) //first item , initially item_pos = -1 but it is incremented before it is reaches here first time
                 {
                     item_view.performClick();//select first item by default in UI by "clicking" it
                 }

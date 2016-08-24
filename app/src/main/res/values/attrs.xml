@@ -2,7 +2,8 @@
 <resources>
     <attr name="box_bg" format="color" />
     <attr name="app_bg" format="color" />
-    <attr name="main_activity_bg" format="color" />
+    <attr name="app_bg_lighter_on_light_theme" format="color" />
+    <attr name="app_bg_pure_white_or_black" format="color" />
     <attr name="theme_green" format="color" />
     <attr name="theme_pink" format="color" />
 </resources>
