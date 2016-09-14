@@ -160,15 +160,21 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
-        if (id == R.id.action_settings) {
+        else if (id == R.id.action_settings) {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         }
 
-        if (id == R.id.action_info) {
+        else if (id == R.id.action_info) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
         }
+        else if(id == R.id.action_syllabus)
+        {
+            Intent intent = new Intent(getApplicationContext(), CourseStructure.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
