@@ -169,11 +169,13 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
         }
+        /*
         else if(id == R.id.action_syllabus)
         {
             Intent intent = new Intent(getApplicationContext(), CourseStructure.class);
             startActivity(intent);
         }
+        */
 
         return super.onOptionsItemSelected(item);
     }
