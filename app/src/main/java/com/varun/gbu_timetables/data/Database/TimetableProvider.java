@@ -146,7 +146,7 @@ public class TimetableProvider extends ContentProvider {
         cursor.moveToNext();
         String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
         cursor.close();
-        String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code= '" + code + "'";
+        String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code like '%" + code + "%'";
         return mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
     }
 

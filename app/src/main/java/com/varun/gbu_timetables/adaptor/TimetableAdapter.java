@@ -51,14 +51,14 @@ public class TimetableAdapter {
         this.timetable_id = timetable_id;
         this.context = context;
 
-        Uri max_uri;
+        Uri maxMinUri;
         if (this.timetable_type.equals(TimetableContract.PATH_SECTION)) {
-            max_uri = TimetableContract.BuildMaxPeriodBySection(this.timetable_id);
+            maxMinUri = TimetableContract.BuildMaxPeriodBySection(this.timetable_id);
         } else {
-            max_uri = TimetableContract.BuildMaxPeriodByFaculty(this.timetable_id);
+            maxMinUri = TimetableContract.BuildMaxPeriodByFaculty(this.timetable_id);
         }
         //  Log.d("max_uri",max_uri.toString());
-        Cursor max_c = context.getContentResolver().query(max_uri, null, null, null, null);
+        Cursor max_c = context.getContentResolver().query(maxMinUri, null, null, null, null);
         max_c.moveToNext();
         max_period = max_c.getLong(max_c.getColumnIndex("max(TT_Period)"));
         min_period = max_c.getLong(max_c.getColumnIndex("min(TT_Period)"));
@@ -237,8 +237,9 @@ public class TimetableAdapter {
             } catch (Exception e) {
                 Log.d("day_no", Integer.toString(Day_no));
                 Log.d("period_no", Integer.toString(Period_Pos));
-                Log.d("TimetableAdapter", "caught error in CSF_id" + CSF_Id.toString());
-                Log.d("TimetableAdapter", e.toString());
+                Log.d("TimetableAdapter", "caught error in CSF_id " + CSF_Id.toString());
+                Log.d("TimetableAdapter", e.toString(),e);
+             //   Log.d("TimetableAdapter",Log.getStackTraceString(e));
             }
         }
         cursor.close();

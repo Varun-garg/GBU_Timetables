@@ -9,7 +9,7 @@ android {
         minSdkVersion 9 // need 9 with firebase messaging library otherwise use 7
         targetSdkVersion 25
         versionCode 70
-        versionName "10.6"
+        versionName "10.7"
     }
     buildTypes {
         release {
