@@ -36,6 +36,8 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
     private boolean silent = false;
+    String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
+    String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -44,15 +46,14 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected Integer doInBackground(Void... params) {
-        String url_str = "http://gbuonline.in/timetable_md5/md5.php";
         HttpURLConnection urlConnection;
         BufferedReader reader;
         String server_str;
         String server_md5;
         publishProgress("Checking for timetable updates");
         try {
-            URL url = new URL(url_str);
-            urlConnection = (HttpURLConnection) url.openConnection();
+            URL checksumUrl = new URL(checksumUrlLocation);
+            urlConnection = (HttpURLConnection) checksumUrl.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
@@ -77,9 +78,9 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
             String db_md5 = preferences.getString(TimetableDbHelper.DB_MD5_PATH, null);
 
             if (!server_md5.equals(db_md5)) {
+                URL downloadUrl = new URL(downloadUrlLocation);
                 publishProgress("Newer timetables found, downloading");
-                URL download_url = new URL("http://gbuonline.in/timetable/varun.db");
-                URLConnection dl_url_connection = download_url.openConnection();
+                URLConnection dl_url_connection = downloadUrl.openConnection();
                 dl_url_connection.connect();
                 String downloaded_file_path = "download.db";
                 FileOutputStream saved = mContext.openFileOutput(downloaded_file_path, Context.MODE_PRIVATE);
