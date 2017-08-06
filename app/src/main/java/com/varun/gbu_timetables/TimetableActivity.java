@@ -13,7 +13,7 @@ import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.varun.gbu_timetables.data.model.TimeTableBasic;
+import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 
 import java.lang.reflect.Type;
 import java.util.HashSet;

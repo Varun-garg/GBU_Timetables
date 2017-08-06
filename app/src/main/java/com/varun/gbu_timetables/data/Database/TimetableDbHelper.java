@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.database;
+package com.varun.gbu_timetables.data.Database;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 /**
  * varun.timetables_sql.data (Timetables_sql)
@@ -24,20 +25,29 @@ import java.util.ArrayList;
  */
 public class TimetableDbHelper extends SQLiteOpenHelper {
 
-    static final String DATABASE_NAME = "varun.db";
-    static final String LOG_TAG = "TimetableDbHelper";
-    public static String DB_VERSION_PATH = "App_db_version";
-    public static String DB_MD5_PATH = "App_db_md5";
-    Context context;
+    private static final String DATABASE_NAME = "varun.db";
+    private final String LOG_TAG = "TimetableDbHelper";
+    private static final String DB_VERSION_PATH = "App_db_version";
+    public static final String DB_MD5_PATH = "App_db_md5";
+    private static final String DB_LOCK = "DB_LOCK";
+    private static final String DB_LOCK_ON = "ON";
+    private static final String DB_LOCK_OFF = "OFF";
 
-    SharedPreferences prefs;
-    SharedPreferences.Editor editor;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     public TimetableDbHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
         prefs = PreferenceManager.getDefaultSharedPreferences(context);
         editor = prefs.edit();
-        this.context = context;
+
+        try {
+            while (prefs.getString(DB_LOCK, "").equalsIgnoreCase(DB_LOCK_ON)) //already locked
+                TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Log.d("error", e.toString());
+            return; //no point of overwriting now.
+        }
 
         Cursor c = this.getWritableDatabase().rawQuery("SELECT name from sqlite_master where type = 'table'", null);
         ArrayList<String> list = new ArrayList<>();
@@ -52,7 +62,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
 
         if (list.size() <= 1) // only sql_master or empty db
         {
-            copy_db(context, 0, null);
+            overwriteDB(context, 0, null);
         }
 
         PackageInfo info;
@@ -61,7 +71,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             int saved_db_version = prefs.getInt(DB_VERSION_PATH, 0);
             int current_db_version = info.versionCode;
             if (current_db_version != saved_db_version) {
-                copy_db(context, 0, null);
+                overwriteDB(context, 0, null);
                 editor.putInt(DB_VERSION_PATH, current_db_version);
                 editor.apply();
                 Log.d("updating", "due to version mismatch");
@@ -72,12 +82,25 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         }
     }
 
-    public static File get_dest_db(Context context) {
+    private File getDBFile(Context context) {
         String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
         return new File(dest_db);
     }
 
-    public void copy_db(Context context, int mode, String location) {
+    public void overwriteDB(Context context, int mode, String location) {
+
+        Log.d(LOG_TAG, "entering overwriteDB with lock status " + prefs.getString(DB_LOCK, ""));
+
+        try {
+            while (prefs.getString(DB_LOCK, "").equalsIgnoreCase(DB_LOCK_ON)) //already locked
+                TimeUnit.SECONDS.sleep(1);
+        } catch (InterruptedException e) {
+            Log.d("error", e.toString());
+            return; //no point of overwriting now.
+        }
+
+        editor.putString(DB_LOCK, DB_LOCK_ON);
+        editor.commit();
 
         Log.d(LOG_TAG, "Ok, we are gonna copy some data");
         String dest_db = context.getApplicationInfo().dataDir + "/databases/" + DATABASE_NAME;
@@ -109,9 +132,13 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             Log.d(LOG_TAG, "Caught IO Exception " + e);
         }
-        String new_MD5 = MD5.calculateMD5(get_dest_db(context));
+        String new_MD5 = MD5.calculateMD5(getDBFile(context));
         editor.putString(DB_MD5_PATH, new_MD5);
         editor.commit();
+
+        editor.putString(DB_LOCK, DB_LOCK_OFF); //release our lock.
+        editor.commit();
+
     }
 
     @Override

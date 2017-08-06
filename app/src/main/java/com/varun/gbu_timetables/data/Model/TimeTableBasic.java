@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.model;
+package com.varun.gbu_timetables.data.Model;
 
 import android.util.Log;
 

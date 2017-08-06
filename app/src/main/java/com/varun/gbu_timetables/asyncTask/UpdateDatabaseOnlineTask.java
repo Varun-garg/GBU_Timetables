@@ -17,9 +17,10 @@ import android.widget.Toast;
 
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
-import com.varun.gbu_timetables.data.database.TimetableContract;
-import com.varun.gbu_timetables.data.database.TimetableDbHelper;
-import com.varun.gbu_timetables.data.database.TimetableProvider;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.Database.TimetableDbHelper;
+import com.varun.gbu_timetables.data.Database.TimetableProvider;
+import com.varun.gbu_timetables.data.MD5;
 
 import org.json.JSONObject;
 
@@ -36,8 +37,8 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
     private boolean silent = false;
-    String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
-    String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
+    private final String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
+    private final String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -82,13 +83,11 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 publishProgress("Newer timetables found, downloading");
                 URLConnection dl_url_connection = downloadUrl.openConnection();
                 dl_url_connection.connect();
-                String downloaded_file_path = "download.db";
-                FileOutputStream saved = mContext.openFileOutput(downloaded_file_path, Context.MODE_PRIVATE);
+                String DownloadedDBFileName = "download.db";
+                FileOutputStream saved = mContext.openFileOutput(DownloadedDBFileName, Context.MODE_PRIVATE);
 
                 publishProgress("Application will restart after update");
                 InputStream download_stream = dl_url_connection.getInputStream();
-                if (dl_url_connection == null)
-                    return -1;
 
                 byte mbuffer[] = new byte[1024];
 
@@ -97,10 +96,16 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                     saved.write(mbuffer, 0, length);
                 }
 
+                File DownloadedDbFile =  new File(mContext.getFilesDir() + "/" + DownloadedDBFileName);
+
+                //Check if downloaded file has MD5 sum from the server to avoid incomplete downloads.
+                if(!MD5.checkMD5(server_md5,DownloadedDbFile))
+                    return -1;
+
                 TimetableDbHelper timetableDbHelper = new TimetableDbHelper(mContext);
-                timetableDbHelper.copy_db(mContext, 1, downloaded_file_path);
-                File f = new File(downloaded_file_path);
-                f.delete();
+                timetableDbHelper.overwriteDB(mContext, 1, DownloadedDBFileName);
+
+                DownloadedDbFile.delete(); //Not Required
 
                 /*Uri reloadDBUri = TimetableContract.RELOAD_DB_URI;
                 mContext.getContentResolver().query(reloadDBUri,null,null,null,null);

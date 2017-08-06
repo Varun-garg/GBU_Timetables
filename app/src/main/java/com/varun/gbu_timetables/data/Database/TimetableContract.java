@@ -1,4 +1,4 @@
-package com.varun.gbu_timetables.data.database;
+package com.varun.gbu_timetables.data.Database;
 
 import android.content.ContentResolver;
 import android.net.Uri;

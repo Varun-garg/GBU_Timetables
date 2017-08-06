@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
-import com.varun.gbu_timetables.data.model.TimeTableBasic;
+import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 
 import java.util.ArrayList;
 

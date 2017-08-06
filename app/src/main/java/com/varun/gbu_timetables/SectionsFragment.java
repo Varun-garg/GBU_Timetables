@@ -13,7 +13,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ExpandableListView;
 
 import com.varun.gbu_timetables.adaptor.SectionsFacultyAdapter;
-import com.varun.gbu_timetables.data.database.TimetableContract;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;

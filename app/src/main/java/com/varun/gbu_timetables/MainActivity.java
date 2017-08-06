@@ -1,5 +1,8 @@
 package com.varun.gbu_timetables;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +23,8 @@ import android.widget.Toast;
 
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -182,7 +187,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onDestroy() {
-        startService();
+        // startService();
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.set(Calendar.HOUR_OF_DAY, 13); // For 1 PM or 2 PM
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0,
+                new Intent(getApplicationContext(), UpdateDatabaseService.class), PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                AlarmManager.INTERVAL_DAY, pi);
         super.onDestroy();
     }
 

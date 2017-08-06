@@ -16,10 +16,10 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.crash.FirebaseCrash;
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
-import com.varun.gbu_timetables.data.database.TimetableContract;
-import com.varun.gbu_timetables.data.model.CSF;
-import com.varun.gbu_timetables.data.model.CSF_FAC_MAP_KEY;
-import com.varun.gbu_timetables.data.model.PairKey;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.Model.CSF;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
+import com.varun.gbu_timetables.data.Model.PairKey;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

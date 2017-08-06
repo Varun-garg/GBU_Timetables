@@ -13,7 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
-import com.varun.gbu_timetables.data.database.TimetableContract;
+import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)

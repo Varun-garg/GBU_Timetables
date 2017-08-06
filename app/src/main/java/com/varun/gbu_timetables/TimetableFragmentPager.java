@@ -17,8 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.varun.gbu_timetables.adaptor.TimetableAdapter;
-import com.varun.gbu_timetables.data.model.CSF;
-import com.varun.gbu_timetables.data.model.CSF_FAC_MAP_KEY;
+import com.varun.gbu_timetables.data.Model.CSF;
+import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
 
 import java.util.ArrayList;
 import java.util.Calendar;

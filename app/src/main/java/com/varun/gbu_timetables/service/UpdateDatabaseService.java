@@ -1,13 +1,16 @@
 package com.varun.gbu_timetables.service;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
+import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
 
 /**
@@ -53,6 +56,20 @@ public class UpdateDatabaseService extends Service {
         updateDatabaseOnlineTask.execute();
 
         mStartMode = Service.START_NOT_STICKY;
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.logo)
+                        .setContentTitle("My notification")
+                        .setContentText("Hello World!");
+        NotificationManager mNotificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+// mNotificationId is a unique integer your app uses to identify the
+// notification. For example, to cancel the notification, you can pass its ID
+// number to NotificationManager.cancel().
+        mNotificationManager.notify(23232, mBuilder.build());
+
         return mStartMode;
     }
 
