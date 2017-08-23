@@ -57,18 +57,18 @@ public class UpdateDatabaseService extends Service {
 
         mStartMode = Service.START_NOT_STICKY;
 
-        NotificationCompat.Builder mBuilder =
+        /*NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.drawable.logo)
                         .setContentTitle("My notification")
                         .setContentText("Hello World!");
         NotificationManager mNotificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE); */
 
 // mNotificationId is a unique integer your app uses to identify the
 // notification. For example, to cancel the notification, you can pass its ID
 // number to NotificationManager.cancel().
-        mNotificationManager.notify(23232, mBuilder.build());
+      /*  mNotificationManager.notify(23232, mBuilder.build()); */
 
         return mStartMode;
     }
