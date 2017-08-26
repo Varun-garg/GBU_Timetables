@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GBU Timtables.iml" filepath="$PROJECT_DIR$/GBU Timtables.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GBU_Timetables.iml" filepath="$PROJECT_DIR$/GBU_Timetables.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

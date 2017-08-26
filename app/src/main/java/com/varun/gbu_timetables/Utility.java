@@ -53,8 +53,11 @@ public class Utility {
     public static String getFullSectionName(String SectionCode, Context context) {
         String splitted[] = SectionCode.split("-");
         String Year = null;
+        //String Grp = null;
         if (splitted.length >= 2)
             Year = " (" + splitted[1] + ")";
+        if (splitted.length >= 3)
+            Year = " (" + splitted[1] + "-" + splitted[2] + ")";
 
         Uri uri = TimetableContract.BuildFullSectionName(splitted[0]);
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);

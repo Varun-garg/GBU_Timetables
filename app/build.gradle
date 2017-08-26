@@ -8,7 +8,7 @@ android {
         applicationId "com.varun.gbu_timetables"
         minSdkVersion 9 // need 9 with firebase messaging library otherwise use 7
         targetSdkVersion 25
-        versionCode 71
+        versionCode 72
         versionName "10.8"
     }
     buildTypes {

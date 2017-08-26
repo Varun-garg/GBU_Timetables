@@ -32,6 +32,7 @@
         <item name="theme_pink">@color/theme_pink</item>
     </style>
 
+
     <style name="DarkTheme" parent="android:ThemeOverlay.Material">
         <item name="colorPrimary">@color/DarkThemeColorPrimary</item>
         <item name="colorPrimaryDark">@color/DarkThemeColorPrimaryDark</item>
