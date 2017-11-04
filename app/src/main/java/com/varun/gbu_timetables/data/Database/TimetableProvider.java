@@ -100,9 +100,10 @@ public class TimetableProvider extends ContentProvider {
 
     private Cursor getSectionsByProgramID(Uri uri) {
         Long program_id = TimetableContract.getProgramFromUri(uri);
-        String query = "SELECT _ROWID_ as _id,id as section_id,name from Section" +
-                " where ShowTimetable = 1 and  program = " + program_id
-                + " order by Section.name";
+        String query = "SELECT distinct Section._ROWID_ as _id,id as section_id,name from Section,M_Time_Table" +
+                " where ShowTimetable = 1 and program = " + program_id +" and Section.id = M_Time_Table.Section_Id"
+                + " order by Section.name ";
+
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 

@@ -17,6 +17,7 @@ import com.varun.gbu_timetables.data.Database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class FacultyFragment extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.setInverseBackgroundForced(false);
 
-        HeaderListData = new ArrayList<>();
+        HashSet<String> RedundantHeaderListData = new HashSet<>();
         ChildrenListData = new HashMap<>();
 
         Uri Faculty_uri = TimetableContract.BuildFaculty();
@@ -52,7 +53,7 @@ public class FacultyFragment extends Fragment {
             ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
             ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
 
-            HeaderListData.add(school);
+            RedundantHeaderListData.add(school);
 
             List<SectionsFacultyAdapter.Common_type> facultyList = ChildrenListData.get(school);
             if (facultyList == null) facultyList = new ArrayList<>();
@@ -61,10 +62,7 @@ public class FacultyFragment extends Fragment {
         }
         faculty_cursor.close();
 
-        Set<String> hs = new LinkedHashSet<>(HeaderListData); // now we remove duplicates
-        HeaderListData.clear();
-        HeaderListData.addAll(hs);
-
+        HeaderListData = new ArrayList<>(RedundantHeaderListData);
         schoolsAdapter = new SectionsFacultyAdapter(getContext(), HeaderListData, ChildrenListData);
     }
 
