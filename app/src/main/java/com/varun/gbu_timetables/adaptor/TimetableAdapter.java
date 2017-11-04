@@ -63,8 +63,8 @@ public class TimetableAdapter {
         bundle.putString(FirebaseAnalytics.Param.ITEM_CATEGORY, "TimetableOpen");
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
         bundle.putString("Title", title);
-        bundle.putString("Timetable Id", timetable_id.toString());
-        bundle.putString("Timetable Type ", timetable_type.toString());
+        bundle.putString("Timetable_Id", timetable_id.toString());
+        bundle.putString("Timetable_Type", timetable_type.toString().replaceAll(" ","_"));
         mFirebaseAnalytics.logEvent("TimetableOpen", bundle);
 
         Uri maxMinUri;

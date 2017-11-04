@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.varun.gbu_timetables.data.MD5;
 
@@ -49,6 +50,13 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             return; //no point of overwriting now.
         }
 
+        if(!this.getReadableDatabase().isDatabaseIntegrityOk())
+        {
+            Toast toast = Toast.makeText(context, "Database is corrupted, please reinstall this application.", Toast.LENGTH_LONG);
+            toast.show();
+            return;
+        }
+
         Cursor c = this.getWritableDatabase().rawQuery("SELECT name from sqlite_master where type = 'table'", null);
         ArrayList<String> list = new ArrayList<>();
         if (c.moveToFirst()) {
@@ -79,6 +87,13 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             }
         } catch (Exception e) {
             Log.d("error", e.toString());
+        }
+
+        if(!this.getReadableDatabase().isDatabaseIntegrityOk())
+        {
+            Toast toast = Toast.makeText(context, "Database is corrupted, please reinstall this application.", Toast.LENGTH_LONG);
+            toast.show();
+            return;
         }
     }
 
