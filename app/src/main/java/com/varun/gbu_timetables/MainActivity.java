@@ -5,9 +5,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,10 +23,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
+import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
+import java.lang.reflect.Type;
 import java.util.Calendar;
+import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +42,20 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     FragmentPagerAdapter fragmentPagerAdapter;
+
+    public static boolean checkFavouritesExist(Context context) {
+        Gson gson = new Gson();
+        String existing_TAG = "favourites";
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+        String json = prefs.getString(existing_TAG, null);
+
+        Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
+        }.getType(); //simply checking  string size doesn't work
+
+        return json != null && json.length() > 0 &&
+                ((HashSet<TimeTableBasic>) gson.fromJson(json, favourites_type)).size() > 0;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,18 +71,23 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.pager);
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         viewPager.setAdapter(fragmentPagerAdapter);
-        viewPager.setCurrentItem(2); // open page no 3
         viewPager.setOffscreenPageLimit(2); // Cache all pages = N-1
+
+        if (checkFavouritesExist(getApplicationContext()) == true)
+            viewPager.setCurrentItem(2); // open favourites
+        else
+            viewPager.setCurrentItem(0); // open sections
+
         tabLayout.setupWithViewPager(viewPager);
 
         updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), false);
@@ -100,11 +126,9 @@ public class MainActivity extends AppCompatActivity {
                     } catch (android.content.ActivityNotFoundException e) {
                         startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + Content)));
                     }
-                }
-                else if (ContentType.equalsIgnoreCase("BrowserUrl"))
+                } else if (ContentType.equalsIgnoreCase("BrowserUrl"))
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Content)));
-                else if (ContentType.equalsIgnoreCase("MessageDialog")) ;
-                {
+                else if (ContentType.equalsIgnoreCase("MessageDialog")) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
                     builder1.setMessage(Html.fromHtml(Content));
                     builder1.setCancelable(false);
@@ -164,13 +188,10 @@ public class MainActivity extends AppCompatActivity {
                 updateDatabaseOnlineTask = null;
             }
             return true;
-        }
-        else if (id == R.id.action_settings) {
+        } else if (id == R.id.action_settings) {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
-        }
-
-        else if (id == R.id.action_info) {
+        } else if (id == R.id.action_info) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
         }

@@ -62,7 +62,7 @@ public class TimetableActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_timetable);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -93,7 +93,7 @@ public class TimetableActivity extends AppCompatActivity {
         final Drawable fav_yes = Utility.ThemeTools.FavouriteIcon.getFavYes(getApplicationContext());
         final Drawable fav_no = Utility.ThemeTools.FavouriteIcon.getFavNo(getApplicationContext());
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = findViewById(R.id.fab);
 
         if (existing_data.contains(info)) {
             fab.setImageDrawable(fav_yes);

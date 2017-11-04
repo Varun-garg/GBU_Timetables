@@ -53,8 +53,8 @@ public class TimetableFragmentPager extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_timetable_pager, container, false);
 
-        AppBarLayout appBarLayout = (AppBarLayout) getActivity().findViewById(R.id.appbar_layout);
-        ViewPager viewPager = (ViewPager) rootView.findViewById(R.id.timetable_pager);
+        AppBarLayout appBarLayout = getActivity().findViewById(R.id.appbar_layout);
+        ViewPager viewPager = rootView.findViewById(R.id.timetable_pager);
         TimetablePagerAdapter timetablePagerAdapter = new TimetablePagerAdapter(getContext());
 
         Calendar calendar = Calendar.getInstance();
@@ -123,7 +123,7 @@ public class TimetableFragmentPager extends Fragment {
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
-            final LinearLayout linearLayout = (LinearLayout) parent_view.findViewById(R.id.linear_layout);
+            final LinearLayout linearLayout = parent_view.findViewById(R.id.linear_layout);
             int beg_min = 30;
             final ArrayList<LinearLayout> items_list = new ArrayList<>();
             String prev_time_string = "";
@@ -134,7 +134,7 @@ public class TimetableFragmentPager extends Fragment {
                 HashSet<CSF_FAC_MAP_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
                 ArrayList<CSF_FAC_MAP_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
-                if (time_string.length()<1) {
+                if (time_string.length() < 1) {
                     repeat = 0;
                     prev_time_string = null;
                     continue;
@@ -142,7 +142,7 @@ public class TimetableFragmentPager extends Fragment {
                 if (time_string.equals(prev_time_string)) {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
-                    TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
+                    TextView textView = cur_item.findViewById(R.id.pager_item_row);
                     textView.setText(Integer.toString(Utility.getPeriodTitleNo(j - repeat)) + ":" + Integer.toString(beg_min) + " - ");
                     textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
                     textView.append(" (" + Integer.toString(repeat + 1) + " Hrs)");
@@ -157,7 +157,7 @@ public class TimetableFragmentPager extends Fragment {
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
                 item_view.addView(item, layoutParams);
 
-                TextView textView = (TextView) item_view.findViewById(R.id.pager_item_row);
+                TextView textView = item_view.findViewById(R.id.pager_item_row);
                 textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
                 textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
                 textView.setBackgroundResource(BgBoxDefault_id);
@@ -175,7 +175,7 @@ public class TimetableFragmentPager extends Fragment {
                     }
 
                 final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), current_csf_list, type);
-                final LinearLayout footer = (LinearLayout) parent_view.findViewById(R.id.footer_ll);
+                final LinearLayout footer = parent_view.findViewById(R.id.footer_ll);
                 footer.setPadding(0, 20, 0, 0);
 
                 item_view.setOnClickListener(new View.OnClickListener() {

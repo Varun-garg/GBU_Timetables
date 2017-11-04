@@ -23,7 +23,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.splash_screen);
-        ImageView imageView = (ImageView) findViewById(R.id.image_view);
+        ImageView imageView = findViewById(R.id.image_view);
         imageView.setImageDrawable(ContextCompat.getDrawable(getApplicationContext(), R.drawable.logo));
 
         new Handler().postDelayed(new Runnable() {
@@ -32,7 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 Bundle Extras = getIntent().getExtras();
-                if(Extras != null)
+                if (Extras != null)
                     intent.putExtras(Extras);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 getApplicationContext().startActivity(intent);

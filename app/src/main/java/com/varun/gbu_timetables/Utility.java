@@ -113,7 +113,7 @@ public class Utility {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor;
         editor = sharedPreferences.edit();
-        editor.putString(context.getString(R.string.pref_firebase_instance_id_key),InstanceId);
+        editor.putString(context.getString(R.string.pref_firebase_instance_id_key), InstanceId);
         editor.apply();
     }
 
@@ -125,8 +125,8 @@ public class Utility {
     }
 
     // copy text to clipboard
-    public static void setClipboard(Context context,String text) {
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+    public static void setClipboard(Context context, String text) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
         } else {

@@ -77,7 +77,7 @@ public class SectionsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.expandable_listview, container, false);
 
-        final ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+        final ExpandableListView schools_lv = rootView.findViewById(R.id.expandableListView);
         schools_lv.setAdapter(schoolsAdapter);
 
         ViewTreeObserver vto = schools_lv.getViewTreeObserver();

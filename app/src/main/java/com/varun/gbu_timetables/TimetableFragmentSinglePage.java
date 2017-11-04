@@ -62,7 +62,7 @@ public class TimetableFragmentSinglePage extends Fragment {
         }
 
 
-        tableLayout = (TableLayout) rootView.findViewById(R.id.timetable_table);
+        tableLayout = rootView.findViewById(R.id.timetable_table);
 
 
         type = getActivity().getIntent().getExtras().getString("Type");
@@ -141,7 +141,7 @@ public class TimetableFragmentSinglePage extends Fragment {
         Set<CSF> csf_items = new HashSet<>(CSF_Details.values());
 
         ArrayList<CSF> CSF_Array = new ArrayList<>(csf_items);
-        final ListView lv2 = (ListView) rootView.findViewById(R.id.timetable_faculty_data);
+        final ListView lv2 = rootView.findViewById(R.id.timetable_faculty_data);
         final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array, type);
         lv2.setAdapter(detailsAdapter);
 

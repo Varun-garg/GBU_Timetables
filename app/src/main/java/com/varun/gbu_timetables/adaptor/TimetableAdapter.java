@@ -13,7 +13,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.firebase.crash.FirebaseCrash;
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
 import com.varun.gbu_timetables.data.Database.TimetableContract;
@@ -39,16 +38,14 @@ public class TimetableAdapter {
     ArrayList<Integer> day_nos;
     String title;
     HashMap<CSF_FAC_MAP_KEY, CSF> CSF_Details = new HashMap();
-    private FirebaseAnalytics mFirebaseAnalytics;
-
     HashMap<PairKey, String> cache = new HashMap();
     HashMap<PairKey, HashSet> keymap = new HashMap<>();
-
     int BgBoxDefault;
     int BgBoxPink;
     int BgBoxGreen;
     long max_period = 0;
     long min_period = 0;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, String title) {
         this.title = title;
@@ -64,7 +61,7 @@ public class TimetableAdapter {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
         bundle.putString("Title", title);
         bundle.putString("Timetable_Id", timetable_id.toString());
-        bundle.putString("Timetable_Type", timetable_type.toString().replaceAll(" ","_"));
+        bundle.putString("Timetable_Type", timetable_type.toString().replaceAll(" ", "_"));
         mFirebaseAnalytics.logEvent("TimetableOpen", bundle);
 
         Uri maxMinUri;
@@ -261,12 +258,12 @@ public class TimetableAdapter {
                 bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
                 bundle.putString("day_no", Integer.toString(Day_no));
                 bundle.putString("period_no", Integer.toString(Period_Pos));
-                bundle.putString("CSF_id ", CSF_Id.toString());
-                bundle.putString("exception ", e.toString());
+                bundle.putString("CSF_id", CSF_Id.toString());
+                bundle.putString("exception", e.toString());
 
                 StringWriter errors = new StringWriter();
                 e.printStackTrace(new PrintWriter(errors));
-                bundle.putString("StackTracke", errors.toString());
+                bundle.putString("StackTrace", errors.toString());
                 mFirebaseAnalytics.logEvent("Error", bundle);
             }
         }

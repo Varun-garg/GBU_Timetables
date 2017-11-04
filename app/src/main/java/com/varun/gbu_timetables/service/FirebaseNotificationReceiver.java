@@ -67,7 +67,7 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notificationBuilder = (NotificationCompat.Builder) new NotificationCompat.Builder(this)
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_notification_statue_buddha)
                 .setColor(getResources().getColor(R.color.app_bg_dark))
                 .setContentTitle(messageTitle)
@@ -88,7 +88,7 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         int DummyUniqueInt = new Random().nextInt(543254);
-        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(), (int) DummyUniqueInt, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(), DummyUniqueInt, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         notificationBuilder.setContentIntent(myIntent);
 

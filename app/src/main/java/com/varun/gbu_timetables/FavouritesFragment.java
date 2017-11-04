@@ -84,7 +84,7 @@ public class FavouritesFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.favourites, container, false);
-        listView = (ListView) rootView.findViewById(R.id.listView);
+        listView = rootView.findViewById(R.id.listView);
         favouritesAdapter = new FavouritesAdapter(getContext(), FavouritesList);
         listView.setAdapter(favouritesAdapter);
 
@@ -92,7 +92,7 @@ public class FavouritesFragment extends Fragment {
         progressDialog.setCancelable(false);
         progressDialog.setInverseBackgroundForced(false);
 
-        listView = (ListView) rootView.findViewById(R.id.listView);
+        listView = rootView.findViewById(R.id.listView);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,

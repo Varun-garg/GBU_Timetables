@@ -18,9 +18,7 @@ import com.varun.gbu_timetables.data.Database.TimetableContract;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -71,7 +69,7 @@ public class FacultyFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.expandable_listview, container, false);
-        final ExpandableListView schools_lv = (ExpandableListView) rootView.findViewById(R.id.expandableListView);
+        final ExpandableListView schools_lv = rootView.findViewById(R.id.expandableListView);
 
         schools_lv.setAdapter(schoolsAdapter);
 

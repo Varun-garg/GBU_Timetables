@@ -26,14 +26,13 @@ import java.util.concurrent.TimeUnit;
  */
 public class TimetableDbHelper extends SQLiteOpenHelper {
 
-    private static final String DATABASE_NAME = "varun.db";
-    private final String LOG_TAG = "TimetableDbHelper";
-    private static final String DB_VERSION_PATH = "App_db_version";
     public static final String DB_MD5_PATH = "App_db_md5";
+    private static final String DATABASE_NAME = "varun.db";
+    private static final String DB_VERSION_PATH = "App_db_version";
     private static final String DB_LOCK = "DB_LOCK";
     private static final String DB_LOCK_ON = "ON";
     private static final String DB_LOCK_OFF = "OFF";
-
+    private final String LOG_TAG = "TimetableDbHelper";
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
 
@@ -50,8 +49,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             return; //no point of overwriting now.
         }
 
-        if(!this.getReadableDatabase().isDatabaseIntegrityOk())
-        {
+        if (!this.getReadableDatabase().isDatabaseIntegrityOk()) {
             Toast toast = Toast.makeText(context, "Database is corrupted, please reinstall this application.", Toast.LENGTH_LONG);
             toast.show();
             return;
@@ -89,8 +87,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             Log.d("error", e.toString());
         }
 
-        if(!this.getReadableDatabase().isDatabaseIntegrityOk())
-        {
+        if (!this.getReadableDatabase().isDatabaseIntegrityOk()) {
             Toast toast = Toast.makeText(context, "Database is corrupted, please reinstall this application.", Toast.LENGTH_LONG);
             toast.show();
             return;

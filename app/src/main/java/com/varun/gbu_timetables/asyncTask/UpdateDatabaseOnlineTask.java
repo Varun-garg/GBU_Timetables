@@ -36,9 +36,9 @@ import java.net.URLConnection;
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
-    private boolean silent = false;
     private final String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
     private final String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
+    private boolean silent = false;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -96,10 +96,10 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                     saved.write(mbuffer, 0, length);
                 }
 
-                File DownloadedDbFile =  new File(mContext.getFilesDir() + "/" + DownloadedDBFileName);
+                File DownloadedDbFile = new File(mContext.getFilesDir() + "/" + DownloadedDBFileName);
 
                 //Check if downloaded file has MD5 sum from the server to avoid incomplete downloads.
-                if(!MD5.checkMD5(server_md5,DownloadedDbFile))
+                if (!MD5.checkMD5(server_md5, DownloadedDbFile))
                     return -1;
 
                 TimetableDbHelper timetableDbHelper = new TimetableDbHelper(mContext);

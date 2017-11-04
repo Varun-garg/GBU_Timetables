@@ -32,16 +32,16 @@ public class DetailsAdapter extends ArrayAdapter<CSF> {
         }
 
         CSF mCSF = getItem(position);
-        TextView sub_code = (TextView) convertView.findViewById(R.id.sub_code);
+        TextView sub_code = convertView.findViewById(R.id.sub_code);
         sub_code.setText(mCSF.Sub_Code);
 
-        TextView sub_name = (TextView) convertView.findViewById(R.id.sub_name);
+        TextView sub_name = convertView.findViewById(R.id.sub_name);
         sub_name.setText(mCSF.Sub_name);
 
-        TextView fac_code = (TextView) convertView.findViewById(R.id.fac_code);
+        TextView fac_code = convertView.findViewById(R.id.fac_code);
         fac_code.setText(mCSF.Fac_abbr);
 
-        TextView fac_name = (TextView) convertView.findViewById(R.id.fac_name);
+        TextView fac_name = convertView.findViewById(R.id.fac_name);
 
         fac_name.setText(mCSF.Fac_name);
 

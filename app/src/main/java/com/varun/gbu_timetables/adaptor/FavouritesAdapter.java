@@ -36,13 +36,13 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.favourites_item, null);
 
-            ImageView GroupIcon = (ImageView) convertView.findViewById(R.id.image_view);
+            ImageView GroupIcon = convertView.findViewById(R.id.image_view);
             GroupIcon.setImageDrawable(ItemIconDrawable);
         }
 
         TimeTableBasic info = getItem(position);
 
-        TextView textView = (TextView) convertView.findViewById(R.id.textview);
+        TextView textView = convertView.findViewById(R.id.textview);
         textView.setText(info.getTitle());
 
         convertView.setTag(info);

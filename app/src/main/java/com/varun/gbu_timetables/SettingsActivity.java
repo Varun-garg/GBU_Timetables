@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_tt_display_type_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_theme_key)));
 
-        Toolbar toolbar = (Toolbar) this.findViewById(R.id.toolbar);
+        Toolbar toolbar = this.findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);

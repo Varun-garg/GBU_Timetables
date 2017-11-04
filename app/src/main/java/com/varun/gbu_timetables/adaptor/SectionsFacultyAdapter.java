@@ -62,7 +62,7 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_item_children, null);
         }
 
-        TextView txtListChild = (TextView) convertView
+        TextView txtListChild = convertView
                 .findViewById(R.id.list_child_tv);
 
 
@@ -101,11 +101,11 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group_item, null);
 
-            ImageView GroupIcon = (ImageView) convertView.findViewById(R.id.image_view);
+            ImageView GroupIcon = convertView.findViewById(R.id.image_view);
             GroupIcon.setImageDrawable(GroupIconDrawable);
         }
 
-        TextView lblListHeader = (TextView) convertView
+        TextView lblListHeader = convertView
                 .findViewById(R.id.list_group_tv);
         lblListHeader.setTypeface(null, Typeface.BOLD);
         lblListHeader.setText(headerTitle);

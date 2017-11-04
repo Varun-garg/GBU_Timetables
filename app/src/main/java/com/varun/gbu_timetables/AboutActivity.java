@@ -32,14 +32,14 @@ public class AboutActivity extends AppCompatActivity {
 
         setTitle("About GBU Timetables");
         setContentView(R.layout.activity_about);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        TextView textView = (TextView) findViewById(R.id.textView);
+        TextView textView = findViewById(R.id.textView);
 
         textView.setText(Html.fromHtml("<h2><b>GBU Timetables</b></h2>"));
         String BuildInfo = "";
@@ -58,20 +58,21 @@ public class AboutActivity extends AppCompatActivity {
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View textView) {
-                Toast.makeText(getApplicationContext(),"Copied id to clipboard.",Toast.LENGTH_LONG).show();
-                Utility.setClipboard(getApplicationContext(),Utility.getFirebaseInstanceId(getApplicationContext()));
+                Toast.makeText(getApplicationContext(), "Copied id to clipboard.", Toast.LENGTH_LONG).show();
+                Utility.setClipboard(getApplicationContext(), Utility.getFirebaseInstanceId(getApplicationContext()));
             }
+
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(false);
             }
         };
-        ss.setSpan(clickableSpan,0, FinalBuildInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ss.setSpan(clickableSpan, 0, FinalBuildInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         MyFirebaseInstanceIdService myFirebaseInstanceIdService = new MyFirebaseInstanceIdService();
-        Intent intent= new Intent(getApplicationContext(),myFirebaseInstanceIdService.getClass());
-     //   Log.d(this.getClass().getSimpleName(),"Starting MyFirebaseInstanceIdService");
+        Intent intent = new Intent(getApplicationContext(), myFirebaseInstanceIdService.getClass());
+        //   Log.d(this.getClass().getSimpleName(),"Starting MyFirebaseInstanceIdService");
         startService(intent);
 
         textView.append(ss);
