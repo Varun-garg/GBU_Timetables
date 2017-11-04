@@ -134,11 +134,12 @@ public class TimetableFragmentPager extends Fragment {
                 HashSet<CSF_FAC_MAP_KEY> key_hashmap = (HashSet) item.getTag(R.string.current_csf_fac_key_list);
                 ArrayList<CSF_FAC_MAP_KEY> keys = new ArrayList<>(key_hashmap);
                 String time_string = (String) item.getTag(R.string.time_string);
-                if (time_string.equals("")) {
+                if (time_string.length()<1) {
                     repeat = 0;
+                    prev_time_string = null;
                     continue;
                 }
-                if (time_string.length() > 0 && time_string.equals(prev_time_string)) {
+                if (time_string.equals(prev_time_string)) {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = (TextView) cur_item.findViewById(R.id.pager_item_row);
