@@ -8,8 +8,8 @@ android {
         applicationId "com.varun.gbu_timetables"
         minSdkVersion 14 // Sorry, Google support library and Firebase forced me!
         targetSdkVersion 26
-        versionCode 72
-        versionName "10.9"
+        versionCode 73
+        versionName "11"
     }
     buildTypes {
         release {

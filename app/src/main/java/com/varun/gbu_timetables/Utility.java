@@ -141,7 +141,7 @@ public class Utility {
         public static int getThemeId(Context context) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0");
+            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "1"); //1 -> Default dark
             if (theme.equals("0"))
                 return R.style.LightTheme;
             else
@@ -177,6 +177,14 @@ public class Utility {
                 return ContextCompat.getDrawable(context, R.drawable.ic_school_black_24dp);
             else
                 return ContextCompat.getDrawable(context, R.drawable.ic_school_white_24dp);
+        }
+
+        public static Drawable getGBU_remastered(Context context) {
+            int theme_id = getThemeId(context);
+            if (theme_id == R.style.LightTheme)
+                return ContextCompat.getDrawable(context, R.drawable.gbu_remastered);
+            else
+                return ContextCompat.getDrawable(context, R.drawable.gbu_remastered_dark);
         }
 
         public static class FavouriteIcon {

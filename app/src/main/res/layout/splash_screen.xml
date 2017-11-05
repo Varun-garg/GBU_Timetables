@@ -10,13 +10,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?attr/app_bg_lighter_on_light_theme"
-        android:gravity="center"
+        android:gravity="top|center"
         android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="25dp"
+            android:layout_weight="1"
+            android:id="@+id/image_view_ll">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,6 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
+            android:layout_marginBottom="30dp"
             android:text="http://github.com/opengbu"
             android:textSize="20sp" />
     </LinearLayout>
