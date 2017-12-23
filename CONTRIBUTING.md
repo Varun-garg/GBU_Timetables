@@ -11,16 +11,16 @@ issues and more.
 
 ### Introduction
 
-Android application to view timetables for both faculty and students. https://play.google.com/store/apps/details?id=com.varun.gbu_timetables .
+GBU Timetables in an android application to view timetables for both faculty and students.  
+https://play.google.com/store/apps/details?id=com.varun.gbu_timetables .  
 It is recommended that you install the application from play store and understand
 all its features as explained in the [README](README.md)
 
 ### Introduction to Android Development
 
-Start with Android tutorials on [Udacity](https://in.udacity.com/course/new-android-fundamentals--ud851).
-
+Start with Android tutorials on [Udacity](https://in.udacity.com/course/new-android-fundamentals--ud851).  
 It is very beginning friendly and will help you with application code. 
-It's very big and I don't expect you guys to complete it, but at least go half way through it.
+It's very big and I don't expect you to complete it, but at least go half way through it to understand code here.
 
 ## Code structure
 Inside the directory `app/src/main/java/com/varun/gbu_timetables`
@@ -65,17 +65,17 @@ Inside the directory `app/src/main/java/com/varun/gbu_timetables`
 </pre>
 
 #### Notes
-1. Please try to make sure changes are as backward compatible as possible.
+1. Please try to make sure changes are as backward compatible as possible.  
 With some additional code, app was working fine with Android version 2.1,
 but with firebase I needed to move to android 2.3 and after updating 
-some libraries lately, it needs Android 4.0. Please write code that does
-not need Android version beyond 4.0.
+some libraries lately, it needs Android 4.0.  
+So please contribute code that is backward compatible with 4.0 (API Level: 14)
 
 2. Please don't copy paste code without crediting original authors.
 Include there names in commit messages and in code comments, and I 
 will find appropriate place to add them in application.
 
-3. Follow commit guidelines as listed later.
+3. Follow commit guidelines as listed in this page.
 
 ## Issues
 
