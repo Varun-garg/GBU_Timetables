@@ -111,10 +111,6 @@
                 android:value="com.varun.gbu_timetables.MainActivity" />
         </activity>
 
-        <receiver
-            android:name=".BootReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
     </application>
 
 </manifest>
