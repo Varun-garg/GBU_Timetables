@@ -1,0 +1,10 @@
+language: android
+jdk: oraclejdk8
+
+android:
+  components:
+    - build-tools-27.0.0
+
+script:
+    - echo "Travis branch is $TRAVIS_BRANCH"
+    - echo "Travis branch is in pull request $TRAVIS_PULL+REQUEST"
