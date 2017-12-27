@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 import java.util.Calendar;
@@ -16,7 +17,8 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
+        try {
+            if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
                 Calendar calendar = Calendar.getInstance();
 
                 calendar.set(Calendar.HOUR_OF_DAY, 13); // For 1 PM or 2 PM
@@ -29,5 +31,8 @@ public class BootReceiver extends BroadcastReceiver {
                         AlarmManager.INTERVAL_DAY, pi);
 
             }
+        }catch (java.lang.NullPointerException e){
+            Log.e("BootReceiver", e.getMessage());
+        }
     }
 }
