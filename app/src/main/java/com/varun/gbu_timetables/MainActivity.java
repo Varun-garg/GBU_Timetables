@@ -217,6 +217,8 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0,
                 new Intent(getApplicationContext(), UpdateDatabaseService.class), PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+        //just in case there is an existing pending intent
+        am.cancel(pi);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 AlarmManager.INTERVAL_DAY, pi);
         super.onDestroy();
