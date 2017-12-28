@@ -3,7 +3,6 @@ package com.varun.gbu_timetables;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -19,17 +18,16 @@ import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 
 import java.lang.reflect.Type;
-import java.sql.Time;
 import java.util.HashSet;
 
 public class TimetableActivity extends AppCompatActivity {
 
     HashSet<TimeTableBasic> existing_data;
-    TimeTableBasic myclass;
+    private TimeTableBasic myclass;
     SharedPreferences prefs;
     Gson gson = new Gson();
     String existing_TAG = "favourites";
-    String myclass_TAG = "myclass";
+    private String myclass_TAG = "myclass";
     String json;
     Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
     }.getType();

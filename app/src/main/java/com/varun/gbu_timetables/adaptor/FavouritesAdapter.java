@@ -2,7 +2,6 @@ package com.varun.gbu_timetables.adaptor;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
     Drawable ItemIconDrawable;
 
-Context context;
+private Context context;
     public FavouritesAdapter(Context context, ArrayList<TimeTableBasic> values) {
         super(context, 0, values);
         ItemIconDrawable = Utility.ThemeTools.FavouriteIcon.getFavYesInverse(context);

@@ -30,7 +30,7 @@ public class FavouritesFragment extends Fragment {
     ProgressDialog progressDialog;
     TimeTableBasic emptyTimeTableBasic;
     ArrayList<TimeTableBasic> FavouritesList;
-    TimeTableBasic myclass=null;
+    private TimeTableBasic myclass=null;
     private int ElementsCount = 0;
 
     @Override
@@ -56,7 +56,7 @@ public class FavouritesFragment extends Fragment {
 
         String json = prefs.getString(existing_TAG, null);
         String myclass_json=prefs.getString(myclass_TAG,null);
-        try {  if(!(myclass_json.equals("null")) && myclass_json.length() > 0){
+        try {  if(!("null".equals(myclass_json)) && myclass_json.length() > 0){
             Log.d("Ritik", "not empty : "+myclass_json);
                 myclass=gson.fromJson(myclass_json,TimeTableBasic.class);
         }
