@@ -15,6 +15,7 @@ import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.varun.gbu_timetables.BuildConfig;
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.data.Database.TimetableContract;
@@ -32,6 +33,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
@@ -39,7 +41,6 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
     private final String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
     private final String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
     private boolean silent = false;
-    public boolean updated =false;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -117,7 +118,6 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 TimetableProvider provider = (TimetableProvider) client.getLocalContentProvider();
                 provider.reloadDb();
                 client.release();
-                updated=true;
                 publishProgress("Timetables Updated Successfully!");
                 return 1;
             } else {
@@ -127,8 +127,8 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
         } catch (Exception e) {
             publishProgress("Update Failed: An internet error occurred");
             Log.d("error", e.toString());
+            return -1;
         }
-        return 0;
     }
 
     @Override
@@ -141,8 +141,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     @Override
     protected void onPostExecute(Integer status) {
-        if (status == 1) {
-            if (!silent) {
+        if (status == 1 && !silent) {
                 /* Old code that restarted app
                 Intent mStartActivity = new Intent(mContext, MainActivity.class);
                 int mPendingIntentId = 123456;
@@ -156,12 +155,24 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
-            } else {
+        }
+        else if(silent){
+
+            String title = "GBU Timetables";
+            String text;
+            if(status == 1)
+                text = "Newer timetables available";
+            else if(status == 0)
+                text = "Already up to date";
+            else
+                text = "Update Failed: An internet error occurred";
+
+            if(status == 1 || BuildConfig.DEBUG) {
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(mContext)
-                                .setSmallIcon(R.mipmap.ic_launcher)
-                                .setContentTitle("GBU Timetables")
-                                .setContentText("Newer timetables have been downloaded");
+                                .setSmallIcon(R.drawable.ic_notification_statue_buddha)
+                                .setColor(mContext.getResources().getColor(R.color.app_bg_dark))                                .setContentTitle(title)
+                                .setContentText(text);
 
                 Intent resultIntent = new Intent(mContext, MainActivity.class);
 
@@ -176,8 +187,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 mBuilder.setContentIntent(resultPendingIntent);
                 NotificationManager mNotificationManager =
                         (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-                mNotificationManager.notify(0, mBuilder.build());
-
+                mNotificationManager.notify((new Random()).nextInt(9999 - 1000) + 1000, mBuilder.build());
             }
         }
     }
