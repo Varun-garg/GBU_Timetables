@@ -30,6 +30,7 @@ public class FavouritesFragment extends Fragment {
     ProgressDialog progressDialog;
     TimeTableBasic emptyTimeTableBasic;
     ArrayList<TimeTableBasic> FavouritesList;
+    TimeTableBasic myclass=null;
     private int ElementsCount = 0;
 
     @Override
@@ -48,16 +49,29 @@ public class FavouritesFragment extends Fragment {
 
         Gson gson = new Gson();
         String existing_TAG = "favourites";
+        String myclass_TAG = "myclass";
+
         Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
         }.getType();
 
         String json = prefs.getString(existing_TAG, null);
-        try {
-
+        String myclass_json=prefs.getString(myclass_TAG,null);
+        try {  if(!(myclass_json.equals("null")) && myclass_json.length() > 0){
+            Log.d("Ritik", "not empty : "+myclass_json);
+                myclass=gson.fromJson(myclass_json,TimeTableBasic.class);
+        }
+            else{
+            Log.d("Ritik", "empty : "+myclass_json);
+            myclass=new TimeTableBasic();
+            myclass.setTitle("MyClass not set yet.");
+            myclass.setId(Long.valueOf(0));
+            myclass.setType("");
+            }
             if (json != null && json.length() > 0) {
                 existing_data = gson.fromJson(json, favourites_type);
                 ElementsCount = existing_data.size();
             }
+
         } catch (Exception e) {
             existing_data = new HashSet<>();
             ElementsCount = 0;
@@ -97,10 +111,13 @@ public class FavouritesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                if (ElementsCount == 0)
-                    return;
+
 
                 TimeTableBasic item = (TimeTableBasic) view.getTag();
+
+                if (item.getId() == 0)
+                    return;
+
                 progressDialog.setMessage("Loading " + item.getTitle());
                 progressDialog.show();
 
@@ -126,6 +143,7 @@ public class FavouritesFragment extends Fragment {
         FavouritesList = getFavourites();
         favouritesAdapter.clear(); //clear previous data
 
+            favouritesAdapter.add(myclass);
         for (int i = 0; i < FavouritesList.size(); i++) { //add all requires api 11
             TimeTableBasic item = FavouritesList.get(i);
             favouritesAdapter.add(item);
