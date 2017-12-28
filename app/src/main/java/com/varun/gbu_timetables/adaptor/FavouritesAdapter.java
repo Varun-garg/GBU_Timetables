@@ -2,6 +2,7 @@ package com.varun.gbu_timetables.adaptor;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,11 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
     Drawable ItemIconDrawable;
 
-
+Context context;
     public FavouritesAdapter(Context context, ArrayList<TimeTableBasic> values) {
         super(context, 0, values);
         ItemIconDrawable = Utility.ThemeTools.FavouriteIcon.getFavYesInverse(context);
+        this.context=context;
     }
 
     @Override
@@ -38,9 +40,15 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
             ImageView GroupIcon = convertView.findViewById(R.id.image_view);
             GroupIcon.setImageDrawable(ItemIconDrawable);
+            GroupIcon.setImageDrawable(ItemIconDrawable);
         }
 
         TimeTableBasic info = getItem(position);
+        ImageView icon=convertView.findViewById(R.id.image_view);
+        if(position==0)
+            icon.setImageDrawable(Utility.ThemeTools.MyClassIcon.getMyClassYesInverse(context));
+
+
 
         TextView textView = convertView.findViewById(R.id.textview);
         textView.setText(info.getTitle());

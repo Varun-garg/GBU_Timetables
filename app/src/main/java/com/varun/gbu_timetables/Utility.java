@@ -212,6 +212,44 @@ public class Utility {
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
             }
         }
+        public static class MyClassIcon {
+            public static Drawable getMyClassYes(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_white);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_black);
+            }
+
+            public static Drawable getMyClassYesInverse(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_black);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_white);
+            }
+
+            public static Drawable getMyClassNo(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_border_white);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_myclass_border_black);
+            }
+        }
+        public static class FabIcon {
+            public static Drawable getfabup(Context context) {
+                int theme_id = getThemeId(context);
+                if (theme_id == R.style.LightTheme)
+                    return ContextCompat.getDrawable(context, R.drawable.ic_show_fab_white);
+                else
+                    return ContextCompat.getDrawable(context, R.drawable.ic_show_fab_black);
+            }
+
+
+
+
+        }
 
         public static class BackgroundIcons {
 
@@ -241,6 +279,15 @@ public class Utility {
                     return R.drawable.bg_box_green_dark;
             }
         }
+    }
+
+    public static String getMyclass(Context context){
+
+
+        return "todo";
+    }
+    public static void setMyclass(Context context,String myclass){
+
     }
 
 
