@@ -39,6 +39,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
     private final String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
     private final String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
     private boolean silent = false;
+    public boolean updated =false;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -116,7 +117,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 TimetableProvider provider = (TimetableProvider) client.getLocalContentProvider();
                 provider.reloadDb();
                 client.release();
-
+                updated=true;
                 publishProgress("Timetables Updated Successfully!");
                 return 1;
             } else {

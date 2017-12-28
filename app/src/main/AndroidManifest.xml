@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:allowBackup="true"
@@ -30,6 +31,14 @@
             android:authorities="com.varun.gbu_timetables"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver
+            android:name=".BootReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
 
         <activity
             android:name=".TimetableActivity"
@@ -59,6 +68,7 @@
             android:label="@string/title_activity_about"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -100,6 +110,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.varun.gbu_timetables.MainActivity" />
         </activity>
+
     </application>
 
 </manifest>
