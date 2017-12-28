@@ -1,14 +1,19 @@
-package com.varun.gbu_timetables;
+package com.varun.gbu_timetables.service;
 
 import android.app.AlarmManager;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.varun.gbu_timetables.BuildConfig;
+import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 import java.util.Calendar;
+import java.util.Random;
 
 import static android.content.Context.ALARM_SERVICE;
 
@@ -17,10 +22,23 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+
         try {
             if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-                Calendar calendar = Calendar.getInstance();
+                if (BuildConfig.DEBUG)
+                {
+                    NotificationCompat.Builder mBuilder =
+                            new NotificationCompat.Builder(context)
+                                    .setSmallIcon(R.drawable.ic_notification_statue_buddha)
+                                    .setColor(context.getResources().getColor(R.color.app_bg_dark))
+                                    .setContentTitle("BootReceiver Service initiated");
+                    NotificationManager mNotificationManager =
+                            (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
+                    mNotificationManager.notify((new Random()).nextInt(9999 - 1000) + 1000, mBuilder.build());
+                }
+
+                Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.HOUR_OF_DAY, 13); // For 1 PM or 2 PM
                 calendar.set(Calendar.MINUTE, 0);
                 calendar.set(Calendar.SECOND, 0);
