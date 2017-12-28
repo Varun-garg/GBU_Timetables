@@ -281,14 +281,7 @@ public class Utility {
         }
     }
 
-    public static String getMyclass(Context context){
 
-
-        return "todo";
-    }
-    public static void setMyclass(Context context,String myclass){
-
-    }
 
 
 
