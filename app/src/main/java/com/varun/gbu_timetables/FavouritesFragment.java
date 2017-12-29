@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class FavouritesFragment extends Fragment {
     ListView listView;
     FavouritesAdapter favouritesAdapter;
     ProgressDialog progressDialog;
-    TimeTableBasic emptyTimeTableBasic;
+   TimeTableBasic emptyTimeTableBasic;
     ArrayList<TimeTableBasic> FavouritesList;
     private TimeTableBasic myclass=null;
     private int ElementsCount = 0;
@@ -44,6 +43,7 @@ public class FavouritesFragment extends Fragment {
     }
 
     public ArrayList<TimeTableBasic> getFavourites() {
+
         HashSet<TimeTableBasic> existing_data = new HashSet<>();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
@@ -55,13 +55,13 @@ public class FavouritesFragment extends Fragment {
         }.getType();
 
         String json = prefs.getString(existing_TAG, null);
-        String myclass_json=prefs.getString(myclass_TAG,null);
-        try {  if(!("null".equals(myclass_json)) && myclass_json.length() > 0){
-            Log.d("Ritik", "not empty : "+myclass_json);
+        String myclass_json=prefs.getString(myclass_TAG,"");
+        try {  if(!("null".equals(myclass_json)) && myclass_json.length() > 1){
+
                 myclass=gson.fromJson(myclass_json,TimeTableBasic.class);
         }
             else{
-            Log.d("Ritik", "empty : "+myclass_json);
+
             myclass=new TimeTableBasic();
             myclass.setTitle("MyClass not set yet.");
             myclass.setId(Long.valueOf(0));
@@ -83,7 +83,7 @@ public class FavouritesFragment extends Fragment {
             json = gson.toJson(existing_data);
             Message = "New Format " + json;
             Toast.makeText(getContext(), Message, Toast.LENGTH_LONG).show();
-            Log.d(this.getClass().getSimpleName(), e.toString());
+
         }
 
         if (ElementsCount == 0)
@@ -96,6 +96,7 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View rootView = inflater.inflate(R.layout.favourites, container, false);
         listView = rootView.findViewById(R.id.listView);

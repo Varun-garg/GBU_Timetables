@@ -37,15 +37,17 @@ private Context context;
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.favourites_item, null);
 
-            ImageView GroupIcon = convertView.findViewById(R.id.image_view);
-            GroupIcon.setImageDrawable(ItemIconDrawable);
-            GroupIcon.setImageDrawable(ItemIconDrawable);
+            //ImageView GroupIcon = convertView.findViewById(R.id.image_view);
+            //GroupIcon.setImageDrawable(ItemIconDrawable);
+            //GroupIcon.setImageDrawable(ItemIconDrawable);
         }
 
         TimeTableBasic info = getItem(position);
         ImageView icon=convertView.findViewById(R.id.image_view);
         if(position==0)
             icon.setImageDrawable(Utility.ThemeTools.MyClassIcon.getMyClassYesInverse(context));
+        else
+            icon.setImageDrawable(ItemIconDrawable);
 
 
 
