@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,8 +27,9 @@ public class FavouritesFragment extends Fragment {
     ListView listView;
     FavouritesAdapter favouritesAdapter;
     ProgressDialog progressDialog;
-    TimeTableBasic emptyTimeTableBasic;
+   TimeTableBasic emptyTimeTableBasic;
     ArrayList<TimeTableBasic> FavouritesList;
+    private TimeTableBasic myclass=null;
     private int ElementsCount = 0;
 
     @Override
@@ -43,21 +43,35 @@ public class FavouritesFragment extends Fragment {
     }
 
     public ArrayList<TimeTableBasic> getFavourites() {
+
         HashSet<TimeTableBasic> existing_data = new HashSet<>();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         Gson gson = new Gson();
         String existing_TAG = "favourites";
+        String myclass_TAG = "myclass";
+
         Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
         }.getType();
 
         String json = prefs.getString(existing_TAG, null);
-        try {
+        String myclass_json=prefs.getString(myclass_TAG,"");
+        try {  if(!("null".equals(myclass_json)) && myclass_json.length() > 1){
 
+                myclass=gson.fromJson(myclass_json,TimeTableBasic.class);
+        }
+            else{
+
+            myclass=new TimeTableBasic();
+            myclass.setTitle("MyClass not set yet.");
+            myclass.setId(Long.valueOf(0));
+            myclass.setType("");
+            }
             if (json != null && json.length() > 0) {
                 existing_data = gson.fromJson(json, favourites_type);
                 ElementsCount = existing_data.size();
             }
+
         } catch (Exception e) {
             existing_data = new HashSet<>();
             ElementsCount = 0;
@@ -69,7 +83,7 @@ public class FavouritesFragment extends Fragment {
             json = gson.toJson(existing_data);
             Message = "New Format " + json;
             Toast.makeText(getContext(), Message, Toast.LENGTH_LONG).show();
-            Log.d(this.getClass().getSimpleName(), e.toString());
+
         }
 
         if (ElementsCount == 0)
@@ -82,6 +96,7 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
 
         View rootView = inflater.inflate(R.layout.favourites, container, false);
         listView = rootView.findViewById(R.id.listView);
@@ -97,10 +112,13 @@ public class FavouritesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                if (ElementsCount == 0)
-                    return;
+
 
                 TimeTableBasic item = (TimeTableBasic) view.getTag();
+
+                if (item.getId() == 0)
+                    return;
+
                 progressDialog.setMessage("Loading " + item.getTitle());
                 progressDialog.show();
 
@@ -126,6 +144,7 @@ public class FavouritesFragment extends Fragment {
         FavouritesList = getFavourites();
         favouritesAdapter.clear(); //clear previous data
 
+            favouritesAdapter.add(myclass);
         for (int i = 0; i < FavouritesList.size(); i++) { //add all requires api 11
             TimeTableBasic item = FavouritesList.get(i);
             favouritesAdapter.add(item);
