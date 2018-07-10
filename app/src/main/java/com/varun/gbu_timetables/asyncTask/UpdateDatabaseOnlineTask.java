@@ -11,7 +11,6 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
-import android.support.v4.content.IntentCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -38,9 +37,9 @@ import java.util.Random;
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
-    private final String checksumUrlLocation = "http://gbuonline.in/timetable_md5/md5.php";
-    private final String downloadUrlLocation = "http://gbuonline.in/timetable/varun.db";
-    private boolean silent = false;
+    private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
+    private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
+    private boolean silent;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;
@@ -115,8 +114,11 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
                 ContentResolver resolver = mContext.getContentResolver(); //no need of non working uri method - better way
                 ContentProviderClient client = resolver.acquireContentProviderClient(TimetableContract.CONTENT_AUTHORITY);
+
                 TimetableProvider provider = (TimetableProvider) client.getLocalContentProvider();
-                provider.reloadDb();
+                if (provider != null) {
+                    provider.reloadDb();
+                }
                 client.release();
                 publishProgress("Timetables Updated Successfully!");
                 return 1;
@@ -152,7 +154,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 */
 
                 Intent intent = new Intent(mContext, MainActivity.class);
-                intent.addFlags(IntentCompat.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 mContext.startActivity(intent);
 
         }
