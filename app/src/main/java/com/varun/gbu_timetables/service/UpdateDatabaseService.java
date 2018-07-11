@@ -1,20 +1,14 @@
 package com.varun.gbu_timetables.service;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
 
-import com.varun.gbu_timetables.BuildConfig;
-import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
-
-import java.util.Random;
 
 /**
  * com.varun.gbu_timetables.data (Timetables_sql)

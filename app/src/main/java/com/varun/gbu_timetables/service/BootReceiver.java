@@ -11,7 +11,7 @@ import android.util.Log;
 
 import com.varun.gbu_timetables.BuildConfig;
 import com.varun.gbu_timetables.R;
-import com.varun.gbu_timetables.service.UpdateDatabaseService;
+
 import java.util.Calendar;
 import java.util.Random;
 
