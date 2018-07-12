@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="26b512ff54604e262c20c6ac0c71a6aac2b4cc73" />
+        <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification_statue_buddha" />
         <meta-data

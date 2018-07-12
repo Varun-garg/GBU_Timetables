@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
@@ -32,6 +33,8 @@ import com.varun.gbu_timetables.service.UpdateDatabaseService;
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.HashSet;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        Fabric.with(this, new Crashlytics());
+       // Crashlytics.getInstance().crash();
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
