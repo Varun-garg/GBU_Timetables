@@ -42,12 +42,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                 int height = imageView_ll.getHeight();
                 int width = imageView_ll.getWidth();
 
-                if(width < height)
+                if (width < height)
                     height = width;
                 else
                     width = height;
 
-                Log.d("SPLASH",height + " " + width );
+                Log.d("SPLASH", height + " " + width);
                 BitmapFactory.Options opts = new BitmapFactory.Options();
                 opts.inPurgeable = true;
                 opts.inScaled = true;

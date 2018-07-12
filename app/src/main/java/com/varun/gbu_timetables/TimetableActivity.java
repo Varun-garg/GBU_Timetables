@@ -1,15 +1,27 @@
 package com.varun.gbu_timetables;
 
+import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,27 +29,46 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.data.Model.TimeTableBasic;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.util.HashSet;
 
 public class TimetableActivity extends AppCompatActivity {
 
+    private final int MY_PERMISSIONS_REQUEST_WRITE_STORAGE = 123;
     HashSet<TimeTableBasic> existing_data;
-    private TimeTableBasic myclass;
     SharedPreferences prefs;
     Gson gson = new Gson();
     String existing_TAG = "favourites";
-    private String myclass_TAG = "myclass";
     String json;
     Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
     }.getType();
     SharedPreferences.Editor editor;
     String message = "";
-    private Boolean isFABOpen=false;
-    private FloatingActionButton fab;
-    private FloatingActionButton fab1;
-    private FloatingActionButton fab2;
+    private TimeTableBasic myclass;
+    private String myclass_TAG = "myclass";
+    private Boolean isFABOpen = false;
+    private FloatingActionButton fab_main, fab_fav, fab_myclass, fab_share;
+    private int saved_theme;
 
+    public static File SaveBitmapasPNG(Bitmap bitmap, String dir) {
+        OutputStream os = null;
+        try {
+            File file = new File(dir, "image" + System.currentTimeMillis() + ".png");
+            os = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, os);
+            bitmap.recycle();
+            return file;
+        } catch (IOException e) {
+
+            bitmap.recycle();
+            Log.e("combineImages", "problem combining images", e);
+            return null;
+        }
+    }
 
     private void reload() {
         json = prefs.getString(existing_TAG, null);
@@ -65,7 +96,7 @@ public class TimetableActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
+        saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         setTheme(saved_theme);
 
         super.onCreate(savedInstanceState);
@@ -81,7 +112,7 @@ public class TimetableActivity extends AppCompatActivity {
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         editor = prefs.edit();
 
-        String stored_mode = prefs.getString(getString(R.string.pref_tt_display_type_key), "0");
+        final String stored_mode = prefs.getString(getString(R.string.pref_tt_display_type_key), "0");
 
         if (savedInstanceState == null) {
 
@@ -101,34 +132,35 @@ public class TimetableActivity extends AppCompatActivity {
 
         final Drawable fav_yes = Utility.ThemeTools.FavouriteIcon.getFavYes(getApplicationContext());
         final Drawable fav_no = Utility.ThemeTools.FavouriteIcon.getFavNo(getApplicationContext());
-
+        final Drawable share = Utility.ThemeTools.getShareIconDrawable(getApplicationContext());
         final Drawable myclass_yes = Utility.ThemeTools.MyClassIcon.getMyClassYes(getApplicationContext());
         final Drawable myclass_no = Utility.ThemeTools.MyClassIcon.getMyClassNo(getApplicationContext());
 
-        fab = findViewById(R.id.fab);
-        fab1 = findViewById(R.id.fab1);
-        fab2 = findViewById(R.id.fab2);
+        fab_main = findViewById(R.id.fab_main);
+        fab_fav = findViewById(R.id.fab_favr);
+        fab_myclass = findViewById(R.id.fab_myclass);
+        fab_share = findViewById(R.id.fab_share);
 
-        fab.setImageDrawable(Utility.ThemeTools.FabIcon.getfabup(getApplicationContext()));
+        fab_main.setImageDrawable(Utility.ThemeTools.FabIcon.getfabup(getApplicationContext()));
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isFABOpen){
+                if (!isFABOpen) {
                     showFABMenu();
-                }else{
+                } else {
                     closeFABMenu();
                 }
             }
         });
 
         if (existing_data.contains(info)) {
-            fab1.setImageDrawable(fav_yes);
+            fab_fav.setImageDrawable(fav_yes);
         } else {
-            fab1.setImageDrawable(fav_no);
+            fab_fav.setImageDrawable(fav_no);
         }
 
-        fab1.setOnClickListener(new View.OnClickListener() {
+        fab_fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -138,11 +170,11 @@ public class TimetableActivity extends AppCompatActivity {
                 if (existing_data.contains(info)) {
                     existing_data.remove(info);
                     message = "Removed from Favourites";
-                    fab1.setImageDrawable(fav_no);
+                    fab_fav.setImageDrawable(fav_no);
                 } else {
                     existing_data.add(info);
                     message = "Added to Favourites";
-                    fab1.setImageDrawable(fav_yes);
+                    fab_fav.setImageDrawable(fav_yes);
                 }
 
                 json = gson.toJson(existing_data);
@@ -155,29 +187,28 @@ public class TimetableActivity extends AppCompatActivity {
         });
 
 
-        if(getCurrentBasic().equals(gson.fromJson(prefs.getString(myclass_TAG,""),TimeTableBasic.class)))
-            fab2.setImageDrawable(myclass_yes);
+        if (getCurrentBasic().equals(gson.fromJson(prefs.getString(myclass_TAG, ""), TimeTableBasic.class)))
+            fab_myclass.setImageDrawable(myclass_yes);
         else
-            fab2.setImageDrawable(myclass_no);
-        fab2.setOnClickListener(new View.OnClickListener() {
+            fab_myclass.setImageDrawable(myclass_no);
+        fab_myclass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 final TimeTableBasic setmyclass;
                 final TimeTableBasic currentBasic = getCurrentBasic();
                 reload();
-                String myclass_json=prefs.getString(myclass_TAG,"");
-                if(myclass_json.length()>1){
-                  setmyclass=gson.fromJson(myclass_json,TimeTableBasic.class);
-                }
-                else {
-                    setmyclass=null;
+                String myclass_json = prefs.getString(myclass_TAG, "");
+                if (myclass_json.length() > 1) {
+                    setmyclass = gson.fromJson(myclass_json, TimeTableBasic.class);
+                } else {
+                    setmyclass = null;
                 }
 
 
-                if (setmyclass==null) {
-                    myclass=currentBasic;
+                if (setmyclass == null) {
+                    myclass = currentBasic;
                     message = "MyClass set";
-                    fab2.setImageDrawable(myclass_yes);
+                    fab_myclass.setImageDrawable(myclass_yes);
 
                     json = gson.toJson(myclass);
                     editor.putString(myclass_TAG, json);
@@ -185,35 +216,32 @@ public class TimetableActivity extends AppCompatActivity {
                     Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
 
                 } else {
-                    if(currentBasic.equals(setmyclass)){
-                        myclass=null;
+                    if (currentBasic.equals(setmyclass)) {
+                        myclass = null;
                         message = "Current MyClass Removed";
-                        fab2.setImageDrawable(myclass_no);
-
-
+                        fab_myclass.setImageDrawable(myclass_no);
 
 
                         json = gson.toJson(myclass);
                         editor.putString(myclass_TAG, json);
                         editor.apply();
                         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
-                    }
-                    else{
+                    } else {
                         //Replace existing class with current class,Prompt user to confirm the action
                         AlertDialog.Builder builder;
-                       // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                          //  builder = new AlertDialog.Builder(TimetableActivity.this, android.R.style.Theme_Material_Dialog_Alert);
+                        // if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        //  builder = new AlertDialog.Builder(TimetableActivity.this, android.R.style.Theme_Material_Dialog_Alert);
                         //} else {
-                            builder = new AlertDialog.Builder(TimetableActivity.this);
+                        builder = new AlertDialog.Builder(TimetableActivity.this);
                         //}
                         builder.setTitle("Replace Current MyClass")
                                 .setMessage("There is an existing MyClass, This will replace current Myclass")
                                 .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                        myclass=currentBasic;
+                                        myclass = currentBasic;
                                         json = gson.toJson(myclass);
                                         message = "MyClass Replaced";
-                                        fab2.setImageDrawable(myclass_yes);
+                                        fab_myclass.setImageDrawable(myclass_yes);
                                         editor.putString(myclass_TAG, json);
                                         editor.apply();
                                         Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
@@ -221,7 +249,7 @@ public class TimetableActivity extends AppCompatActivity {
                                 })
                                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int which) {
-                                       // no need to do anything here
+                                        // no need to do anything here
                                     }
                                 })
                                 //.setIcon(android.R.drawable.ic_dialog_alert)
@@ -232,6 +260,52 @@ public class TimetableActivity extends AppCompatActivity {
 
             }
         });
+        fab_share.setImageDrawable(share);
+        fab_share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(TimetableActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                        == PackageManager.PERMISSION_GRANTED) {
+                    File png;
+                    if (stored_mode.equals("0"))
+                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_pager), null), Environment.getExternalStorageDirectory().getAbsolutePath());
+                    else
+                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), findViewById(R.id.timetable_faculty_data)), Environment.getExternalStorageDirectory().getAbsolutePath());
+                    if (png == null)
+                        return;
+                    try {
+                        Uri imageURI = FileProvider.getUriForFile(TimetableActivity.this, TimetableActivity.this.getApplicationContext().getPackageName() + ".fileprovider", png);
+                        Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                        sharingIntent.setType("image/*");
+                        sharingIntent.putExtra(Intent.EXTRA_STREAM, imageURI);
+                        startActivity(Intent.createChooser(sharingIntent, "Share image using"));
+                    } catch (Exception e) {
+                        Log.e("PNG_Share", "onClick: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(TimetableActivity.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            MY_PERMISSIONS_REQUEST_WRITE_STORAGE);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_WRITE_STORAGE: {
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    fab_share.performClick();
+                } else {
+
+                }
+                return;
+            }
+        }
     }
 
     @Override
@@ -244,18 +318,49 @@ public class TimetableActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-    private void showFABMenu(){
-        isFABOpen=true;
-        fab1.animate().translationY(-getResources().getDimension(R.dimen.fab_margin_1));
-        fab2.animate().translationY(-getResources().getDimension(R.dimen.fab_margin_2));
-        fab.animate().rotation(180);
+
+    private void showFABMenu() {
+        isFABOpen = true;
+        fab_fav.animate().translationY(-getResources().getDimension(R.dimen.fab_margin_1));
+        fab_myclass.animate().translationY(-getResources().getDimension(R.dimen.fab_margin_2));
+        fab_share.animate().translationY(-getResources().getDimension(R.dimen.fab_margin_3));
+        fab_main.animate().rotation(180);
     }
 
-    private void closeFABMenu(){
-        isFABOpen=false;
-        fab1.animate().translationY(0);
-        fab2.animate().translationY(0);
-        fab.animate().rotation(0);
+    private void closeFABMenu() {
+        isFABOpen = false;
+        fab_fav.animate().translationY(0);
+        fab_myclass.animate().translationY(0);
+        fab_main.animate().rotation(0);
+        fab_share.animate().translationY(0);
+    }
+
+    public Bitmap BitmapfromView(View view1, @Nullable View view2) {
+        int height, width;
+        if (view2 != null) {
+            height = view1.getHeight() + view2.getHeight();
+            width = Math.max(view1.getWidth(), view2.getWidth());
+        } else {
+            height = view1.getHeight();
+            width = view1.getWidth();
+        }
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        Drawable Backgrounddrawable = view1.getBackground();
+        if (Backgrounddrawable != null)
+            Backgrounddrawable.draw(canvas);
+        else {
+            if (saved_theme == R.style.LightTheme)
+                canvas.drawColor(getResources().getColor(R.color.main_activity_bg));
+            else
+                canvas.drawColor(getResources().getColor(R.color.main_activity_bg_dark));
+        }
+        view1.draw(canvas);
+        if (view2 != null) {
+            canvas.translate(0, view1.getHeight());
+            view2.draw(canvas);
+        }
+        return bitmap;
     }
 
 }

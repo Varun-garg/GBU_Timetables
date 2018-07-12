@@ -179,6 +179,14 @@ public class Utility {
                 return ContextCompat.getDrawable(context, R.drawable.ic_school_white_24dp);
         }
 
+        public static Drawable getShareIconDrawable(Context context) {
+            int theme_id = getThemeId(context);
+            if (theme_id == R.style.LightTheme)
+                return ContextCompat.getDrawable(context, R.drawable.ic_share_white_24dp);
+            else
+                return ContextCompat.getDrawable(context, R.drawable.ic_share_black_24dp);
+        }
+
         public static Drawable getGBU_remastered(Context context) {
             int theme_id = getThemeId(context);
             if (theme_id == R.style.LightTheme)
@@ -212,6 +220,7 @@ public class Utility {
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
             }
         }
+
         public static class MyClassIcon {
             public static Drawable getMyClassYes(Context context) {
                 int theme_id = getThemeId(context);
@@ -237,6 +246,7 @@ public class Utility {
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_border_black);
             }
         }
+
         public static class FabIcon {
             public static Drawable getfabup(Context context) {
                 int theme_id = getThemeId(context);
@@ -245,8 +255,6 @@ public class Utility {
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_show_fab_black);
             }
-
-
 
 
         }
@@ -280,10 +288,6 @@ public class Utility {
             }
         }
     }
-
-
-
-
 
 
 }

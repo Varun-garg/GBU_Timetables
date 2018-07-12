@@ -27,9 +27,9 @@ public class FavouritesFragment extends Fragment {
     ListView listView;
     FavouritesAdapter favouritesAdapter;
     ProgressDialog progressDialog;
-   TimeTableBasic emptyTimeTableBasic;
+    TimeTableBasic emptyTimeTableBasic;
     ArrayList<TimeTableBasic> FavouritesList;
-    private TimeTableBasic myclass=null;
+    private TimeTableBasic myclass = null;
     private int ElementsCount = 0;
 
     @Override
@@ -55,17 +55,17 @@ public class FavouritesFragment extends Fragment {
         }.getType();
 
         String json = prefs.getString(existing_TAG, null);
-        String myclass_json=prefs.getString(myclass_TAG,"");
-        try {  if(!("null".equals(myclass_json)) && myclass_json.length() > 1){
+        String myclass_json = prefs.getString(myclass_TAG, "");
+        try {
+            if (!("null".equals(myclass_json)) && myclass_json.length() > 1) {
 
-                myclass=gson.fromJson(myclass_json,TimeTableBasic.class);
-        }
-            else{
+                myclass = gson.fromJson(myclass_json, TimeTableBasic.class);
+            } else {
 
-            myclass=new TimeTableBasic();
-            myclass.setTitle("MyClass not set yet.");
-            myclass.setId(Long.valueOf(0));
-            myclass.setType("");
+                myclass = new TimeTableBasic();
+                myclass.setTitle("MyClass not set yet.");
+                myclass.setId(Long.valueOf(0));
+                myclass.setType("");
             }
             if (json != null && json.length() > 0) {
                 existing_data = gson.fromJson(json, favourites_type);
@@ -144,7 +144,7 @@ public class FavouritesFragment extends Fragment {
         FavouritesList = getFavourites();
         favouritesAdapter.clear(); //clear previous data
 
-            favouritesAdapter.add(myclass);
+        favouritesAdapter.add(myclass);
         for (int i = 0; i < FavouritesList.size(); i++) { //add all requires api 11
             TimeTableBasic item = FavouritesList.get(i);
             favouritesAdapter.add(item);

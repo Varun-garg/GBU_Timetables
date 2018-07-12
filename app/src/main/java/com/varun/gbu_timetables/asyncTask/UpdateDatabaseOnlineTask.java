@@ -153,27 +153,26 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 System.exit(0);
                 */
 
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                mContext.startActivity(intent);
+            Intent intent = new Intent(mContext, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(intent);
 
-        }
-        else if(silent){
+        } else if (silent) {
 
             String title = "GBU Timetables";
             String text;
-            if(status == 1)
+            if (status == 1)
                 text = "Newer timetables available";
-            else if(status == 0)
+            else if (status == 0)
                 text = "Already up to date";
             else
                 text = "Update Failed: An internet error occurred";
 
-            if(status == 1 || BuildConfig.DEBUG) {
+            if (status == 1 || BuildConfig.DEBUG) {
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(mContext)
                                 .setSmallIcon(R.drawable.ic_notification_statue_buddha)
-                                .setColor(mContext.getResources().getColor(R.color.app_bg_dark))                                .setContentTitle(title)
+                                .setColor(mContext.getResources().getColor(R.color.app_bg_dark)).setContentTitle(title)
                                 .setContentText(text);
 
                 Intent resultIntent = new Intent(mContext, MainActivity.class);

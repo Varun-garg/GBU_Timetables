@@ -22,11 +22,12 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
     Drawable ItemIconDrawable;
 
-private Context context;
+    private Context context;
+
     public FavouritesAdapter(Context context, ArrayList<TimeTableBasic> values) {
         super(context, 0, values);
         ItemIconDrawable = Utility.ThemeTools.FavouriteIcon.getFavYesInverse(context);
-        this.context=context;
+        this.context = context;
     }
 
     @Override
@@ -43,12 +44,11 @@ private Context context;
         }
 
         TimeTableBasic info = getItem(position);
-        ImageView icon=convertView.findViewById(R.id.image_view);
-        if(position==0)
+        ImageView icon = convertView.findViewById(R.id.image_view);
+        if (position == 0)
             icon.setImageDrawable(Utility.ThemeTools.MyClassIcon.getMyClassYesInverse(context));
         else
             icon.setImageDrawable(ItemIconDrawable);
-
 
 
         TextView textView = convertView.findViewById(R.id.textview);
