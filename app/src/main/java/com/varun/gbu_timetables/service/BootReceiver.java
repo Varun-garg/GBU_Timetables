@@ -25,8 +25,7 @@ public class BootReceiver extends BroadcastReceiver {
 
         try {
             if (intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-                if (BuildConfig.DEBUG)
-                {
+                if (BuildConfig.DEBUG) {
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(context)
                                     .setSmallIcon(R.drawable.ic_notification_statue_buddha)
@@ -49,7 +48,7 @@ public class BootReceiver extends BroadcastReceiver {
                         AlarmManager.INTERVAL_DAY, pi);
 
             }
-        }catch (java.lang.NullPointerException e){
+        } catch (java.lang.NullPointerException e) {
             Log.e("BootReceiver", e.getMessage());
         }
     }

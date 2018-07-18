@@ -5,5 +5,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="fab_margin_1">60dp</dimen>
     <dimen name="fab_margin_2">120dp</dimen>
+    <dimen name="fab_margin_3">180dp</dimen>
 
 </resources>

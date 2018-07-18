@@ -51,7 +51,6 @@ public class UpdateDatabaseService extends Service {
                 return mStartMode;
 
 
-
         updateDatabaseOnlineTask = new UpdateDatabaseOnlineTask(getApplicationContext(), true);
         updateDatabaseOnlineTask.execute();
 
