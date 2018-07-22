@@ -9,9 +9,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -135,40 +133,69 @@ public class TimetableFragmentSinglePage extends Fragment {
 
             tableLayout.addView(tableRow);
         }
-
+        tableLayout.addView(new LinearLayout(this.getContext()));
 
         CSF_Details = timetableAdapter.getCSFDetails();
         Set<CSF> csf_items = new HashSet<>(CSF_Details.values());
 
         ArrayList<CSF> CSF_Array = new ArrayList<>(csf_items);
-        final ListView lv2 = rootView.findViewById(R.id.timetable_faculty_data);
         final DetailsAdapter detailsAdapter = new DetailsAdapter(getContext(), CSF_Array, type);
-        lv2.setAdapter(detailsAdapter);
 
-        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        for (int i = 0; i < CSF_Array.size(); i++) {
+            final View detail_item = detailsAdapter.getView(i, null, null);
+            detail_item.setPadding(20, 0, 20, 0);
+            detail_item.setBackgroundResource(BgBoxDefault_id);
+            detail_item.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CSF csf = (CSF) detail_item.getTag();
+                    Intent intent = new Intent(getActivity(), TimetableActivity.class);
 
-            @Override
-            public void onItemClick(AdapterView adapterView, View view, int position, long l) {
-                CSF csf = (CSF) view.getTag();
-
-
-                Intent intent = new Intent(getActivity(), TimetableActivity.class);
-
-                if (type.equals("Faculty")) {
-                    dialog.setMessage("Loading " + csf.Section_name);
-                    intent.putExtra("Section_id", csf.Section_id);
-                    intent.putExtra("Timetable_title", csf.Section_name);
-                    intent.putExtra("Type", "Section");
-                } else if (type.equals("Section")) {
-                    dialog.setMessage("Loading " + csf.Fac_name);
-                    intent.putExtra("Faculty_id", csf.Fac_id);
-                    intent.putExtra("Timetable_title", csf.Fac_name);
-                    intent.putExtra("Type", "Faculty");
+                    if (type.equals("Faculty")) {
+                        dialog.setMessage("Loading " + csf.Section_name);
+                        intent.putExtra("Section_id", csf.Section_id);
+                        intent.putExtra("Timetable_title", csf.Section_name);
+                        intent.putExtra("Type", "Section");
+                    } else if (type.equals("Section")) {
+                        dialog.setMessage("Loading " + csf.Fac_name);
+                        intent.putExtra("Faculty_id", csf.Fac_id);
+                        intent.putExtra("Timetable_title", csf.Fac_name);
+                        intent.putExtra("Type", "Faculty");
+                    }
+                    dialog.show();
+                    startActivity(intent);
                 }
-                dialog.show();
-                startActivity(intent);
-            }
-        });
+            });
+
+            tableLayout.addView(detail_item);
+        }
+
+//        final ListView lv2 = rootView.findViewById(R.id.timetable_faculty_data);
+//        lv2.setAdapter(detailsAdapter);
+//        lv2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView adapterView, View view, int position, long l) {
+//                CSF csf = (CSF) view.getTag();
+//
+//
+//                Intent intent = new Intent(getActivity(), TimetableActivity.class);
+//
+//                if (type.equals("Faculty")) {
+//                    dialog.setMessage("Loading " + csf.Section_name);
+//                    intent.putExtra("Section_id", csf.Section_id);
+//                    intent.putExtra("Timetable_title", csf.Section_name);
+//                    intent.putExtra("Type", "Section");
+//                } else if (type.equals("Section")) {
+//                    dialog.setMessage("Loading " + csf.Fac_name);
+//                    intent.putExtra("Faculty_id", csf.Fac_id);
+//                    intent.putExtra("Timetable_title", csf.Fac_name);
+//                    intent.putExtra("Type", "Faculty");
+//                }
+//                dialog.show();
+//                startActivity(intent);
+//            }
+//        });
 
         return rootView;
     }

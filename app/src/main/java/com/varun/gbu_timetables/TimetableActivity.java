@@ -270,7 +270,8 @@ public class TimetableActivity extends AppCompatActivity {
                     if (stored_mode.equals("0"))
                         png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_pager), null), Environment.getExternalStorageDirectory().getAbsolutePath());
                     else
-                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), findViewById(R.id.timetable_faculty_data)), Environment.getExternalStorageDirectory().getAbsolutePath());
+//                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), findViewById(R.id.timetable_faculty_data)), Environment.getExternalStorageDirectory().getAbsolutePath());
+                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), null), Environment.getExternalStorageDirectory().getAbsolutePath());
                     if (png == null)
                         return;
                     try {
