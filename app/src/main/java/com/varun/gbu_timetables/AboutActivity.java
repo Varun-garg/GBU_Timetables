@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import com.varun.gbu_timetables.service.MyFirebaseInstanceIdService;
 
 public class AboutActivity extends AppCompatActivity {
 
+    @SuppressLint({"TimberArgCount", "LogNotTimber"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +36,12 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         TextView textView = findViewById(R.id.textView);
 
@@ -85,7 +89,9 @@ public class AboutActivity extends AppCompatActivity {
         textView.append("\n\n");
         textView.append("Developed under guidance of Dr. Amit K. Awasthi\n\n");
         textView.append("Developed by Varun Garg <");
-        textView.append(Html.fromHtml("<a href=\"mailto:varun.10@live.com\">varun.10@live.com</a>><br />"));
+        textView.append(Html.fromHtml("<a href=\"mailto:varun.10@live.com\">Email Varun</a>><br />"));
+        textView.append("Share Timetable feature by Ritik Channa\n <");
+        textView.append(Html.fromHtml("<a href=\"mailto:chnritik@gmail.com\">Email Ritik</a>><br />"));
         textView.append("\nThanks to CyanogenMod for MD5 library\n\n");
         textView.append("Released Under GPLv3 Licence");
     }

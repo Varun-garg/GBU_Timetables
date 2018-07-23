@@ -29,6 +29,7 @@
     <color name="app_bg_pure_white_or_black">#FFFFFF</color>
     <color name="app_bg_pure_white_or_black_dark">#263238</color>
     <color name="colorPinkGBT">#e91e63</color>
+    <color name="colorLightPinkGBT">#bbe91e68</color>
     <color name="colorPinkDarkGBT">#c2185b</color>
 
 

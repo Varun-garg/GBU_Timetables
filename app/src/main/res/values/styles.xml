@@ -52,10 +52,21 @@
 
     <style name="DarkTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
 
-    <style name="GBURed" parent="AppTheme">
+    <style name="GBURed" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPinkGBT</item>
         <item name="colorPrimaryDark">@color/colorPinkDarkGBT</item>
+        <item name="colorAccent">@color/colorPinkGBT</item>
+        <item name="box_bg">@color/box_bg</item>
+        <item name="app_bg">@color/colorLightPinkGBT</item>
+        <item name="theme_green">@color/theme_green</item>
+        <item name="theme_pink">@color/theme_pink</item>
+        <item name="app_bg_lighter_on_light_theme">@color/main_activity_bg</item>
+        <item name="app_bg_pure_white_or_black">@color/app_bg_pure_white_or_black</item>
     </style>
 
+
+    <style name="GBURed.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="GBURed.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

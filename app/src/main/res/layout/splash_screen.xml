@@ -21,11 +21,11 @@
             android:padding="25dp">
 
             <ImageView
-                android:contentDescription="@string/gbu_logo"
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@android:dimen/app_icon_size" />
+                android:layout_margin="@android:dimen/app_icon_size"
+                android:contentDescription="@string/gbu_logo" />
         </LinearLayout>
 
         <TextView
@@ -38,8 +38,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
             android:layout_marginBottom="30dp"
+            android:layout_marginTop="5dp"
             android:text="@string/http_github_com_opengbu"
             android:textSize="20sp" />
     </LinearLayout>

@@ -35,11 +35,13 @@
     <string-array name="pref_theme_options">
         <item>Light Theme</item>
         <item>Dark Theme</item>
+        <item>Pink Theme</item>
     </string-array>
 
     <string-array name="pref_theme_values">
         <item>0</item>
         <item>1</item>
+        <item>2</item>
     </string-array>
     <string name="title_activity_about">AboutActivity</string>
     <string name="title_activity_course_structure">ICT Course Structure</string>

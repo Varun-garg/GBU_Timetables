@@ -34,7 +34,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?attr/app_bg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:background="@drawable/bg_box_default_light" />
 
 
 </android.support.design.widget.CoordinatorLayout>
