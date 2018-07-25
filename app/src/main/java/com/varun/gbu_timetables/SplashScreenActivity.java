@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.ViewTreeObserver;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -29,6 +30,10 @@ public class SplashScreenActivity extends AppCompatActivity {
 
 
         setContentView(R.layout.splash_screen);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        );
         final ImageView imageView = findViewById(R.id.image_view);
         final LinearLayout imageView_ll = findViewById(R.id.image_view_ll);
 
