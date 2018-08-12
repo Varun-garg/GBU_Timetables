@@ -95,7 +95,7 @@ public class Utility {
      * @return A float value to represent px equivalent to dp depending on device density
      */
     public static int convertDpToPixel(int dp, Context context) {
-        Log.d(Utility.class.getCanonicalName(),"dp : "+ dp + ", context: " + context);
+        Log.d(Utility.class.getCanonicalName(), "dp : " + dp + ", context: " + context);
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);

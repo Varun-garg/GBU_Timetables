@@ -124,5 +124,4 @@ public class SectionsFragment extends Fragment {
     }
 
 
-
 }

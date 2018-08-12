@@ -66,23 +66,6 @@ public class MainActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         // Crashlytics.getInstance().crash();
 
-        // Create a new configuration
-        //Configuration.Builder builder = new Configuration.Builder(getApplicationContext());
-
-        // Perform any configuration steps (optional)
-        //builder.firebaseRootPath("prod");
-
-        // Initialize the Chat SDK
-        //ChatSDK.initialize(builder.build());
-        //UserInterfaceModule.activate(getApplicationContext());
-
-        // Activate the Firebase module
-        //FirebaseModule.activate();
-
-        // File storage is needed for profile image upload and image messages
-        //FirebaseFileStorageModule.activate();
-
-
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         set_theme = R.style.AppTheme;
         if (set_theme != saved_theme)
@@ -216,16 +199,31 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_info) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
-        } else if (id == R.id.action_discuss) {
-            //InterfaceManager.shared().a.startLoginActivity(getApplicationContext(), true);
+        } else if (id == R.id.action_slack) {
+
+            AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
+            builder1.setTitle("Setup Slack");
+            builder1.setMessage(Html.fromHtml("1. Go to play store and download slack. <br /><br />" +
+            "2. Open slack -> sign in -> man -> Workspace url is <b>gbuhq</b> or <a>gbuhq.slack.com</a><br /><br />"+
+            "3. Click <b>Launch</b>"));
+            builder1.setCancelable(false);
+
+            builder1.setPositiveButton(
+                    "Launch",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("slack://channel?id=CC6J2UGF3&team=TBW575JA2"));
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            dialog.cancel();
+                        }
+                    });
+
+            AlertDialog alertDialog = builder1.create();
+            alertDialog.show();
+
+
         }
-        /*
-        else if(id == R.id.action_syllabus)
-        {
-            Intent intent = new Intent(getApplicationContext(), CourseStructure.class);
-            startActivity(intent);
-        }
-        */
 
         return super.onOptionsItemSelected(item);
     }
