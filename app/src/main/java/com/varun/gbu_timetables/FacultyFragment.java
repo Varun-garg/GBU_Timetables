@@ -1,6 +1,7 @@
 package com.varun.gbu_timetables;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -73,14 +74,15 @@ public class FacultyFragment extends Fragment {
 
         schools_lv.setAdapter(schoolsAdapter);
 
+        Context context = getContext();
         ViewTreeObserver vto = schools_lv.getViewTreeObserver();
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
                 if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    schools_lv.setIndicatorBounds(schools_lv.getRight() - Utility.convertDpToPixel(60, getContext()), schools_lv.getWidth());
+                    schools_lv.setIndicatorBounds(schools_lv.getRight() - Utility.convertDpToPixel(60, context), schools_lv.getWidth());
                 } else {
-                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight() - Utility.convertDpToPixel(60, getContext()), schools_lv.getWidth());
+                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight() - Utility.convertDpToPixel(60, context), schools_lv.getWidth());
                 }
             }
         });

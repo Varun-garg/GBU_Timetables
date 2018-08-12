@@ -1,6 +1,5 @@
 package com.varun.gbu_timetables;
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -51,7 +50,7 @@ public class Utility {
         return Period_no;
     }
 
-    @SuppressLint("LogNotTimber")
+    //@SuppressLint("LogNotTimber")
     public static String getFullSectionName(String SectionCode, Context context) {
         String splitted[] = SectionCode.split("-");
         String Year = null;
@@ -96,6 +95,7 @@ public class Utility {
      * @return A float value to represent px equivalent to dp depending on device density
      */
     public static int convertDpToPixel(int dp, Context context) {
+        Log.d(Utility.class.getCanonicalName(),"dp : "+ dp + ", context: " + context);
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * (metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
@@ -132,16 +132,12 @@ public class Utility {
 
     // copy text to clipboard
     public static void setClipboard(Context context, String text) {
-        //if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
-        //  android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-        //  clipboard.setText(text);
-        //} else {
-            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
-            android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
+        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+        android.content.ClipData clip = android.content.ClipData.newPlainText("Copied Text", text);
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip);
         }
-        //  }
+
     }
 
     public static class ThemeTools {
@@ -149,15 +145,16 @@ public class Utility {
         public static int getThemeId(Context context) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0"); //1 -> Default dark
+            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "1"); //1 -> Default dark
             switch (theme) {
+                case "0":
+                    return R.style.LightTheme;
                 case "1":
                     return R.style.DarkTheme;
                 case "2":
                     return R.style.GBURed;
-                default:
-                    return R.style.LightTheme;
             }
+            return -1;
         }
 
         public static int getMarginDrawable(Context context) {
@@ -165,33 +162,32 @@ public class Utility {
             switch (theme_id) {
                 case R.style.LightTheme:
                     return R.drawable.margin_light;
+                case R.style.DarkTheme:
+                    return R.drawable.margin_dark;
                 case R.style.GBURed:
                     return R.drawable.margin_gbured;
-                default:
-                    return R.drawable.margin_dark;
             }
+            return -1;
         }
 
         public static int getDialogThemeId(Context context) {
             int theme_id = getThemeId(context);
-            if (theme_id == R.style.DarkTheme) {
-                if (android.os.Build.VERSION.SDK_INT >= 21) {
+            if (theme_id == R.style.LightTheme || theme_id == R.style.DarkTheme) {
+                if (android.os.Build.VERSION.SDK_INT >= 21)
                     return android.R.style.Theme_Material_Light_Dialog;
-                } else {
+                else
                     return ProgressDialog.THEME_HOLO_LIGHT;
-                }
-            } else if (android.os.Build.VERSION.SDK_INT >= 21) {
-                return android.R.style.Theme_Material_Dialog;
             } else {
-                return ProgressDialog.THEME_HOLO_DARK;
+                if (android.os.Build.VERSION.SDK_INT >= 21)
+                    return android.R.style.Theme_Material_Dialog;
+                else
+                    return ProgressDialog.THEME_HOLO_DARK;
             }
         }
 
         public static Drawable getListGroupIconInverseDrawable(Context context) {
             int theme_id = getThemeId(context);
-            if (theme_id == R.style.LightTheme)
-                return ContextCompat.getDrawable(context, R.drawable.ic_school_black_24dp);
-            else if (theme_id == R.style.GBURed)
+            if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                 return ContextCompat.getDrawable(context, R.drawable.ic_school_black_24dp);
             else
                 return ContextCompat.getDrawable(context, R.drawable.ic_school_white_24dp);
@@ -199,7 +195,7 @@ public class Utility {
 
         public static Drawable getShareIconDrawable(Context context) {
             int theme_id = getThemeId(context);
-            if (theme_id == R.style.LightTheme)
+            if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                 return ContextCompat.getDrawable(context, R.drawable.ic_share_white_24dp);
             else
                 return ContextCompat.getDrawable(context, R.drawable.ic_share_black_24dp);
@@ -207,9 +203,7 @@ public class Utility {
 
         public static Drawable getGBU_remastered(Context context) {
             int theme_id = getThemeId(context);
-            if (theme_id == R.style.LightTheme)
-                return ContextCompat.getDrawable(context, R.drawable.gbu_remastered);
-            if (theme_id == R.style.GBURed)
+            if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                 return ContextCompat.getDrawable(context, R.drawable.gbu_remastered);
             else
                 return ContextCompat.getDrawable(context, R.drawable.gbu_remastered_dark);
@@ -218,9 +212,7 @@ public class Utility {
         public static class FavouriteIcon {
             public static Drawable getFavYes(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
-                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
-                else if (theme_id == R.style.GBURed)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
@@ -228,9 +220,7 @@ public class Utility {
 
             public static Drawable getFavYesInverse(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
-                    return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
-                else if (theme_id == R.style.GBURed)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_black_24dp);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_white_24dp);
@@ -238,7 +228,7 @@ public class Utility {
 
             public static Drawable getFavNo(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_white_24dp);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_favorite_border_black_24dp);
@@ -248,7 +238,7 @@ public class Utility {
         public static class MyClassIcon {
             public static Drawable getMyClassYes(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_white);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_black);
@@ -256,7 +246,7 @@ public class Utility {
 
             public static Drawable getMyClassYesInverse(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_black);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_white);
@@ -264,7 +254,7 @@ public class Utility {
 
             public static Drawable getMyClassNo(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_border_white);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_myclass_border_black);
@@ -274,7 +264,7 @@ public class Utility {
         public static class FabIcon {
             public static Drawable getfabup(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return ContextCompat.getDrawable(context, R.drawable.ic_show_fab_white);
                 else
                     return ContextCompat.getDrawable(context, R.drawable.ic_show_fab_black);
@@ -287,10 +277,8 @@ public class Utility {
 
             public static int getBgBoxDefaultDrawable(Context context) {
                 int theme_id = getThemeId(context);
-                if (theme_id == R.style.LightTheme)
+                if (theme_id == R.style.LightTheme || theme_id == R.style.GBURed)
                     return R.drawable.bg_box_default_light;
-                if (theme_id == R.style.GBURed)
-                    return R.drawable.bg_box_pink_light;
                 else
                     return R.drawable.bg_box_default_dark;
             }

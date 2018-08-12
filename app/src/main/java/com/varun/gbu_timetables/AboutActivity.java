@@ -22,7 +22,7 @@ import com.varun.gbu_timetables.service.MyFirebaseInstanceIdService;
 
 public class AboutActivity extends AppCompatActivity {
 
-    @SuppressLint({"TimberArgCount", "LogNotTimber"})
+    //@SuppressLint({"TimberArgCount", "LogNotTimber"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +36,11 @@ public class AboutActivity extends AppCompatActivity {
         setContentView(R.layout.activity_about);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setDisplayUseLogoEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 
 
         TextView textView = findViewById(R.id.textView);

@@ -34,12 +34,6 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import co.chatsdk.core.session.ChatSDK;
-import co.chatsdk.core.session.Configuration;
-import co.chatsdk.firebase.FirebaseModule;
-import co.chatsdk.firebase.file_storage.FirebaseFileStorageModule;
-import co.chatsdk.ui.manager.InterfaceManager;
-import co.chatsdk.ui.manager.UserInterfaceModule;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -73,20 +67,20 @@ public class MainActivity extends AppCompatActivity {
         // Crashlytics.getInstance().crash();
 
         // Create a new configuration
-        Configuration.Builder builder = new Configuration.Builder(getApplicationContext());
+        //Configuration.Builder builder = new Configuration.Builder(getApplicationContext());
 
         // Perform any configuration steps (optional)
-        builder.firebaseRootPath("prod");
+        //builder.firebaseRootPath("prod");
 
         // Initialize the Chat SDK
-        ChatSDK.initialize(builder.build());
-        UserInterfaceModule.activate(getApplicationContext());
+        //ChatSDK.initialize(builder.build());
+        //UserInterfaceModule.activate(getApplicationContext());
 
         // Activate the Firebase module
-        FirebaseModule.activate();
+        //FirebaseModule.activate();
 
         // File storage is needed for profile image upload and image messages
-        FirebaseFileStorageModule.activate();
+        //FirebaseFileStorageModule.activate();
 
 
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
@@ -223,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
         } else if (id == R.id.action_discuss) {
-            InterfaceManager.shared().a.startLoginActivity(getApplicationContext(), true);
+            //InterfaceManager.shared().a.startLoginActivity(getApplicationContext(), true);
         }
         /*
         else if(id == R.id.action_syllabus)

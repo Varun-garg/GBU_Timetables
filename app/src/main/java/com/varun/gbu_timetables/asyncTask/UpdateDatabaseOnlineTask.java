@@ -32,6 +32,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Random;
 
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
@@ -187,7 +188,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 mBuilder.setContentIntent(resultPendingIntent);
                 NotificationManager mNotificationManager =
                         (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
-               // mNotificationManager.notify((new Random()).nextInt(9999 - 1000) + 1000, mBuilder.build());
+                mNotificationManager.notify((new Random()).nextInt(9999 - 1000) + 1000, mBuilder.build());
             }
         }
     }
