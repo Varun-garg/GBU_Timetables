@@ -1,15 +1,14 @@
 apply plugin: 'com.android.application'
-apply plugin: 'io.fabric'
+//apply plugin: 'io.fabric'
 android {
     compileSdkVersion 26
-    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.varun.gbu_timetables"
         minSdkVersion 16 // Sorry, Google support library and Firebase forced me!
         targetSdkVersion 26
-        versionCode 74
-        versionName "11"
+        versionCode 77
+        versionName "11.4"
         multiDexEnabled true
     }
     buildTypes {

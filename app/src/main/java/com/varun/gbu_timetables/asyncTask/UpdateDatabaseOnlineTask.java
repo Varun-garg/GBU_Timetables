@@ -37,8 +37,12 @@ import java.util.Random;
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
-    private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
-    private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
+    //private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
+    //private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
+    private final String checksumUrlLocation = "https://github.com/mygbu/timetable/raw/master/md5.html";
+    private final String downloadUrlLocation = "https://github.com/mygbu/timetable/raw/master/varun.sqlite";
+
+
     private boolean silent;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
@@ -90,7 +94,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 publishProgress("Application will restart after update");
                 InputStream download_stream = dl_url_connection.getInputStream();
 
-                byte mbuffer[] = new byte[1024];
+                byte[] mbuffer = new byte[1024];
 
                 int length;
                 while ((length = download_stream.read(mbuffer)) > 0) {

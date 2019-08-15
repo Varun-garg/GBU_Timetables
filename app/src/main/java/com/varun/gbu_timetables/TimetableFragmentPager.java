@@ -124,7 +124,7 @@ public class TimetableFragmentPager extends Fragment {
         public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
             final LinearLayout linearLayout = parent_view.findViewById(R.id.linear_layout);
-            int beg_min = 30;
+            String beg_min = "00";
             final ArrayList<LinearLayout> items_list = new ArrayList<>();
             String prev_time_string = "";
             int item_pos = -1;
@@ -143,9 +143,11 @@ public class TimetableFragmentPager extends Fragment {
                     repeat++;
                     LinearLayout cur_item = items_list.get(item_pos);
                     TextView textView = cur_item.findViewById(R.id.pager_item_row);
-                    textView.setText(Integer.toString(Utility.getPeriodTitleNo(j - repeat)) + ":" + Integer.toString(beg_min) + " - ");
-                    textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
-                    textView.append(" (" + Integer.toString(repeat + 1) + " Hrs)");
+                    //textView.setText(Integer.toString(Utility.getPeriodTitleNo(j - repeat)) + ":" + Integer.toString(beg_min) + " - ");
+                    //textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
+                    textView.setText(Utility.getPeriodTitleNo(j - repeat) + ":" + beg_min + " - ");
+                    textView.append(Utility.getPeriodTitleNo(j + 1) + ":" + beg_min);
+                    textView.append(" (" + (repeat + 1) + " Hrs)");
                     continue;
                 }
                 repeat = 0;
@@ -158,8 +160,11 @@ public class TimetableFragmentPager extends Fragment {
                 item_view.addView(item, layoutParams);
 
                 TextView textView = item_view.findViewById(R.id.pager_item_row);
-                textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
-                textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
+                // textView.setText(Integer.toString(Utility.getPeriodTitleNo(j)) + ":" + Integer.toString(beg_min) + " - ");
+                // textView.append(Integer.toString(Utility.getPeriodTitleNo(j + 1)) + ":" + Integer.toString(beg_min));
+                textView.setText(Utility.getPeriodTitleNo(j) + ":" + beg_min + " - ");
+                textView.append(Utility.getPeriodTitleNo(j + 1) + ":" + beg_min);
+
                 textView.setBackgroundResource(BgBoxDefault_id);
                 textView.setTypeface(null, Typeface.BOLD);
                 textView.setPadding(0, 15, 0, 15);

@@ -73,7 +73,7 @@ public class TimetableFragmentSinglePage extends Fragment {
 
         //We insert Periods
         TableRow header = (TableRow) inflater.inflate(R.layout.timetable_row, null);
-        int beg_min = 30;
+        String beg_min = "00";
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
         TableRow.LayoutParams cellParams = new TableRow.LayoutParams(width, TableRow.LayoutParams.MATCH_PARENT);
         TableRow.LayoutParams halfparams = new TableRow.LayoutParams(width / 2, TableRow.LayoutParams.MATCH_PARENT);
@@ -90,8 +90,10 @@ public class TimetableFragmentSinglePage extends Fragment {
         for (int i = min_period; i <= max_period; i++) {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
             textView.setLayoutParams(cellParams);
-            textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
-            textView.append(Integer.toString(Utility.getPeriodTitleNo(i + 1)) + ":" + Integer.toString(beg_min));
+            // textView.setText(Integer.toString(Utility.getPeriodTitleNo(i)) + ":" + Integer.toString(beg_min) + " - ");
+            // textView.append(Integer.toString(Utility.getPeriodTitleNo(i + 1)) + ":" + Integer.toString(beg_min));
+            textView.setText(Utility.getPeriodTitleNo(i) + ":" + beg_min + " - ");
+            textView.append(Utility.getPeriodTitleNo(i + 1) + ":" + beg_min);
             textView.setBackgroundResource(BgBoxDefault_id);
             textView.setTypeface(null, Typeface.BOLD);
             textView.setPadding(5, 5, 0, 0);
