@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -66,7 +66,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                publishProgress("Update Failed: An internet error occurred");
+                publishProgress("Offline: Timetable may be old.");
                 return -1;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));

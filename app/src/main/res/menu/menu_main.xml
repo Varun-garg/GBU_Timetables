@@ -2,12 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.varun.gbu_timetables.MainActivity">
-    <item
+    <!--<item
         android:id="@+id/action_slack"
         android:icon="@drawable/slack_mark_white_web"
         android:orderInCategory="100"
         android:title="@string/discussion"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom" />-->
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings_white_24dp"
