@@ -9,7 +9,7 @@ import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
@@ -32,7 +32,7 @@ public class Utility {
             return "Engineering";
         else if (src.equalsIgnoreCase("SOM"))
             return "Management";
-        else if (src.equalsIgnoreCase("SOLJ"))
+        else if (src.equalsIgnoreCase("SOLJG"))
             return "Law, Justice and Governance";
         else if (src.equalsIgnoreCase("SOBSC"))
             return "Buddhist Studies And Civilization";
@@ -52,7 +52,7 @@ public class Utility {
 
     //@SuppressLint("LogNotTimber")
     public static String getFullSectionName(String SectionCode, Context context) {
-        String splitted[] = SectionCode.split("-");
+        String[] splitted = SectionCode.split("-");
         String Year = null;
         //String Grp = null;
         if (splitted.length >= 2)

@@ -1,4 +1,5 @@
-<android.support.design.widget.TabLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.tabs.TabLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/tab_layout"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"

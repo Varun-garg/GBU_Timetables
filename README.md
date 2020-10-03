@@ -15,8 +15,6 @@ https://play.google.com/store/apps/details?id=com.varun.gbu_timetables
 
 - Support of both light and dark themes.
 
--Soon aralrm feature is to come.
-
 - Push Notifications to inform users of new or important activities.
 
 - Public content provider is available for other developing applications using our services.

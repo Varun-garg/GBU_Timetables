@@ -10,20 +10,21 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import com.google.android.material.tabs.TabLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+//import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
@@ -34,7 +35,7 @@ import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.HashSet;
 
-import io.fabric.sdk.android.Fabric;
+//import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Fabric.with(this, new Crashlytics());
+      //  Fabric.with(this, new Crashlytics());
         // Crashlytics.getInstance().crash();
+        //FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         set_theme = R.style.AppTheme;
@@ -199,7 +202,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_info) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
-        } else if (id == R.id.action_slack) {
+        }
+     /*  else if (id == R.id.action_slack) {
 
             AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
             builder1.setTitle("Setup Slack");
@@ -223,7 +227,7 @@ public class MainActivity extends AppCompatActivity {
             alertDialog.show();
 
 
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }
@@ -256,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
         stopService(new Intent(getBaseContext(), UpdateDatabaseService.class));
     }
 
-    public class FragmentPagerAdapter extends android.support.v4.app.FragmentPagerAdapter {
+    public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
         final int PAGE_COUNT = 3;
         private String tabTitles[] = new String[]{"Sections", "Faculty", "Favourites"};
 
