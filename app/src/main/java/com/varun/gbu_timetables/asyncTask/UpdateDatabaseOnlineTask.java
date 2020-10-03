@@ -9,8 +9,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.TaskStackBuilder;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -37,8 +37,12 @@ import java.util.Random;
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
     private final Context mContext;
-    private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
-    private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
+    //private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
+    //private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
+    private final String checksumUrlLocation = "https://github.com/mygbu/timetable/raw/master/md5.html";
+    private final String downloadUrlLocation = "https://github.com/mygbu/timetable/raw/master/varun.sqlite";
+
+
     private boolean silent;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
@@ -62,7 +66,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
             InputStream inputStream = urlConnection.getInputStream();
             StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
-                publishProgress("Update Failed: An internet error occurred");
+                publishProgress("Offline: Timetable may be old.");
                 return -1;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -90,7 +94,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 publishProgress("Application will restart after update");
                 InputStream download_stream = dl_url_connection.getInputStream();
 
-                byte mbuffer[] = new byte[1024];
+                byte[] mbuffer = new byte[1024];
 
                 int length;
                 while ((length = download_stream.read(mbuffer)) > 0) {

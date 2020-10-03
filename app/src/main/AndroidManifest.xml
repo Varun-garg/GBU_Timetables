@@ -15,9 +15,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data
+     <!--   <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="26b512ff54604e262c20c6ac0c71a6aac2b4cc73" />
+            android:value="26b512ff54604e262c20c6ac0c71a6aac2b4cc73" /> -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notification_statue_buddha" />
@@ -36,7 +36,7 @@
             android:enabled="true"
             android:exported="true" />
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
