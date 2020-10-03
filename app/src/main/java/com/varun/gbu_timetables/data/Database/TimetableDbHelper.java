@@ -81,7 +81,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
                 editor.putInt(DB_VERSION_PATH, current_db_version);
                 editor.apply();
                 Log.d("updating", "due to version mismatch");
-                Log.d("Difference", "new version = " + Integer.toString(current_db_version) + ", old db version = " + Integer.toString(saved_db_version));
+                Log.d("Difference", "new version = " + current_db_version + ", old db version = " + saved_db_version);
             }
         } catch (Exception e) {
             Log.d("error", e.toString());
@@ -130,7 +130,7 @@ public class TimetableDbHelper extends SQLiteOpenHelper {
             }
             OutputStream dest_db_stream = new FileOutputStream(dest_db);
 
-            byte buffer[] = new byte[1024];
+            byte[] buffer = new byte[1024];
 
             int length;
             while ((length = db_stream.read(buffer)) > 0) {
