@@ -52,7 +52,7 @@ public class AboutActivity extends AppCompatActivity {
             info = getPackageManager().getPackageInfo(getPackageName(), 0);
             int build = info.versionCode;
             String name = info.versionName;
-            BuildInfo = "Version " + name + "\n Build number " + Integer.toString(build) + "\n\n";
+            BuildInfo = "Version " + name + "\n Build number " + build + "\n\n";
         } catch (Exception e) {
             Log.d("error", e.toString());
         }

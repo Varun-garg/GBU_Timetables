@@ -262,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
         final int PAGE_COUNT = 3;
-        private String tabTitles[] = new String[]{"Sections", "Faculty", "Favourites"};
+        private String[] tabTitles = new String[]{"Sections", "Faculty", "Favourites"};
 
         public FragmentPagerAdapter(FragmentManager fm) {
             super(fm);

@@ -61,7 +61,7 @@ public class TimetableAdapter {
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, "text");
         bundle.putString("Title", title);
         bundle.putString("Timetable_Id", timetable_id.toString());
-        bundle.putString("Timetable_Type", timetable_type.toString().replaceAll(" ", "_"));
+        bundle.putString("Timetable_Type", timetable_type.replaceAll(" ", "_"));
         mFirebaseAnalytics.logEvent("TimetableOpen", bundle);
 
         Uri maxMinUri;
@@ -114,7 +114,7 @@ public class TimetableAdapter {
         Set<CSF_FAC_MAP_KEY> current_csf_fac_key_list = keymap.get(key);
         String day_str = cache.get(key);
         if (day_str == null) day_str = "";
-        String lines[] = day_str.split("\\r?\\n");
+        String[] lines = day_str.split("\\r?\\n");
 
         for (int i = 0; i < lines.length; i++) {
             TextView textView = (TextView) inflater.inflate(R.layout.timetable_item_single, null);
@@ -248,8 +248,8 @@ public class TimetableAdapter {
                     time_string += " LAB";
 
             } catch (Exception e) {
-                Log.d("TimetableAdapter", "day_no " + Integer.toString(Day_no));
-                Log.d("TimetableAdapter", "period_no " + Integer.toString(Period_Pos));
+                Log.d("TimetableAdapter", "day_no " + Day_no);
+                Log.d("TimetableAdapter", "period_no " + Period_Pos);
                 Log.d("TimetableAdapter", "CSF_id " + CSF_Id.toString());
                 Log.d("TimetableAdapter", e.toString(), e);
                 mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);

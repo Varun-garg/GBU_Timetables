@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GBU_Timetables.iml" filepath="$PROJECT_DIR$/GBU_Timetables.iml" group="GBU_Timetables" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GBU_Timetables-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GBU_Timetables-app.iml" group="GBU_Timetables/app" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="GBU_Timetables/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dev-GBU_Timetables.iml" filepath="$PROJECT_DIR$/.idea/modules/dev-GBU_Timetables.iml" group="GBU_Timetables" />
     </modules>
   </component>
 </project>
