@@ -21,7 +21,7 @@ https://play.google.com/store/apps/details?id=com.varun.gbu_timetables
 
 - In-depth analytics and crash reporting.
 
-- Backword Compatiblity upto Android 4.0 (ICS). It was upto 2.3 (Gingerbread) till google decided to bump important libraries to Android 4.0 starting from android 8.0 (Oreo).
+- Backword Compatiblity upto Android 5.0. 
 
 ## Contributing
 We welcome and enourage all kinds of contribution to the project.  
