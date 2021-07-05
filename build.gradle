@@ -2,20 +2,20 @@
 
 buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
-        classpath 'com.google.gms:google-services:3.2.0' // google-services plugin
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.2.1'
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath 'com.google.gms:google-services:4.3.8' // google-services plugin
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.7.1'
 
     }
     repositories {
-        jcenter()
+         mavenCentral()
          google()
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
         maven {
             url 'https://maven.google.com/'
