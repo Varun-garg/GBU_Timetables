@@ -4,8 +4,8 @@
     android:layout_height="wrap_content"
     android:background="?attr/app_bg_lighter_on_light_theme"
     android:orientation="horizontal"
-    android:paddingBottom="8dp"
-    android:paddingTop="8dp">
+    android:paddingTop="8dp"
+    android:paddingBottom="8dp">
 
     <ImageView
         android:id="@+id/image_view"

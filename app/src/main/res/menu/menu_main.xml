@@ -26,4 +26,10 @@
         android:orderInCategory="100"
         android:title="@string/action_refresh"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_notice"
+        android:icon="@drawable/ic_refresh_white_24dp"
+        android:orderInCategory="100"
+        android:title="@string/action_notice"
+        app:showAsAction="ifRoom" />
 </menu>

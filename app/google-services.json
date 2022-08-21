@@ -19,7 +19,15 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.varun.gbu_timetables",
-            "certificate_hash": "D7290F048BD5881455CF655D88B6555920A6B6A0"
+            "certificate_hash": "d7290f048bd5881455cf655d88b6555920a6b6a0"
+          }
+        },
+        {
+          "client_id": "601916450842-usv9d76kogtkab7jjkhcuagbheeu0alo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.varun.gbu_timetables",
+            "certificate_hash": "de6f6cb10dfe7b22351dab0e911352d026bf82ed"
           }
         },
         {
@@ -33,15 +41,13 @@
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "601916450842-g6pog7ghlm1fonemhr9db0m4qgr99h32.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

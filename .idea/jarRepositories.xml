@@ -12,24 +12,74 @@
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="injected_offline_commons-codec" />
+      <option name="name" value="injected_offline_commons-codec" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/commons-codec/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_it" />
+      <option name="name" value="injected_offline_it" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/it/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="MavenRepo" />
+      <option name="name" value="MavenRepo" />
+      <option name="url" value="https://repo.maven.apache.org/maven2/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_net" />
+      <option name="name" value="injected_offline_net" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/net/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_com" />
+      <option name="name" value="injected_offline_com" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/com/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_commons-logging" />
+      <option name="name" value="injected_offline_commons-logging" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/commons-logging/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_android" />
+      <option name="name" value="injected_offline_android" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/android/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_commons-io" />
+      <option name="name" value="injected_offline_commons-io" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/commons-io/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="maven" />
       <option name="name" value="maven" />
       <option name="url" value="https://maven.google.com/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="maven2" />
-      <option name="name" value="maven2" />
-      <option name="url" value="http://dl.bintray.com/chat-sdk/chat-sdk-android" />
+      <option name="id" value="injected_offline_androidx" />
+      <option name="name" value="injected_offline_androidx" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/androidx/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="BintrayJCenter" />
-      <option name="name" value="BintrayJCenter" />
-      <option name="url" value="https://jcenter.bintray.com/" />
+      <option name="id" value="injected_offline_gmaven_stable" />
+      <option name="name" value="injected_offline_gmaven_stable" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/gmaven_stable/" />
     </remote-repository>
     <remote-repository>
-      <option name="id" value="maven3" />
-      <option name="name" value="maven3" />
-      <option name="url" value="https://jitpack.io" />
+      <option name="id" value="injected_offline_io" />
+      <option name="name" value="injected_offline_io" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/io/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_org" />
+      <option name="name" value="injected_offline_org" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/org/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="injected_offline_javax" />
+      <option name="name" value="injected_offline_javax" />
+      <option name="url" value="file:/$USER_HOME$/.android/manual-offline-m2/javax/" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="Google" />

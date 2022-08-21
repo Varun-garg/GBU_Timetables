@@ -6,12 +6,13 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ExpandableListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.varun.gbu_timetables.adaptor.SectionsFacultyAdapter;
 import com.varun.gbu_timetables.data.Database.TimetableContract;
@@ -79,11 +80,8 @@ public class FacultyFragment extends Fragment {
         vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.JELLY_BEAN_MR2) {
-                    schools_lv.setIndicatorBounds(schools_lv.getRight() - Utility.convertDpToPixel(60, context), schools_lv.getWidth());
-                } else {
-                    schools_lv.setIndicatorBoundsRelative(schools_lv.getRight() - Utility.convertDpToPixel(60, context), schools_lv.getWidth());
-                }
+                assert context != null;
+                schools_lv.setIndicatorBoundsRelative(schools_lv.getRight() - Utility.convertDpToPixel(60, context), schools_lv.getWidth());
             }
         });
 

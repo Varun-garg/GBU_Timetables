@@ -5,17 +5,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import com.google.android.material.appbar.AppBarLayout;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.tabs.TabLayout;
 import com.varun.gbu_timetables.adaptor.TimetableAdapter;
 import com.varun.gbu_timetables.data.Model.CSF;
 import com.varun.gbu_timetables.data.Model.CSF_FAC_MAP_KEY;
@@ -124,7 +125,7 @@ public class TimetableFragmentPager extends Fragment {
         public Object instantiateItem(ViewGroup container, final int position) {
             View parent_view = mLayoutInflater.inflate(R.layout.timetable_page_day, container, false);
             final LinearLayout linearLayout = parent_view.findViewById(R.id.linear_layout);
-            String beg_min = "00";
+            String beg_min = "30";
             final ArrayList<LinearLayout> items_list = new ArrayList<>();
             String prev_time_string = "";
             int item_pos = -1;
@@ -184,7 +185,7 @@ public class TimetableFragmentPager extends Fragment {
                 footer.setPadding(0, 20, 0, 0);
 
                 item_view.setOnClickListener(new View.OnClickListener() {
-                    LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                    final LinearLayout.LayoutParams item_layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 
                     @Override
                     public void onClick(View v) {

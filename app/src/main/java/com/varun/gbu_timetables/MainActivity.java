@@ -10,21 +10,21 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import com.google.android.material.tabs.TabLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager.widget.ViewPager;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-//import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-      //  Fabric.with(this, new Crashlytics());
+        //  Fabric.with(this, new Crashlytics());
         // Crashlytics.getInstance().crash();
         //FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
@@ -202,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
         } else if (id == R.id.action_info) {
             Intent intent = new Intent(getApplicationContext(), AboutActivity.class);
             startActivity(intent);
+        } else if (id == R.id.action_notice) {
+            //  Intent intent = new Intent(getApplicationContext(), NoticesActivity.class);
+            // startActivity(intent);
         }
      /*  else if (id == R.id.action_slack) {
 
@@ -261,8 +264,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
-        private String[] tabTitles = new String[]{"Sections", "Faculty", "Favourites"};
+        final int PAGE_COUNT = 4;
+        private final String[] tabTitles = new String[]{"Notices", "Sections", "Faculty", "Favourites"};
 
         public FragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -276,8 +279,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == 0)
-                return new SectionsFragment();
+                return new NoticesFragment();
             else if (position == 1)
+                return new SectionsFragment();
+            else if (position == 2)
                 return new FacultyFragment();
             else return new FavouritesFragment();
         }

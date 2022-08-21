@@ -9,9 +9,10 @@ import android.database.DatabaseUtils;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.preference.PreferenceManager;
-import androidx.core.content.ContextCompat;
 import android.util.DisplayMetrics;
 import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 
 import com.varun.gbu_timetables.data.Database.TimetableContract;
 
@@ -145,7 +146,7 @@ public class Utility {
         public static int getThemeId(Context context) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "1"); //1 -> Default dark
+            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "2"); //1 -> Default dark
             switch (theme) {
                 case "0":
                     return R.style.LightTheme;

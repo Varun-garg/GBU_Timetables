@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "601916450842",
+    "firebase_url": "https://gbu-timetables-norification.firebaseio.com",
+    "project_id": "gbu-timetables-norification",
+    "storage_bucket": "gbu-timetables-norification.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:601916450842:android:97a4e07c36d1b0b5",
+        "android_client_info": {
+          "package_name": "com.varun.gbu_timetables"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "601916450842-mqq7ue4k30j2pl92pcm4oigas2m5hp2e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.varun.gbu_timetables",
+            "certificate_hash": "D7290F048BD5881455CF655D88B6555920A6B6A0"
+          }
+        },
+        {
+          "client_id": "601916450842-g6pog7ghlm1fonemhr9db0m4qgr99h32.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4pksBRx5zbYjTLfimz51jfRD6ni9oAvY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

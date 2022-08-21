@@ -2,9 +2,9 @@ package com.varun.gbu_timetables.service;
 
 import android.os.Bundle;
 
-import com.varun.gbu_timetables.R;
-
 import androidx.preference.PreferenceFragmentCompat;
+
+import com.varun.gbu_timetables.R;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override

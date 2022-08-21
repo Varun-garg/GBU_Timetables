@@ -1,0 +1,164 @@
+[
+  {
+    "id": "1",
+    "type": "Hostel",
+    "title": "Brief of Allocation made for new admission Boys (2020-21)",
+    "pdf": "BriefAllocation_newAdmisBoys_13March2021.pdf",
+    "createdat": "2021-03-13T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "2",
+    "type": "Hostel",
+    "title": "Hostel Accommodation Form 2020-21",
+    "pdf": "Hostel_AccommForm_13March2021.pdf",
+    "createdat": "2021-03-13T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "3",
+    "type": "Hostel",
+    "title": "First Year Girls Hostel Allotment List First Phase 2020-21",
+    "pdf": "Firstyear_GirlsHostelAllt_FirstList_12March2021.pdf",
+    "createdat": "2021-03-12T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "4",
+    "type": "Hostel",
+    "title": "Hostel Room Furniture Details",
+    "pdf": "Hostel_RoomFurnDtl_12March2021.pdf",
+    "createdat": "2021-03-12T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "5",
+    "type": "Exam",
+    "title": "Notice for Even Semester Examination of Academic Session 2020-21",
+    "pdf": "letter_Exam_12March2021.jpg",
+    "createdat": "2021-02-27T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "6",
+    "type": "Hostel",
+    "title": "Notice for Girls first year Students Academic Session 2020-21",
+    "pdf": "Notice_GirlsStudents_10March2021.jpeg",
+    "createdat": "2021-03-01T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "7",
+    "type": "Exam",
+    "title": "Notice for all Deans of the Schools",
+    "pdf": "Notice_Deans_10March2021.jpg",
+    "createdat": "2021-02-27T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "8",
+    "type": "General",
+    "title": "Important Notice for all Students Academic Session 2020-21",
+    "pdf": "Notice_Students_6March2021.pdf",
+    "createdat": "2021-03-06T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "9",
+    "type": "Hostel",
+    "title": "Hostel allocation List for Boys for Academic Session 2020-21",
+    "pdf": "Hostel_Allocation_boys_6March2021.pdf",
+    "createdat": "2021-02-27T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "10",
+    "type": "Hostel",
+    "title": "Covid-19 guidelines",
+    "pdf": "Covid-19Guidlines_1March2021.pdf",
+    "createdat": "2021-03-01T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "11",
+    "type": "Hostel",
+    "title": "Office Order for Exemption of Hostel/Mess for last semester students",
+    "pdf": "ExemptionLetter_HostelMess_2March2021.pdf",
+    "createdat": "2021-02-27T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "12",
+    "type": "Admin",
+    "title": "Notice for students regarding Hostel and Mess fees",
+    "pdf": "Notice_Fees_28Feb2021.pdf",
+    "createdat": "2021-02-28T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "13",
+    "type": "Accounts",
+    "title": "Office Order Regarding exemption of fees",
+    "pdf": "Office_Order_Accts_25Feb21.pdf",
+    "createdat": "2021-02-25T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "14",
+    "type": "Accounts",
+    "title": "Office Order to deposit Hostel/Mess fees for academic Session 2021-22",
+    "pdf": "Office_Order_Hostel_Fees_23Feb2021.jpg",
+    "createdat": "2021-03-01T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "15",
+    "type": "Admin",
+    "title": "Notice for Resumption of Academic Session 2020-21",
+    "pdf": "Notice_hostel_18Feb2021.pdf",
+    "createdat": "2021-02-18T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "16",
+    "title": "Examination Fees",
+    "type": "Exam",
+    "pdf": "Examination_Fees_17Feb2021.pdf",
+    "createdat": "2021-02-17T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "17",
+    "type": "Exam",
+    "title": "Circular regarding M.Phil/Ph.D thesis submission date extended till 30th June 2021",
+    "pdf": "circular_PhD_thesis_24Dec2020.png",
+    "createdat": "2021-03-01T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  },
+  {
+    "id": "18",
+    "type": "",
+    "title": "Orientation Program 2018-19, Honorable Chancellor visit to Gautam Buddha University Photogallery",
+    "pdf": "https://drive.google.com/drive/folders/1wIGLBV6czPPkoThzczGfsdnq1sUReWzk",
+    "createdat": "2021-02-18T13:37:27+00:00",
+    "displaytill": "2021-03-31T13:37:27+00:00",
+    "isActive": 1
+  }
+]

@@ -1,0 +1,83 @@
+package com.varun.gbu_timetables.service;
+
+import android.app.Notification;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.google.firebase.messaging.FirebaseMessagingService;
+import com.google.firebase.messaging.RemoteMessage;
+import com.varun.gbu_timetables.MainActivity;
+import com.varun.gbu_timetables.R;
+import com.varun.gbu_timetables.Utility;
+
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+    private static final String TAG = "FCM Service";
+
+    @Override
+    public void onNewToken(String s) {
+        super.onNewToken(s);
+
+        String savedToken = Utility.getFirebaseInstanceId(getApplicationContext());
+        String defaultToken = getApplication().getString(R.string.pref_firebase_instance_id_default_key);
+        Log.e("NEW_TOKEN", s);
+        Log.d("NEW_TOKEN", s);
+        if (s != null && !savedToken.equalsIgnoreCase(defaultToken))
+        //currentToken is null when app is first installed and token is not available
+        //also skip if token is already saved in preferences...
+        {
+            Utility.setFirebaseInstanceId(getApplicationContext(), s);
+        }
+    }
+
+    @Override
+    public void onMessageReceived(RemoteMessage remoteMessage) {
+        if (remoteMessage.getData().size() > 0) {
+            Log.i(TAG, "Message data payload: " + remoteMessage.getData());
+        }
+
+        if (remoteMessage.getNotification() != null) {
+            Log.i(TAG, "Message Notification Body: " +
+                    remoteMessage.getNotification().getBody());
+        }
+
+    }
+
+    private void sendNotification(RemoteMessage remoteMessage) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        final String title = remoteMessage.getData().get("title");
+        final String msg = remoteMessage.getData().get("body");
+        if (title != null && msg != null) {
+            final Notification not = new NotificationCompat.Builder(this, "CHANNEL_WELCOME")
+                    .setContentTitle(title)
+                    .setContentText(msg)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH)
+                    .setCategory(NotificationCompat.CATEGORY_ALARM)
+                    .setSmallIcon(R.drawable.ic_notification_statue_buddha)
+                    .setContentIntent(pendingIntent)
+                    .build();
+            NotificationManagerCompat compat = NotificationManagerCompat.from(getApplicationContext());
+            compat.notify(33333, not);
+        }
+    }
+
+    //    private void sendNotification(String from, String body) {
+//Log.i("Notice-It",from);
+//        new Handler(Looper.getMainLooper()).post(new Runnable() {
+//            @Override
+//            public void run() {
+//                Toast.makeText(getApplicationContext(), "body", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
+    private void sendNotification(String messageTitle, String messageBody) {
+
+    }
+}

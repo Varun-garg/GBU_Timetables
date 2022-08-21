@@ -2,18 +2,17 @@ package com.varun.gbu_timetables.service;
 
 import android.util.Log;
 
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
 
 /**
  * Created by varun on 8/3/2016.
  */
-public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIdService extends mFirebaseInstanceIdService {
 
     public void onStart() {
-        String CurrentToken = FirebaseInstanceId.getInstance().getToken();
+        String CurrentToken = FirebaseMessaging.getInstance().getToken().toString();
 
         //Log.d(this.getClass().getSimpleName(),"Inside Instance on onCreate");
         String savedToken = Utility.getFirebaseInstanceId(getApplicationContext());
@@ -31,7 +30,7 @@ public class MyFirebaseInstanceIdService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        String refreshedToken = FirebaseMessaging.getInstance().getToken().toString();
         Log.d(this.getClass().getSimpleName(), "Refreshed token: " + refreshedToken);
 
         Utility.setFirebaseInstanceId(getApplicationContext(), refreshedToken);

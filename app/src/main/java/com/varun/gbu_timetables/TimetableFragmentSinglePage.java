@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.varun.gbu_timetables.adaptor.TimetableAdapter;
 import com.varun.gbu_timetables.data.Model.CSF;
@@ -73,7 +74,7 @@ public class TimetableFragmentSinglePage extends Fragment {
 
         //We insert Periods
         TableRow header = (TableRow) inflater.inflate(R.layout.timetable_row, null);
-        String beg_min = "00";
+        String beg_min = "30";
         int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 90, getResources().getDisplayMetrics());
         TableRow.LayoutParams cellParams = new TableRow.LayoutParams(width, TableRow.LayoutParams.MATCH_PARENT);
         TableRow.LayoutParams halfparams = new TableRow.LayoutParams(width / 2, TableRow.LayoutParams.MATCH_PARENT);

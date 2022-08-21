@@ -2,10 +2,12 @@ package com.varun.gbu_timetables;
 
 import android.os.Bundle;
 
-import com.varun.gbu_timetables.service.SettingsFragment;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import com.varun.gbu_timetables.service.SettingsFragment;
+
+import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity {
     @Override
@@ -23,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -32,4 +34,5 @@ public class SettingsActivity extends AppCompatActivity {
                 .replace(R.id.settings_frame, new SettingsFragment())
                 .commit();
     }
+
 }

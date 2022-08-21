@@ -9,10 +9,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.TaskStackBuilder;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.TaskStackBuilder;
 
 import com.varun.gbu_timetables.BuildConfig;
 import com.varun.gbu_timetables.MainActivity;
@@ -43,7 +44,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
     private final String downloadUrlLocation = "https://github.com/mygbu/timetable/raw/master/varun.sqlite";
 
 
-    private boolean silent;
+    private final boolean silent;
 
     public UpdateDatabaseOnlineTask(Context context, boolean silent) {
         mContext = context;

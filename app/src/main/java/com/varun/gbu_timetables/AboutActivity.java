@@ -3,10 +3,6 @@ package com.varun.gbu_timetables;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-//import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -19,7 +15,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.varun.gbu_timetables.service.MyFirebaseInstanceIdService;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.varun.gbu_timetables.service.MyFirebaseMessagingService;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -63,7 +66,23 @@ public class AboutActivity extends AppCompatActivity {
             @Override
             public void onClick(View textView) {
                 Toast.makeText(getApplicationContext(), "Copied id to clipboard.", Toast.LENGTH_LONG).show();
-                Utility.setClipboard(getApplicationContext(), Utility.getFirebaseInstanceId(getApplicationContext()));
+                FirebaseMessaging.getInstance().getToken()
+                        .addOnCompleteListener(new OnCompleteListener<String>() {
+                            @Override
+                            public void onComplete(@NonNull Task<String> task) {
+                                if (!task.isSuccessful()) {
+                                    System.out.println("Fetching FCM registration token failed");
+                                    return;
+                                }
+                                // Get new FCM registration token
+                                String token = task.getResult();
+                                Log.i("Firebase Token", token);
+                                Toast.makeText(getApplicationContext(), "Firebase Token: " + token, Toast.LENGTH_SHORT).show();
+                                Utility.setClipboard(getApplicationContext(), token);
+                            }
+                        });
+
+                // Utility.setClipboard(getApplicationContext(), Utility.getFirebaseInstanceId(getApplicationContext()));
             }
 
             @Override
@@ -73,9 +92,10 @@ public class AboutActivity extends AppCompatActivity {
             }
         };
         ss.setSpan(clickableSpan, 0, FinalBuildInfo.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        MyFirebaseInstanceIdService myFirebaseInstanceIdService = new MyFirebaseInstanceIdService();
-        Intent intent = new Intent(getApplicationContext(), myFirebaseInstanceIdService.getClass());
+        MyFirebaseMessagingService myFMS = new MyFirebaseMessagingService();
+        //MyFirebaseInstanceIdService myFirebaseInstanceIdService = new MyFirebaseInstanceIdService();
+        Intent intent = new Intent(getApplicationContext(), myFMS.getClass());
+        //Intent intent = new Intent(getApplicationContext(), myFirebaseInstanceIdService.getClass());
         //   Log.d(this.getClass().getSimpleName(),"Starting MyFirebaseInstanceIdService");
         startService(intent);
 

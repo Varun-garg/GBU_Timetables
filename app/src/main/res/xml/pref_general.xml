@@ -6,8 +6,8 @@
         android:entries="@array/pref_tt_display_type_options"
         android:entryValues="@array/pref_tt_display_type_values"
         android:key="@string/pref_tt_display_type_key"
-        android:title="@string/pref_tt_display_type_label"
-        android:summary="Select timetable layout"/>
+        android:summary="Select timetable layout"
+        android:title="@string/pref_tt_display_type_label" />
 
 
     <androidx.preference.ListPreference
@@ -15,7 +15,7 @@
         android:entries="@array/pref_theme_options"
         android:entryValues="@array/pref_theme_values"
         android:key="@string/pref_theme_key"
-        android:title="@string/pref_theme_key_label"
-        android:summary="Select theme" />
+        android:summary="Select theme"
+        android:title="@string/pref_theme_key_label" />
 
 </androidx.preference.PreferenceScreen>

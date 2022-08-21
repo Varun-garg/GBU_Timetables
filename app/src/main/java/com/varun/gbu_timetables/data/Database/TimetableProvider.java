@@ -69,7 +69,8 @@ public class TimetableProvider extends ContentProvider {
         Long day = TimetableContract.getDayFromUri(uri);
         Long slot = TimetableContract.getSlotFromUri(uri);
 
-        String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table Where Section_Id=" + section_id.toString() + " AND  TT_Day=" + day.toString() + " AND TT_Period=" + slot.toString();
+        String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table Where Section_Id=" + section_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
+                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -77,7 +78,8 @@ public class TimetableProvider extends ContentProvider {
     private Cursor getMaxPeriodFromSection(Uri uri) {
         Long section_id = TimetableContract.getSectionFromMaxPeriodUri(uri);
 
-        String query = "SELECT _ROWID_ as _id, max(TT_Period),min(TT_Period) from M_Time_Table where Section_Id = " + section_id.toString();
+        String query = "SELECT _ROWID_ as _id, max(TT_Period),min(TT_Period) from M_Time_Table where Section_Id = " + section_id
+                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -93,7 +95,7 @@ public class TimetableProvider extends ContentProvider {
     private Cursor getFaculty() {
 
         String query = "SELECT distinct Teacher._ROWID_ as _id,Teacher.id as faculty_id, Teacher.name,Teacher.school from Teacher,School,M_Time_Table,CSF_Faculty where Teacher.school = School.name " +
-                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id order by Teacher.name";
+                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id order by Teacher.name" + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -102,7 +104,7 @@ public class TimetableProvider extends ContentProvider {
         Long program_id = TimetableContract.getProgramFromUri(uri);
         String query = "SELECT distinct Section._ROWID_ as _id,id as section_id,name from Section,M_Time_Table" +
                 " where ShowTimetable = 1 and program = " + program_id + " and Section.id = M_Time_Table.Section_Id"
-                + " order by Section.name ";
+                + " order by Section.name " + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -121,7 +123,8 @@ public class TimetableProvider extends ContentProvider {
         Long slot = TimetableContract.getSlotFromUri(uri);
 
         String query = "SELECT M_Time_Table._ROWID_ as _id, Section_Id, ContGroupCode, M_Time_Table.CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table,CSF_Faculty " +
-                " where M_Time_Table.CSF_Id=CSF_Faculty.csf_id and faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot;
+                " where M_Time_Table.CSF_Id=CSF_Faculty.csf_id and faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
+                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -130,7 +133,7 @@ public class TimetableProvider extends ContentProvider {
         Long faculty_id = TimetableContract.getFacultyFromMaxPeriodUri(uri);
         String query = "SELECT M_Time_Table._ROWID_ as _id, max(TT_Period),min(TT_Period) from M_Time_Table,CSF_Faculty where " +
                 " M_Time_Table.CSF_Id=CSF_Faculty.csf_id and " +
-                "faculty_Id = " + faculty_id.toString();
+                "faculty_Id = " + faculty_id + " and sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 

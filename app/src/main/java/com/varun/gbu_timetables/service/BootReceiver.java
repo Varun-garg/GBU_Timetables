@@ -1,21 +1,22 @@
 package com.varun.gbu_timetables.service;
 
+import static android.content.Context.ALARM_SERVICE;
+
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
 
 import com.varun.gbu_timetables.BuildConfig;
 import com.varun.gbu_timetables.R;
 
 import java.util.Calendar;
 import java.util.Random;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class BootReceiver extends BroadcastReceiver {
 
