@@ -11,8 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.varun.gbu_timetables.service.JSONDownloader;
-
 import java.util.ArrayList;
 
 
@@ -47,7 +45,7 @@ public class NoticesFragment extends Fragment {
         // ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getContext(), R.layout.item_notice, R.id.notice_title,courseList);
         //listview.setAdapter(arrayAdapter);
         lv = view.findViewById(R.id.listView);
-        new JSONDownloader(getContext(), jsonURL, lv).execute();
+      //  new JSONDownloader(getContext(), jsonURL, lv).execute();
         return view;
     }
 

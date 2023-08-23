@@ -64,13 +64,14 @@ public class TimetableProvider extends ContentProvider {
         return TimetableContract.TT_CELL_TYPE;
     }
 
+
     private Cursor getTTCellBySectionDaySlot(Uri uri) {
         Long section_id = TimetableContract.getSectionFromUri(uri);
         Long day = TimetableContract.getDayFromUri(uri);
         Long slot = TimetableContract.getSlotFromUri(uri);
 
-        String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table Where Section_Id=" + section_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
-                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
+        String query = "SELECT _ROWID_ as _id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM ATView Where Section_Id=" + section_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
+                + " and ATView.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -78,15 +79,15 @@ public class TimetableProvider extends ContentProvider {
     private Cursor getMaxPeriodFromSection(Uri uri) {
         Long section_id = TimetableContract.getSectionFromMaxPeriodUri(uri);
 
-        String query = "SELECT _ROWID_ as _id, max(TT_Period),min(TT_Period) from M_Time_Table where Section_Id = " + section_id
-                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
+        String query = "SELECT _ROWID_ as _id, max(TT_Period),min(TT_Period) from ATView where Section_Id = " + section_id
+                + " and ATView.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getSchools() {
 
-        String query = "SELECT _ROWID_ as _id,id as program_id, school from Program";
+        String query = "SELECT DISTINCT program_id as _id, program_id, school FROM  ATView";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -94,17 +95,14 @@ public class TimetableProvider extends ContentProvider {
 
     private Cursor getFaculty() {
 
-        String query = "SELECT distinct Teacher._ROWID_ as _id,Teacher.id as faculty_id, Teacher.name,Teacher.school from Teacher,School,M_Time_Table,CSF_Faculty where Teacher.school = School.name " +
-                " and M_Time_Table.CSF_Id=CSF_Faculty.csf_id and CSF_Faculty.faculty_Id = Teacher.id order by Teacher.name" + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
+        String query = "SELECT distinct faculty_id as _id,faculty_id, TeacherName,school from ATView  order by TeacherName";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getSectionsByProgramID(Uri uri) {
         Long program_id = TimetableContract.getProgramFromUri(uri);
-        String query = "SELECT distinct Section._ROWID_ as _id,id as section_id,name from Section,M_Time_Table" +
-                " where ShowTimetable = 1 and program = " + program_id + " and Section.id = M_Time_Table.Section_Id"
-                + " order by Section.name " + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
+        String query = "SELECT distinct section_id as _id, section_id,SectionName from ATView where program_id = " + program_id + " order by SectionName";
 
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
@@ -112,7 +110,7 @@ public class TimetableProvider extends ContentProvider {
 
     private Cursor getSectionById(Uri uri) {
         Long section_id = TimetableContract.getSectionFromUri(uri);
-        String query = "SELECT _ROWID_ as _id,id as section_id,Name from Section where id = " + section_id;
+        String query = "SELECT distinct section_id as _id, section_id,SectionName from ATView where section_id = " + section_id;
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
@@ -122,49 +120,55 @@ public class TimetableProvider extends ContentProvider {
         Long day = TimetableContract.getDayFromUri(uri);
         Long slot = TimetableContract.getSlotFromUri(uri);
 
-        String query = "SELECT M_Time_Table._ROWID_ as _id, Section_Id, ContGroupCode, M_Time_Table.CSF_Id,Room_Id, Batch_Id,ActivityTag FROM M_Time_Table,CSF_Faculty " +
-                " where M_Time_Table.CSF_Id=CSF_Faculty.csf_id and faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
-                + " and M_Time_Table.sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
-
+        String query = "SELECT _ROWID_ as _id, Section_Id, ContGroupCode, CSF_Id,Room_Id, Batch_Id,ActivityTag FROM ATView " +
+                " where faculty_Id=" + faculty_id + " AND  TT_Day=" + day + " AND TT_Period=" + slot
+                + " and sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getMaxPeriodFromFaculty(Uri uri) {
         Long faculty_id = TimetableContract.getFacultyFromMaxPeriodUri(uri);
-        String query = "SELECT M_Time_Table._ROWID_ as _id, max(TT_Period),min(TT_Period) from M_Time_Table,CSF_Faculty where " +
-                " M_Time_Table.CSF_Id=CSF_Faculty.csf_id and " +
-                "faculty_Id = " + faculty_id + " and sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
+        String query = "SELECT _ROWID_ as _id, max(TT_Period),min(TT_Period) from ATView where " +
+                " faculty_Id = " + faculty_id + " and sessionid= (SELECT Id FROM Session WHERE (CurrentActive = 1))";
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getFacultyByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
-        String query = "SELECT Teacher._ROWID_ as _id,Teacher.id as faculty_id,* FROM Teacher,CSF_Faculty where faculty_id=Teacher.id and csf_id=" + CSF;
+        // String query = "SELECT Teacher._ROWID_ as _id,Teacher.id as faculty_id,* FROM Teacher,CSF_Faculty where faculty_id=Teacher.id and csf_id=" + CSF;
+        String query = "SELECT DISTINCT faculty_id as _id, TeacherName, faculty_id,abbr FROM ATView where csf_id=" + CSF;
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getSubjectByCSF(Uri uri) {
         Long CSF = TimetableContract.getCSFfromUri(uri);
-        String query = "SELECT _ROWID_ as _id,Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
-        Cursor cursor = mOpenHelper.getReadableDatabase().rawQuery(query, null);
-        cursor.moveToNext();
-        String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
-        cursor.close();
-        String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code like '%" + code + "%'";
+        String sub_query = "Select DISTINCT subject_id as _id, Subject_Code as code, subject_name as name FROM ATView Where CSF_Id=" + CSF;
+        // String query = "SELECT distinct subject_id as _id,Subject_Code FROM ATView Where [CSF_Id]=" + CSF;
+        // String query = "SELECT _ROWID_ as _id,Subject_Code FROM CSF Where [CSF_Id]=" + CSF;
+        // Cursor cursor = mOpenHelper.getReadableDatabase().rawQuery(query, null);
+        // cursor.moveToNext();
+        // String code = cursor.getString(cursor.getColumnIndex("Subject_Code")).trim();
+        // cursor.close();
+        //  String sub_query = "SELECT _ROWID_ as _id,code,name FROM Subject Where code like '%" + code + "%'";
+        //String sub_query = "SELECT distinct subject_id as _id,Subject_Code,subject_name FROM ATView Where Subject_Code like '%" + code + "%'";
         return mOpenHelper.getReadableDatabase().rawQuery(sub_query, null);
     }
 
+    ////////////////////////////
     private Cursor getRoomById(Uri uri) {
         Long room_id = TimetableContract.getRoomFromUri(uri);
-        String query = "SELECT _ROWID_ as _id, name FROM M_Room where room_id=" + room_id;
+        //   String query = "SELECT _ROWID_ as _id, name FROM M_Room where room_id=" + room_id;
+        String query = "SELECT DISTINCT room_id as _id, RoomName  FROM ATView where room_id=" + room_id;
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
 
     private Cursor getFullSectionName(Uri uri) {
         String SectionCode = TimetableContract.getSectionCodeFromUri(uri);
-        String query = "Select _ROWID_ as _id, Name FROM Program where code = '" + SectionCode + "'";
+        //String query = "Select _ROWID_ as _id, Name FROM Program where code = '" + SectionCode + "'";
+        String query = "Select DISTINCT section_id as _id,program_name as Name FROM ATView where Code = '" + SectionCode + "'";
         return mOpenHelper.getReadableDatabase().rawQuery(query, null);
     }
+
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] SelectionArgs, String sortOrder) {

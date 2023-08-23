@@ -171,7 +171,7 @@ public class TimetableAdapter {
                 Uri room_uri = TimetableContract.BuildRoomWithId(Room_Id);
                 Cursor room_cursor = context.getContentResolver().query(room_uri, null, null, null, null);
                 room_cursor.moveToNext();
-                String Room_no = room_cursor.getString(room_cursor.getColumnIndex("Name")).trim();
+                String Room_no = room_cursor.getString(room_cursor.getColumnIndex("RoomName")).trim();
                 room_cursor.close();
 
 
@@ -193,8 +193,8 @@ public class TimetableAdapter {
                         mCSF = new CSF(CSF_Id, context);
                         mCSF.CSF_Id = CSF_Id;
                         mCSF.Fac_abbr = fac_cursor.getString(fac_cursor.getColumnIndex("abbr")).trim();
-                        mCSF.Fac_name = fac_cursor.getString(fac_cursor.getColumnIndex("name")).trim();
-                        mCSF.Fac_name = fac_cursor.getString(fac_cursor.getColumnIndex("name")).trim();
+                        mCSF.Fac_name = fac_cursor.getString(fac_cursor.getColumnIndex("TeacherName")).trim();
+                        mCSF.Fac_name = fac_cursor.getString(fac_cursor.getColumnIndex("TeacherName")).trim();
                         mCSF.Fac_id = fac_cursor.getLong(fac_cursor.getColumnIndex("faculty_id"));
                         mCSF.Sub_Code = Sub_Code;
                         mCSF.Sub_name = Sub_name;
@@ -210,7 +210,7 @@ public class TimetableAdapter {
                             Uri section_uri = TimetableContract.BuildSectionWithId(mCSF.Section_id);
                             Cursor section_cursor = context.getContentResolver().query(section_uri, null, null, null, null);
                             section_cursor.moveToNext();
-                            mCSF.Section_name = section_cursor.getString(section_cursor.getColumnIndex("Name")).trim();
+                            mCSF.Section_name = section_cursor.getString(section_cursor.getColumnIndex("SectionName")).trim();
                             mCSF.Section_name = Utility.getFullSectionName(mCSF.Section_name, context);
                             section_cursor.close();
                         }
@@ -242,7 +242,7 @@ public class TimetableAdapter {
                 time_string += Room_no;
 
                 if (Batch_id != 0)
-                    time_string += " G" + Batch_id.toString();
+                    time_string += " G" + Batch_id;
 
                 if (ActivityTag.equalsIgnoreCase("lab"))
                     time_string += " LAB";
@@ -250,7 +250,7 @@ public class TimetableAdapter {
             } catch (Exception e) {
                 Log.d("TimetableAdapter", "day_no " + Day_no);
                 Log.d("TimetableAdapter", "period_no " + Period_Pos);
-                Log.d("TimetableAdapter", "CSF_id " + CSF_Id.toString());
+                Log.d("TimetableAdapter", "CSF_id " + CSF_Id);
                 Log.d("TimetableAdapter", e.toString(), e);
                 mFirebaseAnalytics = FirebaseAnalytics.getInstance(context);
                 Bundle bundle = new Bundle();

@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
+
     int set_theme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
 
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
         set_theme = R.style.AppTheme;
@@ -85,5 +87,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             }
         }, 2777L);
 
+
     }
+
 }

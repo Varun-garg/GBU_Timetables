@@ -5,12 +5,14 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +25,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -38,7 +46,7 @@ import java.util.HashSet;
 //import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final int MY_REQUEST_CODE = 20220918;
     public static String ContentType_KEY = "NotificationContentType";
     public static String Content_KEY = "NotificationContent";
     UpdateDatabaseOnlineTask updateDatabaseOnlineTask;
@@ -46,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     FragmentPagerAdapter fragmentPagerAdapter;
+
 
     public static boolean checkFavouritesExist(Context context) {
         Gson gson = new Gson();
@@ -64,6 +73,26 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(this);
+        Task<AppUpdateInfo> appUpdateInfoTask = appUpdateManager.getAppUpdateInfo();
+
+        appUpdateInfoTask.addOnSuccessListener(appUpdateInfo -> {
+                    if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                            && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+
+                        try {
+                            appUpdateManager.startUpdateFlowForResult(appUpdateInfo, AppUpdateType.IMMEDIATE, this, MY_REQUEST_CODE);
+                        } catch (IntentSender.SendIntentException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                })
+                .addOnFailureListener(appUpdateInfo -> {
+                    Log.e("ImmediateUpdateActivity", "Failed to check for update");
+                });
+
+
         //  Fabric.with(this, new Crashlytics());
         // Crashlytics.getInstance().crash();
         //FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
@@ -91,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(fragmentPagerAdapter);
         viewPager.setOffscreenPageLimit(2); // Cache all pages = N-1
 
-        if (checkFavouritesExist(getApplicationContext()) == true)
+        if (checkFavouritesExist(getApplicationContext()))
             viewPager.setCurrentItem(2); // open favourites
         else
             viewPager.setCurrentItem(0); // open sections
@@ -264,8 +293,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public class FragmentPagerAdapter extends androidx.fragment.app.FragmentPagerAdapter {
-        final int PAGE_COUNT = 4;
-        private final String[] tabTitles = new String[]{"Notices", "Sections", "Faculty", "Favourites"};
+        final int PAGE_COUNT = 3;
+        //private final String[] tabTitles = new String[]{"Notices", "Sections", "Faculty", "Favourites"};
+        private final String[] tabTitles = new String[]{"Sections", "Faculty", "Favourites"};
 
         public FragmentPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -278,11 +308,12 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
+            // if (position == 0)
+            //    return new NoticesFragment();
+            //  else
             if (position == 0)
-                return new NoticesFragment();
-            else if (position == 1)
                 return new SectionsFragment();
-            else if (position == 2)
+            else if (position == 1)
                 return new FacultyFragment();
             else return new FavouritesFragment();
         }

@@ -57,8 +57,8 @@ public class SectionsFragment extends Fragment {
             if (Sections == null) Sections = new ArrayList<>();
             while (program_cursor.moveToNext()) {
                 SectionsFacultyAdapter.Common_type s = new SectionsFacultyAdapter.Common_type();
-                s.id = program_cursor.getLong(program_cursor.getColumnIndex("section_id"));
-                s.Name = program_cursor.getString(program_cursor.getColumnIndex("Name")).trim();
+                s.id = program_cursor.getLong(program_cursor.getColumnIndex("Section_Id"));
+                s.Name = program_cursor.getString(program_cursor.getColumnIndex("SectionName")).trim();
                 s.Name = Utility.getFullSectionName(s.Name, getContext());
                 Sections.add(s);
             }

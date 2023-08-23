@@ -51,7 +51,7 @@ public class FacultyFragment extends Fragment {
             String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
             SectionsFacultyAdapter.Common_type ct = new SectionsFacultyAdapter.Common_type();
             ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
-            ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("name"));
+            ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("TeacherName"));
 
             RedundantHeaderListData.add(school);
 
