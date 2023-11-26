@@ -1,6 +1,6 @@
 package com.varun.gbu_timetables.service
 
-import com.varun.gbu_timetables.data.Model.Notice
+import com.varun.gbu_timetables.data.model.Notice
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

@@ -18,10 +18,10 @@ import androidx.core.app.TaskStackBuilder;
 import com.varun.gbu_timetables.BuildConfig;
 import com.varun.gbu_timetables.MainActivity;
 import com.varun.gbu_timetables.R;
-import com.varun.gbu_timetables.data.Database.TimetableContract;
-import com.varun.gbu_timetables.data.Database.TimetableDbHelper;
-import com.varun.gbu_timetables.data.Database.TimetableProvider;
 import com.varun.gbu_timetables.data.MD5;
+import com.varun.gbu_timetables.data.database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableDbHelper;
+import com.varun.gbu_timetables.data.database.TimetableProvider;
 
 import org.json.JSONObject;
 
@@ -35,13 +35,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Random;
 
+
 public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
 
-    private final Context mContext;
-    //private final String checksumUrlLocation = "http://www.gbuonline.in/timetable/md5.php";
-    //private final String downloadUrlLocation = "http://www.gbuonline.in/timetable/varun.sqlite";
-    private final String checksumUrlLocation = "https://github.com/mygbu/timetable/raw/master/md5.html";
-    private final String downloadUrlLocation = "https://github.com/mygbu/timetable/raw/master/varun.sqlite";
+    protected final Context mContext;
 
 
     private final boolean silent;
@@ -51,27 +48,30 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
         this.silent = silent;
     }
 
+
     @Override
     protected Integer doInBackground(Void... params) {
+
         HttpURLConnection urlConnection;
         BufferedReader reader;
         String server_str;
         String server_md5;
         publishProgress("Checking for timetable updates");
         try {
+            String checksumUrlLocation = "https://github.com/mygbu/timetable/raw/master/md5.html";
             URL checksumUrl = new URL(checksumUrlLocation);
             urlConnection = (HttpURLConnection) checksumUrl.openConnection();
             urlConnection.setRequestMethod("GET");
             urlConnection.connect();
 
             InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
             if (inputStream == null) {
                 publishProgress("Offline: Timetable may be old.");
                 return -1;
             }
             reader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
+            StringBuilder buffer = new StringBuilder();
             while ((line = reader.readLine()) != null) {
                 buffer.append(line + "\n");
             }
@@ -85,6 +85,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
             String db_md5 = preferences.getString(TimetableDbHelper.DB_MD5_PATH, null);
 
             if (!server_md5.equals(db_md5)) {
+                String downloadUrlLocation = "https://github.com/mygbu/timetable/raw/master/varun.sqlite";
                 URL downloadUrl = new URL(downloadUrlLocation);
                 publishProgress("Newer timetables found, downloading");
                 URLConnection dl_url_connection = downloadUrl.openConnection();
@@ -112,10 +113,6 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 timetableDbHelper.overwriteDB(mContext, 1, DownloadedDBFileName);
 
                 DownloadedDbFile.delete(); //Not Required
-
-                /*Uri reloadDBUri = TimetableContract.RELOAD_DB_URI;
-                mContext.getContentResolver().query(reloadDBUri,null,null,null,null);
-                */
 
                 ContentResolver resolver = mContext.getContentResolver(); //no need of non working uri method - better way
                 ContentProviderClient client = resolver.acquireContentProviderClient(TimetableContract.CONTENT_AUTHORITY);

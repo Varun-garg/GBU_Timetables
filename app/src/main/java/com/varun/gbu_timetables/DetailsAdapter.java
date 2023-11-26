@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.varun.gbu_timetables.data.Model.CSF;
+import com.varun.gbu_timetables.data.model.CSF;
 
 import java.util.ArrayList;
 

@@ -29,7 +29,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.varun.gbu_timetables.data.Model.TimeTableBasic;
+import com.varun.gbu_timetables.data.model.TimeTableBasic;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -266,13 +266,13 @@ public class TimetableActivity extends AppCompatActivity {
         fab_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(TimetableActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                if (ContextCompat.checkSelfPermission(TimetableActivity.this, Manifest.permission.READ_MEDIA_IMAGES)
                         == PackageManager.PERMISSION_GRANTED) {
                     File png;
                     if (stored_mode.equals("0"))
                         png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_pager), null), Environment.getExternalStorageDirectory().getAbsolutePath());
                     else
-//                        png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), findViewById(R.id.timetable_faculty_data)), Environment.getExternalStorageDirectory().getAbsolutePath());
+//                       // png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), findViewById(R.id.timetable_faculty_data)), Environment.getExternalStorageDirectory().getAbsolutePath());
                         png = SaveBitmapasPNG(BitmapfromView(findViewById(R.id.timetable_table), null), Environment.getExternalStorageDirectory().getAbsolutePath());
                     if (png == null)
                         return;
@@ -288,7 +288,7 @@ public class TimetableActivity extends AppCompatActivity {
                     }
                 } else {
                     ActivityCompat.requestPermissions(TimetableActivity.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            new String[]{Manifest.permission.READ_MEDIA_IMAGES},
                             MY_PERMISSIONS_REQUEST_WRITE_STORAGE);
                 }
             }

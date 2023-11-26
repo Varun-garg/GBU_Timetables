@@ -14,7 +14,7 @@ import android.util.Log;
 
 import androidx.core.content.ContextCompat;
 
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 /**
  * com.varun.gbu_timetables (Timetables_sql)
@@ -146,7 +146,7 @@ public class Utility {
         public static int getThemeId(Context context) {
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
-            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "2"); //1 -> Default dark
+            String theme = sharedPreferences.getString(context.getString(R.string.pref_theme_key), "0"); //1 -> Default dark
             switch (theme) {
                 case "0":
                     return R.style.LightTheme;

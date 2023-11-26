@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
 import com.varun.gbu_timetables.R
-import com.varun.gbu_timetables.data.Model.Notice
+import com.varun.gbu_timetables.data.model.Notice
 
 class NoticeAdapter(private val notices: ArrayList<Notice>) :
     RecyclerView.Adapter<NoticeAdapter.MyViewHolder>() {
@@ -29,7 +29,7 @@ class NoticeAdapter(private val notices: ArrayList<Notice>) :
         //public val messageButton = itemView.findViewById<Button>(R.id.notice_file)
     }
 
-    override fun onBindViewHolder(holder: NoticeAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         // Glide.with(context).load(movieList.get(position).image)
         //        .apply(RequestOptions().centerCrop())
         //        .into(holder.image)

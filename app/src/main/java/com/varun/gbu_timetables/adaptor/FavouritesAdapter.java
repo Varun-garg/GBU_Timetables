@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.varun.gbu_timetables.R;
 import com.varun.gbu_timetables.Utility;
-import com.varun.gbu_timetables.data.Model.TimeTableBasic;
+import com.varun.gbu_timetables.data.model.TimeTableBasic;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class FavouritesAdapter extends ArrayAdapter<TimeTableBasic> {
 
     Drawable ItemIconDrawable;
 
-    private Context context;
+    private final Context context;
 
     public FavouritesAdapter(Context context, ArrayList<TimeTableBasic> values) {
         super(context, 0, values);

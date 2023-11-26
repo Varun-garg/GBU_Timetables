@@ -3,7 +3,6 @@ package com.varun.gbu_timetables;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -18,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.HtmlCompat;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -48,12 +48,17 @@ public class AboutActivity extends AppCompatActivity {
 
         TextView textView = findViewById(R.id.textView);
 
-        textView.setText(Html.fromHtml("<h2><b>GBU Timetables</b></h2>"));
+        textView.setText(HtmlCompat.fromHtml("<h2><b>GBU Timetables</b></h2>", 0));
         String BuildInfo = "";
         PackageInfo info;
         try {
             info = getPackageManager().getPackageInfo(getPackageName(), 0);
-            int build = info.versionCode;
+            int build = 0; // info.versionCode;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                build = (int) info.getLongVersionCode();
+            } else {
+                build = info.versionCode;
+            }
             String name = info.versionName;
             BuildInfo = "Version " + name + "\n Build number " + build + "\n\n";
         } catch (Exception e) {
@@ -105,24 +110,23 @@ public class AboutActivity extends AppCompatActivity {
         textView.append("Source code:\n");
 
         String url = "<a href=\"https://github.com/Varun-garg/gbu-timetable_sql\">https://github.com/Varun-garg/gbu-timetable_sql</a>";
-        textView.append(Html.fromHtml(url));
+        textView.append(HtmlCompat.fromHtml(url, 0));
         textView.append("\n\n");
         textView.append("Developed under guidance of Dr. Amit K. Awasthi\n\n");
         textView.append("Developed by Varun Garg <");
-        textView.append(Html.fromHtml("<a href=\"mailto:varun.10@live.com\">Email Varun</a>><br />"));
+        textView.append(HtmlCompat.fromHtml("<a href=\"mailto:varun.10@live.com\">Email Varun</a>><br />", 0));
         textView.append("Share Timetable feature by Ritik Channa\n <");
-        textView.append(Html.fromHtml("<a href=\"mailto:chnritik@gmail.com\">Email Ritik</a>><br />"));
+        textView.append(HtmlCompat.fromHtml("<a href=\"mailto:chnritik@gmail.com\">Email Ritik</a>><br />", 0));
         textView.append("\nThanks to CyanogenMod for MD5 library\n\n");
         textView.append("Released Under GPLv3 Licence");
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            // Respond to the action bar's Up/Home button
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+        // Respond to the action bar's Up/Home button
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

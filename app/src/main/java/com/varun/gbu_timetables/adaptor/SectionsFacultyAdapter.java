@@ -24,9 +24,9 @@ public class SectionsFacultyAdapter extends BaseExpandableListAdapter {
 
 
     Drawable GroupIconDrawable;
-    private Context _context;
-    private List<String> _listDataHeader;
-    private HashMap<String, List<Common_type>> _listDataChild;
+    private final Context _context;
+    private final List<String> _listDataHeader;
+    private final HashMap<String, List<Common_type>> _listDataChild;
 
     public SectionsFacultyAdapter(Context context, List<String> listDataHeader,
                                   HashMap<String, List<Common_type>> listChildData) {

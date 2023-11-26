@@ -18,7 +18,7 @@ public class NoticesFragment extends Fragment {
     ListView listview;
     int intCount = 0;
     ArrayList<String> tutorialList = new ArrayList<String>();
-    String[] courseList = {"C-Programming", "Data Structure", "Database", "Python",
+    String[] courseList = {"C-Programming", "Data Structure", "database", "Python",
             "Java", "Operating System", "Compiler Design", "Android Development"};
     String jsonURL = "https://manage.gbu.ac.in/api/listnotices";
     // private final static String URL = "http://manage.gbu.ac.in/api/listnotices";

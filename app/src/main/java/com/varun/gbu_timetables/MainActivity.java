@@ -10,7 +10,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -23,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.preference.PreferenceManager;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.gms.tasks.Task;
@@ -36,13 +36,12 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
-import com.varun.gbu_timetables.data.Model.TimeTableBasic;
+import com.varun.gbu_timetables.data.model.TimeTableBasic;
 import com.varun.gbu_timetables.service.UpdateDatabaseService;
 
 import java.lang.reflect.Type;
 import java.util.Calendar;
 import java.util.HashSet;
-
 //import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity {
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 ((HashSet<TimeTableBasic>) gson.fromJson(json, favourites_type)).size() > 0;
     }
 
+    //SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,7 +15,7 @@ import android.widget.ExpandableListView;
 import androidx.fragment.app.Fragment;
 
 import com.varun.gbu_timetables.adaptor.SectionsFacultyAdapter;
-import com.varun.gbu_timetables.data.Database.TimetableContract;
+import com.varun.gbu_timetables.data.database.TimetableContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;

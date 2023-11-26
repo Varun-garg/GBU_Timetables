@@ -2,4 +2,4 @@
 <TableRow xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/timetable_row"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"></TableRow>
+    android:layout_height="wrap_content" />
