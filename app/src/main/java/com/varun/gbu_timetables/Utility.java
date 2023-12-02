@@ -77,7 +77,9 @@ public class Utility {
         try {
 
             cursor.moveToFirst();
-            String SectionFullName = cursor.getString(cursor.getColumnIndex("Name"));
+            var colIndex = cursor.getColumnIndex("Name");
+            String SectionFullName = (colIndex < 0) ? "" : cursor.getString(colIndex);
+
             cursor.close();
             return SectionFullName + Year;
         } catch (Exception e) {

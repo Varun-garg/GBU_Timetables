@@ -65,6 +65,8 @@ public class MainActivity extends AppCompatActivity {
         Type favourites_type = new TypeToken<HashSet<TimeTableBasic>>() {
         }.getType(); //simply checking  string size doesn't work
 
+        //Type favourites_type = TypeToken.getParameterized(HashSet.class, TimeTableBasic.class).getType();
+
         return json != null && json.length() > 0 &&
                 ((HashSet<TimeTableBasic>) gson.fromJson(json, favourites_type)).size() > 0;
     }
@@ -92,10 +94,6 @@ public class MainActivity extends AppCompatActivity {
                     Log.e("ImmediateUpdateActivity", "Failed to check for update");
                 });
 
-
-        //  Fabric.with(this, new Crashlytics());
-        // Crashlytics.getInstance().crash();
-        //FirebaseCrashlytics crashlytics = FirebaseCrashlytics.getInstance();
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
 
         int saved_theme = Utility.ThemeTools.getThemeId(getApplicationContext());
@@ -110,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.pager);
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -273,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         PendingIntent pi = PendingIntent.getService(getApplicationContext(), 0,
-                new Intent(getApplicationContext(), UpdateDatabaseService.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                new Intent(getApplicationContext(), UpdateDatabaseService.class), PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         //just in case there is an existing pending intent
         am.cancel(pi);

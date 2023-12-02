@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.varun.gbu_timetables.asyncTask.UpdateDatabaseOnlineTask;
 
@@ -37,7 +38,7 @@ public class UpdateDatabaseService extends Service {
      */
     @Override
     public void onCreate() {
-
+        Log.d("GBU-UPD-DB-SVC", "Class Called");
     }
 
     /**
@@ -94,11 +95,12 @@ public class UpdateDatabaseService extends Service {
      */
     @Override
     public void onDestroy() {
+        Log.d("GBU-UPD-DB-SVC", "Destryoing ...");
         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent serviceIntent = new Intent(getApplicationContext(), UpdateDatabaseService.class);
-        PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, serviceIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
         am.set(AlarmManager.RTC_WAKEUP, 30000, pi);
-
+        Log.d("GBU-UPD-DB-SVC", "Destryed!");
     }
 
 }

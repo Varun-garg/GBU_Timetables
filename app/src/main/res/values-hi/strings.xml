@@ -1,8 +1,66 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GBU Timetables</string>
-    <string name="action_refresh">" ताजा करें "</string>
-    <string name="action_export">"भेजें "</string>
-    <string name="title_activity_timetable">"समय सारणी "</string>
-    <string name="action_info">"बारे में "</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_export">Export</string>
+    <string name="title_activity_timetable">GBU Timetables</string>
+    <string name="action_info">About</string>
+    <string name="action_syllabus" translatable="false">ICT Syllabus</string>
+
+    <string name="time_string">Time_String</string>
+    <string name="current_csf_fac_key_list">current_csf_fac_key_list</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- Strings related to Settings -->
+
+    <string name="pref_tt_display_type_key">pref_tt_display_type</string>
+    <string name="pref_tt_display_type_label">Display Mode</string>
+
+    <string-array name="pref_tt_display_type_options">
+        <item>Day Wise</item>
+        <item>Single Page</item>
+    </string-array>
+
+    <string-array name="pref_tt_display_type_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="pref_theme_key">pref_them</string>
+    <string name="pref_theme_key_label">Theme</string>
+    <string name="pref_firebase_instance_id_key">pref_firebase_instance_id</string>
+    <string name="pref_firebase_instance_id_default_key">default</string>
+
+    <string-array name="pref_theme_options">
+        <item>Light Theme</item>
+        <item>Dark Theme</item>
+        <item>Pink Theme</item>
+    </string-array>
+
+    <string-array name="pref_theme_values">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_course_structure">ICT Course Structure</string>
+    <string name="action_settings">Settings</string>
+    <string name="open_gbu">Open GBU</string>
+    <string name="http_github_com_opengbu">http://github.com/opengbu</string>
+    <string name="gbu_logo">GBU Logo</string>
+    <string name="discussion">Discussion</string>
+    <string name="action_notice">Notices</string>
+    <string name="title_activity_notice">Notice Board</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="notification_channel_id">gbu_timetable</string>
+    <string name="previous">Previous</string>
+
+
 </resources>

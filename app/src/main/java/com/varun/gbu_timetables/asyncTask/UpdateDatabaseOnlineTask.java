@@ -185,7 +185,7 @@ public class UpdateDatabaseOnlineTask extends AsyncTask<Void, String, Integer> {
                 PendingIntent resultPendingIntent =
                         stackBuilder.getPendingIntent(
                                 0,
-                                PendingIntent.FLAG_UPDATE_CURRENT
+                               PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT
                         );
                 mBuilder.setContentIntent(resultPendingIntent);
                 NotificationManager mNotificationManager =

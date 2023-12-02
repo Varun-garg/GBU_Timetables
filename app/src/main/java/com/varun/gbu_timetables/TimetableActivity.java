@@ -1,6 +1,7 @@
 package com.varun.gbu_timetables;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -295,6 +296,7 @@ public class TimetableActivity extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("MissingSuperCall")
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {

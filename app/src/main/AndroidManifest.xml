@@ -1,27 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    package="com.varun.gbu_timetables">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
+
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="true"
-        android:icon="@mipmap/ic_launcher"
+        android:fullBackupContent="false"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.App.Starting"
-        tools:targetApi="s">
-        <!--        <activity-->
-        <!--            android:name=".Notice"-->
-        <!--            android:label="@string/title_activity_notice"-->
-        <!--            android:theme="@style/AppTheme.NoActionBar" />-->
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
+        <activity
+            android:name=".Notice"
+            android:label="@string/title_activity_notice"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!--
            <meta-data
@@ -41,14 +44,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/AppTheme">
-            <intent-filter>
-                <!-- <category android:name="android.intent.category.DEFAULT" />-->
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-                <!-- <action android:name="android.intent.action.VIEW" />-->
-            </intent-filter>
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".data.database.TimetableProvider"
@@ -72,6 +68,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
                 <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
 
@@ -136,17 +134,30 @@
             </intent-filter>
         </service>
 
+        <activity
+            android:name=".SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
 
-        <!--        <activity-->
-        <!--            android:name=".CourseStructure"-->
-        <!--            android:exported="true"-->
-        <!--            android:label="@string/title_activity_course_structure"-->
-        <!--            android:parentActivityName=".MainActivity"-->
-        <!--            android:theme="@style/AppTheme.NoActionBar">-->
-        <!--            <meta-data-->
-        <!--                android:name="android.support.PARENT_ACTIVITY"-->
-        <!--                android:value="com.varun.gbu_timetables.MainActivity" />-->
-        <!--        </activity>-->
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".CourseStructure"
+            android:exported="true"
+            android:label="@string/title_activity_course_structure"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.varun.gbu_timetables.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

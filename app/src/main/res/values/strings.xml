@@ -4,7 +4,7 @@
     <string name="action_export">Export</string>
     <string name="title_activity_timetable">GBU Timetables</string>
     <string name="action_info">About</string>
-    <string name="action_syllabus">ICT Syllabus</string>
+    <string name="action_syllabus" translatable="false">ICT Syllabus</string>
 
     <string name="time_string">Time_String</string>
     <string name="current_csf_fac_key_list">current_csf_fac_key_list</string>

@@ -8,6 +8,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:contentDescription="IMG"
         android:paddingLeft="39dp" />
     <!-- padding left of icon in list_group_item (10) + icon (24dp) + padding right (5dp)  = 39dp-->
 

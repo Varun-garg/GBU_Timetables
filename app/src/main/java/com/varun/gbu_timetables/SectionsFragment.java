@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class SectionsFragment extends Fragment {
     ProgressDialog progressDialog;
     SectionsFacultyAdapter schoolsAdapter;
 
+    @SuppressLint("Range")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,9 +50,9 @@ public class SectionsFragment extends Fragment {
         Cursor schools_c = getContext().getContentResolver().query(Schools_uri, null, null, null, null);
 
         while (schools_c.moveToNext()) {
-            String school = schools_c.getString(schools_c.getColumnIndex("school"));
+            @SuppressLint("Range") String school = schools_c.getString(schools_c.getColumnIndex("school"));
             HeaderListData.add(school);
-            Long Program_id = schools_c.getLong(schools_c.getColumnIndex("program_id"));
+            @SuppressLint("Range") Long Program_id = schools_c.getLong(schools_c.getColumnIndex("program_id"));
             Uri Program_uri = TimetableContract.BuildSectionWithProgramId(Program_id);
             Cursor program_cursor = getContext().getContentResolver().query(Program_uri, null, null, null, null);
             List<SectionsFacultyAdapter.Common_type> Sections = ChildrenListData.get(school);

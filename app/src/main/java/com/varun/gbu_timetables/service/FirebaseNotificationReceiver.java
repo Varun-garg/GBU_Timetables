@@ -62,7 +62,7 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
     private void sendNotification(String messageTitle, String messageBody, Map<String, String> Data) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* request code */, intent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         long[] pattern = {500, 500, 500, 500, 500};
 
@@ -89,7 +89,7 @@ public class FirebaseNotificationReceiver extends FirebaseMessagingService {
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         int DummyUniqueInt = new Random().nextInt(543254);
-        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(), DummyUniqueInt, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent myIntent = PendingIntent.getActivity(getApplicationContext(), DummyUniqueInt, notificationIntent, PendingIntent.FLAG_MUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
 
         notificationBuilder.setContentIntent(myIntent);
 

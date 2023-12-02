@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class FacultyFragment extends Fragment {
     ProgressDialog progressDialog;
     SectionsFacultyAdapter schoolsAdapter;
 
+    @SuppressLint("Range")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,7 @@ public class FacultyFragment extends Fragment {
         Cursor faculty_cursor = getContext().getContentResolver().query(Faculty_uri, null, null, null, null);
 
         while (faculty_cursor.moveToNext()) {
-            String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
+            @SuppressLint("Range") String school = faculty_cursor.getString(faculty_cursor.getColumnIndex("school"));
             SectionsFacultyAdapter.Common_type ct = new SectionsFacultyAdapter.Common_type();
             ct.id = faculty_cursor.getLong(faculty_cursor.getColumnIndex("faculty_id"));
             ct.Name = faculty_cursor.getString(faculty_cursor.getColumnIndex("TeacherName"));

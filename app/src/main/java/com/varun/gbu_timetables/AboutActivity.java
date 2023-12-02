@@ -1,7 +1,6 @@
 package com.varun.gbu_timetables;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -49,24 +48,33 @@ public class AboutActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.textView);
 
         textView.setText(HtmlCompat.fromHtml("<h2><b>GBU Timetables</b></h2>", 0));
-        String BuildInfo = "";
-        PackageInfo info;
-        try {
-            info = getPackageManager().getPackageInfo(getPackageName(), 0);
-            int build = 0; // info.versionCode;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                build = (int) info.getLongVersionCode();
-            } else {
-                build = info.versionCode;
-            }
-            String name = info.versionName;
-            BuildInfo = "Version " + name + "\n Build number " + build + "\n\n";
-        } catch (Exception e) {
-            Log.d("error", e.toString());
-        }
-        final String FinalBuildInfo = BuildInfo;
+        //PackageInfo info;
 
-        SpannableString ss = new SpannableString(BuildInfo);
+        String versionCode = String.valueOf(BuildConfig.VERSION_CODE);
+        String versionName = BuildConfig.VERSION_NAME;
+
+        //String BuildInfo =
+
+//        try {
+//            info = getPackageManager().getPackageInfo(getPackageName(), 0);
+//
+//            //PackageInfoCompat.getLongVersionCode(info);
+//
+//            int build = 0; // info.versionCode;
+//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+//                build = (int) info.getLongVersionCode();
+//            } else {
+//                build = info.versionCode;
+//            }
+//            String name = info.versionName;
+//            BuildInfo = "Version " + name + "\n Build number " + build + "\n\n";
+//        } catch (Exception e) {
+//            Log.d("error", e.toString());
+//        }
+        final String FinalBuildInfo = "Version " + versionName + "\n Build number " + versionCode + "\n\n";
+        //BuildInfo;
+
+        SpannableString ss = new SpannableString(FinalBuildInfo);
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(View textView) {

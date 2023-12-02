@@ -1,5 +1,6 @@
 package com.varun.gbu_timetables.adaptor;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
@@ -47,6 +48,7 @@ public class TimetableAdapter {
     long min_period = 0;
     private FirebaseAnalytics mFirebaseAnalytics;
 
+    @SuppressLint("Range")
     public TimetableAdapter(Context context, ArrayList<Integer> day_nos, Long timetable_id, String timetable_type, String title) {
         this.title = title;
         this.day_nos = day_nos;
@@ -136,6 +138,7 @@ public class TimetableAdapter {
         return linearLayout;
     }
 
+    @SuppressLint("Range")
     public void BuildTimeString(int Day_Pos, int Period_Pos) {
 
         int Day_no = day_nos.get(Day_Pos);
@@ -161,9 +164,9 @@ public class TimetableAdapter {
             time_string = time_string.trim();
             if (!time_string.equals("")) time_string += "\n";
             Long CSF_Id = cursor.getLong(cursor.getColumnIndex("CSF_Id"));
-            Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
-            Long Batch_id = cursor.getLong(cursor.getColumnIndex("Batch_Id"));
-            String ActivityTag = cursor.getString(cursor.getColumnIndex("ActivityTag"));
+            @SuppressLint("Range") Long Room_Id = cursor.getLong(cursor.getColumnIndex("Room_Id"));
+            @SuppressLint("Range") Long Batch_id = cursor.getLong(cursor.getColumnIndex("Batch_Id"));
+            @SuppressLint("Range") String ActivityTag = cursor.getString(cursor.getColumnIndex("ActivityTag"));
             Uri fac_uri = TimetableContract.BuildFacultyWithCSFid(CSF_Id);
             Cursor fac_cursor = context.getContentResolver().query(fac_uri, null, null, null, null);
             try {
@@ -171,7 +174,7 @@ public class TimetableAdapter {
                 Uri room_uri = TimetableContract.BuildRoomWithId(Room_Id);
                 Cursor room_cursor = context.getContentResolver().query(room_uri, null, null, null, null);
                 room_cursor.moveToNext();
-                String Room_no = room_cursor.getString(room_cursor.getColumnIndex("RoomName")).trim();
+                @SuppressLint("Range") String Room_no = room_cursor.getString(room_cursor.getColumnIndex("RoomName")).trim();
                 room_cursor.close();
 
 
@@ -179,13 +182,13 @@ public class TimetableAdapter {
                 Uri sub_uri = TimetableContract.BuildSubjectWithCSFid(CSF_Id);
                 Cursor sub_cursor = context.getContentResolver().query(sub_uri, null, null, null, null);
                 sub_cursor.moveToNext();
-                String Sub_Code = sub_cursor.getString(sub_cursor.getColumnIndex("code")).trim();
-                String Sub_name = sub_cursor.getString(sub_cursor.getColumnIndex("name")).trim();
+                @SuppressLint("Range") String Sub_Code = sub_cursor.getString(sub_cursor.getColumnIndex("code")).trim();
+                @SuppressLint("Range") String Sub_name = sub_cursor.getString(sub_cursor.getColumnIndex("name")).trim();
                 sub_cursor.close();
 
                 ArrayList<CSF> myArr = new ArrayList<>();
                 while (fac_cursor.moveToNext()) {
-                    Long Fac_id = fac_cursor.getLong(fac_cursor.getColumnIndex("faculty_id"));
+                    @SuppressLint("Range") Long Fac_id = fac_cursor.getLong(fac_cursor.getColumnIndex("faculty_id"));
                     CSF_FAC_MAP_KEY csf_fac_key = new CSF_FAC_MAP_KEY(CSF_Id, Fac_id);
 
                     CSF mCSF = CSF_Details.get(csf_fac_key);
